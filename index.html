@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-100%, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link id="favicon" rel="icon" type="image/png" href="favicon.ico">
+    <title>mosaic ai tool - open ai - 马赛克处理工具 - 马赛克ai工具</title>
+    <meta name="keywords" content="mosaic down syndrome,fluid mosaic model,mosaic district,mosaic tile,mosaic art,mosaic definition,mosaic tiles,mosaic embryo,mosaic church,ai工具,马赛克处理工具,马赛克ai工具,在线免费马赛克处理工具,免费马赛克ai工具,马赛克艺术" />
+    <meta name="description" content="mosaic down syndrome,fluid mosaic model,mosaic district,mosaic tile,mosaic art,mosaic definition,mosaic tiles,mosaic embryo,mosaic church,ai工具,马赛克处理工具,马赛克ai工具,在线免费马赛克处理工具,免费马赛克ai工具,马赛克艺术" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-V0YFLKRH7D');
+    </script>
+    <style>
+        body{
+            padding: 10px 20px;
+        }
+        .main-div{
+            clear: both;
+            display: flex;
+        }
+        .header-div{
+            float: left;
+            margin-bottom: 30px;
+        }
+        .header-item{
+            float: left;
+        }
+        .item-link{
+            margin-top: 20px;
+            margin-left: 50px;
+        }
+        .frame-div{
+            flex-grow:1;
+            margin-left: -1px;
+            overflow: hidden;
+        }
+        .frame-top{
+            border: 1px solid #000000;
+            border-bottom: 0;
+            padding: 5px;
+        }
+        .frame-center{
+            min-height: 400px;
+            border: 1px solid #000000;
+            padding: 5px;
+        }
+        #rangeInput{
+            vertical-align: bottom;
+        }
+
+        @media screen and (max-width: 600px) {
+            .main-div{
+                flex-direction: column;
+            }
+            .frame-div{
+                margin-left: 0;
+                margin-bottom: -1px;
+            }
+            .frame-center{
+                min-height: 16rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-div">
+        <h3 class="header-item">Online AI Mosaic Processing Tool</h3>
+        <div class="header-item item-link">
+            <a title="在线base64转码" class="text-white" style="text-decoration: underline;" href="https://base64.openai2025.com" target="_blank">
+                Online base64 transcoding
+            </a>
+            <a title="json格式化工具" class="text-white" style="text-decoration: underline;margin-left: 10px" href="https://json.openai2025.com" target="_blank">
+                Online JSON formatting
+            </a>
+            <a title="正则表达式测试工具" class="text-white" style="text-decoration: underline;margin-left: 10px" href="https://reg.openai2025.com" target="_blank">
+                Regular expression testing tool
+            </a>
+            <a title="在线去水印工具" class="text-white" style="text-decoration: underline;margin-left: 10px" href="https://watermark.openai2025.com" target="_blank">
+                Remove watermark AI
+            </a>
+        </div>
+    </div>
+
+    <div class="main-div">
+
+
+        <div class="frame-div">
+            <div class="frame-top">
+                <input type="file" id="fileBtn">    
+            </div>
+            <div class="frame-center">
+                <img id="img" alt="Please select an image" style="display:none"/>
+            </div>
+        </div>
+        <div class="frame-div">
+            <div class="frame-top">
+                <input type="range" id="rangeInput" min="1" max="10" value="5" />
+                <input type="button" id="downloadBtn" value="download">
+            </div>
+            <div class="frame-center">
+                <img id="convertImg" alt="" style="display:none"/>
+            </div>
+        </div>
+    </div>
+        
+    <script type="text/javascript">
+
+        var pix = 5;
+
+        document.getElementById("fileBtn").addEventListener("change",function (e){
+            if (window.FileReader) {
+                var file = e.target.files[0];
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    var dataURL = event.target.result;
+                    var img = document.getElementById("img");
+                    img.src = dataURL;
+                    img.style.display = "block";
+                    document.getElementById("convertImg").style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Your browser does not support changing features");
+            }
+        });
+
+        document.getElementById("img").addEventListener("load",function (e){
+            if (e.target.src) {
+                showConvertPic();
+            }
+        });
+
+
+        document.getElementById("rangeInput").addEventListener("change", function (e) {
+            if (document.getElementById("img").src) {
+                pix = parseInt(e.target.value);
+                showConvertPic();
+            }
+        });
+
+        document.getElementById("downloadBtn").addEventListener("click",function (e){
+            var convertImg = document.getElementById("convertImg");
+            if(!!convertImg.src){
+                download(convertImg.src);
+            } else {
+                alert("Please upload the image first");
+            }
+        });
+
+        function showConvertPic(){
+            var img = document.getElementById("img");
+            var convertImg = document.getElementById("convertImg");
+            convertImg.src = createRevertPic(img);
+        }
+
+        function createRevertPic(img){
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;   
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img,0,0);  
+            var c = ctx.getImageData(0, 0, img.width, img.height);
+            var height = c.height;
+            var width = c.width;
+            for(var i = 0; i < height; i+=pix){
+                for(var j = 0; j < width; j+=pix){
+                    var rAvg = 0;
+                    var gAvg = 0;
+                    var bAvg = 0;
+                    var aAvg = 0;
+                    var count = 0;
+                    outerFor:for (var iPix = i; iPix < i+pix; iPix++) {
+                        for (var jPix = j; jPix < j+pix; jPix++) {
+                            if (iPix > height) {
+                                break;
+                            } else if(jPix>width){
+                                break outerFor;
+                            }
+                            var x = iPix*4*width + 4*jPix;
+                            count++;
+                            rAvg += c.data[x];
+                            gAvg += c.data[x+1];
+                            bAvg += c.data[x+2];
+                            aAvg += c.data[x+3];
+                        }
+                        
+                    }
+                    rAvg /= (count);
+                    gAvg /= (count);
+                    bAvg /= (count);
+                    aAvg /= (count);
+
+                    outerFor:for (var iPix = i; iPix < i+pix; iPix++) {
+                        for (var jPix = j; jPix < j+pix; jPix++) {
+                            if (iPix > height) {
+                                break;
+                            } else if(jPix>width){
+                                break outerFor;
+                            }
+                            var x = iPix*4*width + 4*jPix;
+                            c.data[x] = rAvg
+                            c.data[x+1] = gAvg;
+                            c.data[x+2] = bAvg; 
+                            c.data[x+3] = aAvg;
+                        }
+                    }
+                }
+            }
+            ctx.putImageData(c,0,0);
+            return canvas.toDataURL();
+        }
+
+
+        function download(src) {
+            var $a = document.createElement('a');
+            $a.setAttribute("href", src);
+            $a.setAttribute("download", "");
+
+            var evObj = document.createEvent('MouseEvents');
+            evObj.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
+            $a.dispatchEvent(evObj);
+        };
+        
+    </script>  
+
+</body>
+</html>
