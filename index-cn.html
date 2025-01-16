@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-100%, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link id="favicon" rel="icon" type="image/png" href="favicon.ico">
-    <title>Free online image mosaic processing tool</title>
-    <meta name="keywords" content="Free online image mosaic processing tool,mosaic down syndrome,fluid mosaic model,mosaic district,mosaic tile,mosaic art,mosaic definition,mosaic tiles,mosaic embryo,mosaic church" />
-    <meta name="description" content="Free online image mosaic processing tool,mosaic down syndrome,fluid mosaic model,mosaic district,mosaic tile,mosaic art,mosaic definition,mosaic tiles,mosaic embryo,mosaic church" />
+    <title>在线免费图片马赛克处理工具</title>
+    <meta name="keywords" content="在线免费图片马赛克处理工具,马赛克处理工具,马赛克ai工具,在线免费马赛克处理工具,免费马赛克ai工具,马赛克艺术" />
+    <meta name="description" content="在线免费图片马赛克处理工具,马赛克处理工具,马赛克ai工具,在线免费马赛克处理工具,免费马赛克ai工具,马赛克艺术" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
     <script>
@@ -18,31 +18,32 @@
         gtag('config', 'G-V0YFLKRH7D');
     </script>
     <link rel="stylesheet" href="css.css">
+
 </head>
 <body>
     <div class="header-div">
-        <h1 class="header-item">Mosaic Processing</h1>
+        <h1 class="header-item">马赛克工具</h1>
         <div class="header-item item-link">
-            <a title="base64 transcoding" class="text-white link-a" href="https://base64.openai2025.com" target="_blank">
-                Base64
+            <a title="在线Base64转码" class="text-white link-a" href="https://base64.openai2025.com" target="_blank">
+                Base64转码
             </a>
-            <a title="JSON formatting" class="text-white link-a" href="https://json.openai2025.com" target="_blank">
-                JSON
+            <a title="JSON格式化工具" class="text-white link-a" href="https://json.openai2025.com" target="_blank">
+                JSON格式化
             </a>
-            <a title="Regular expression" class="text-white link-a" href="https://reg.openai2025.com" target="_blank">
-                Regular expression
+            <a title="正则表达式测试工具" class="text-white link-a"  href="https://reg.openai2025.com" target="_blank">
+                正则表达式
             </a>
-            <a title="watermark tool" class="text-white link-a" href="https://watermark.openai2025.com" target="_blank">
-                watermark tool
+            <a title="水印工具" class="text-white link-a" href="https://watermark.openai2025.com" target="_blank">
+                水印工具
             </a>
             <a title="图片压缩" class="text-white link-a" href="https://compress.openai2025.com" target="_blank">
-                Image compression
+                图片压缩
             </a>
-            <a title="Convert images to Excel" class="text-white link-a" href="https://img2excel.openai2025.com" target="_blank">
-                images to Excel
+            <a title="图片转Excel" class="text-white link-a" href="https://img2excel.openai2025.com" target="_blank">
+                图片转Excel
             </a>
-            <a title="Image to icon conversion" class="text-white link-a" href="https://icon.openai2025.com" target="_blank">
-                Image to icon
+            <a title="图片转icon" class="text-white link-a" href="https://icon.openai2025.com" target="_blank">
+                图片转icon
             </a>
         </div>
     </div>
@@ -52,23 +53,23 @@
 
         <div class="frame-div">
             <div class="frame-top">
-                <input type="file" id="fileBtn">    
+                <input type="file" id="fileBtn" accept="image/jpeg,image/gif,image/png,image/bmp,image/webp" />
             </div>
             <div class="frame-center">
-                <img id="img" alt="Please select an image" style="display:none"/>
+                <img id="img" alt="马赛克前图片" style="display:none"/>
             </div>
         </div>
         <div class="frame-div">
             <div class="frame-top">
                 <input type="range" id="rangeInput" min="1" max="10" value="5" />
-                <input type="button" id="downloadBtn" value="download">
+                <input type="button" id="downloadBtn" value="下载">
             </div>
             <div class="frame-center">
-                <img id="convertImg" alt="" style="display:none"/>
+                <img id="convertImg" alt="马赛克处理后的图片" style="display:none"/>
             </div>
         </div>
     </div>
-    <center>(<a href="./index-cn.html">Simplified Chinese</a> | <a href="./index.html">English</a>)</center>
+    <center>(<a href="./index-cn.html">简体中文</a> | <a href="./index.html">English</a>)</center>
     <script type="text/javascript">
 
         var pix = 5;
@@ -86,7 +87,7 @@
                 };
                 reader.readAsDataURL(file);
             } else {
-                alert("Your browser does not support changing features");
+                alert("您的浏览器不支持更改功能");
             }
         });
 
@@ -109,7 +110,7 @@
             if(!!convertImg.src){
                 download(convertImg.src);
             } else {
-                alert("Please upload the image first");
+                alert("请先上传图片");
             }
         });
 
