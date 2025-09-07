@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-100%, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link id="favicon" rel="icon" type="image/png" href="favicon.ico">
     <title>在线免费图片马赛克处理工具</title>
     <meta name="keywords" content="在线免费图片马赛克处理工具,马赛克处理工具,马赛克ai工具,在线免费马赛克处理工具,免费马赛克ai工具,马赛克艺术" />
     <meta name="description" content="在线免费图片马赛克处理工具,马赛克处理工具,马赛克ai工具,在线免费马赛克处理工具,免费马赛克ai工具,马赛克艺术" />
-    <link rel="canonical" href="https://mosaic.openai2025.com/index-cn.html/">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
     <script>
@@ -24,35 +23,38 @@
 
 </head>
 <body>
-    <div class="header-div">
-        <h1 class="header-item">图片马赛克</h1>
-        <div class="header-item item-link">
+    <header class="header-div">
+        <h1 class="header-title">图片马赛克</h1>
+        <div class="header-link">
             <a href="https://www.openai2025.com" class="text-white link-a" target="_blank">传道软件工具箱</a>
-
         </div>
-    </div>
+    </header>
 
-    <div class="main-div">
-
-
-        <div class="frame-div">
+    <main class="main-div">
+        <section class="frame-div upload-section">
             <div class="frame-top">
+                <label for="fileBtn" class="file-label">选择图片</label>
                 <input type="file" id="fileBtn" accept="image/jpeg,image/gif,image/png,image/bmp,image/webp" />
             </div>
             <div class="frame-center">
                 <img id="img" alt="马赛克前图片" style="display:none"/>
+                <div class="placeholder-text">请选择一张图片</div>
             </div>
-        </div>
-        <div class="frame-div">
+        </section>
+        <section class="frame-div result-section">
             <div class="frame-top">
-                <input type="range" id="rangeInput" min="1" max="10" value="5" />
-                <input type="button" id="downloadBtn" value="下载">
+                <div class="controls-group">
+                    <label for="rangeInput" class="range-label">马赛克强度: <span id="rangeValue">5</span></label>
+                    <input type="range" id="rangeInput" min="1" max="10" value="5" />
+                </div>
+                <button type="button" id="downloadBtn" class="download-btn">下载图片</button>
             </div>
             <div class="frame-center">
                 <img id="convertImg" alt="马赛克处理后的图片" style="display:none"/>
+                <div class="placeholder-text">处理后的图片将显示在这里</div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
     <center>(<a href="./index.html">简体中文</a> | <a href="./index-en.html">English</a>)</center>
     <script type="text/javascript">
 
@@ -63,11 +65,23 @@
                 var file = e.target.files[0];
                 let reader = new FileReader();
                 reader.onload = function (event) {
-                    var dataURL = event.target.result;
+                    var dataURL = event.target.result;
                     var img = document.getElementById("img");
-                    img.src = dataURL;
+                    var convertImg = document.getElementById("convertImg");
+                    var uploadPlaceholder = img.parentElement.querySelector('.placeholder-text');
+                    var resultPlaceholder = convertImg.parentElement.querySelector('.placeholder-text');
+                    
+                    img.src = dataURL;
                     img.style.display = "block";
-                    document.getElementById("convertImg").style.display = "block";
+                    convertImg.style.display = "block";
+                    uploadPlaceholder.style.display = "none";
+                    resultPlaceholder.style.display = "none";
+                    
+                    // 确保两个图片的显示尺寸一致
+                    img.onload = function() {
+                        convertImg.style.width = img.offsetWidth + 'px';
+                        convertImg.style.height = img.offsetHeight + 'px';
+                    };
                 };
                 reader.readAsDataURL(file);
             } else {
@@ -85,6 +99,7 @@
         document.getElementById("rangeInput").addEventListener("change", function (e) {
             if (document.getElementById("img").src) {
                 pix = parseInt(e.target.value);
+                document.getElementById("rangeValue").textContent = pix;
                 showConvertPic();
             }
         });
@@ -102,15 +117,20 @@
             var img = document.getElementById("img");
             var convertImg = document.getElementById("convertImg");
             convertImg.src = createRevertPic(img);
+            
+            // 确保右边图片的显示尺寸与左边图片一致
+            convertImg.style.width = img.style.width || img.offsetWidth + 'px';
+            convertImg.style.height = img.style.height || img.offsetHeight + 'px';
         }
 
         function createRevertPic(img){
             var canvas = document.createElement("canvas");
-            canvas.width = img.width;   
-            canvas.height = img.height;
+            // 使用图片的原始尺寸，而不是显示尺寸
+            canvas.width = img.naturalWidth;   
+            canvas.height = img.naturalHeight;
             var ctx = canvas.getContext("2d");
-            ctx.drawImage(img,0,0);  
-            var c = ctx.getImageData(0, 0, img.width, img.height);
+            ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);  
+            var c = ctx.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
             var height = c.height;
             var width = c.width;
             for(var i = 0; i < height; i+=pix){
