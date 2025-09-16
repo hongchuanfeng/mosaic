@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片背景透明化工具 - 智能抠图去背景</title>
+    <meta name="keywords" content="图片去背景,背景透明,抠图工具,图片处理,在线抠图,背景移除" />
+    <meta name="description" content="免费在线图片背景透明化工具，智能识别主体并移除背景，支持多种抠图算法，让图片背景变透明" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-V0YFLKRH7D');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css.css">
+    <link rel="stylesheet" href="removebg.css">
+</head>
+<body>
+    <header class="header-div">
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle" aria-label="切换导航菜单">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="../index.html" class="nav-link">马赛克</a>
+                    <a href="../crop/crop.html" class="nav-link">图片裁剪</a>
+                    <a href="../convert/convert.html" class="nav-link">格式转换</a>
+                    <a href="../icon/icon.html" class="nav-link">icon生成</a>
+                    <a href="../compress/compress.html" class="nav-link">图片压缩</a>
+                    <a href="../blank/blank.html" class="nav-link">彩图转黑白</a>
+                    <a href="../watermark/watermark.html" class="nav-link">图片加水印</a>
+                    <a href="../removewm/removewm.html" class="nav-link">图片去水印</a>
+                    <a href="../nine/nine.html" class="nav-link">九宫格切图</a>
+                    <a href="../text/text.html" class="nav-link">文字转图片</a>
+                    <a href="../join/join.html" class="nav-link">图片拼接</a>
+                    <a href="../textToimage/textToimage.html" class="nav-link">图片加文字</a>
+                    <a href="../corner/corner.html" class="nav-link">圆角处理</a>
+                    <a href="../expand/expand.html" class="nav-link">图片放大</a>
+                    <a href="../old/old.html" class="nav-link">老照片修复</a>
+                    <a href="../bg/bg.html" class="nav-link">黑白上色</a>
+                    <a href="removebg.html" class="nav-link">背景透明</a>
+                    <a href="../changebg/changebg.html" class="nav-link">背景更换</a>
+                </div>
+            </div>
+        </nav>
+        <h1 class="header-title">图片背景透明化工具</h1>
+    </header>
+
+    <!-- 移动端菜单遮罩层 -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <main class="main-container">
+        <!-- 文件上传区域 -->
+        <section class="upload-section">
+            <div class="upload-area">
+                <label for="fileInput" class="file-label">
+                    <div class="upload-icon">🎭</div>
+                    <div class="upload-text">点击选择图片或拖拽到此处</div>
+                    <div class="upload-hint">支持 JPG, PNG, GIF, BMP, WebP 格式</div>
+                    <div class="upload-hint">支持批量处理，最多5张图片</div>
+                </label>
+                <input type="file" id="fileInput" accept="image/*" multiple />
+            </div>
+        </section>
+
+        <!-- 处理设置区域 -->
+        <section class="settings-section" id="settingsSection" style="display: none;">
+            <div class="settings-container">
+                <h3>背景移除设置</h3>
+                
+                <div class="settings-grid">
+                    <!-- 处理模式选择 -->
+                    <div class="setting-group">
+                        <label class="setting-label">处理模式</label>
+                        <div class="processing-modes">
+                            <label class="radio-label">
+                                <input type="radio" name="processingMode" value="auto" checked />
+                                <span class="radio-mark"></span>
+                                智能识别 (推荐)
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="processingMode" value="manual" />
+                                <span class="radio-mark"></span>
+                                手动选择
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="processingMode" value="color" />
+                                <span class="radio-mark"></span>
+                                颜色去除
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 处理精度设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">处理精度</label>
+                        <div class="precision-control">
+                            <input type="range" id="precisionSlider" min="1" max="10" value="7" />
+                            <span id="precisionValue">7</span>
+                        </div>
+                        <div class="precision-presets">
+                            <button type="button" class="precision-preset-btn" data-value="3">快速处理</button>
+                            <button type="button" class="precision-preset-btn" data-value="7">标准处理</button>
+                            <button type="button" class="precision-preset-btn" data-value="10">精细处理</button>
+                        </div>
+                    </div>
+
+                    <!-- 边缘处理设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">边缘处理</label>
+                        <div class="edge-options">
+                            <label class="radio-label">
+                                <input type="radio" name="edgeMode" value="smooth" checked />
+                                <span class="radio-mark"></span>
+                                平滑边缘
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="edgeMode" value="sharp" />
+                                <span class="radio-mark"></span>
+                                锐利边缘
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="edgeMode" value="feather" />
+                                <span class="radio-mark"></span>
+                                羽化边缘
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 手动选择工具 -->
+                    <div class="setting-group" id="manualGroup" style="display: none;">
+                        <label class="setting-label">手动选择</label>
+                        <div class="manual-tools">
+                            <div class="tool-group">
+                                <label>选择模式:</label>
+                                <select id="selectionMode" class="tool-select">
+                                    <option value="rectangle">矩形选择</option>
+                                    <option value="circle">圆形选择</option>
+                                    <option value="polygon">多边形选择</option>
+                                    <option value="brush">画笔选择</option>
+                                </select>
+                            </div>
+                            <div class="tool-group">
+                                <label>画笔大小:</label>
+                                <input type="range" id="brushSize" min="5" max="50" value="20" />
+                                <span id="brushSizeValue">20px</span>
+                            </div>
+                            <div class="tool-group">
+                                <label>容差值:</label>
+                                <input type="range" id="tolerance" min="0" max="100" value="30" />
+                                <span id="toleranceValue">30</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 颜色去除设置 -->
+                    <div class="setting-group" id="colorGroup" style="display: none;">
+                        <label class="setting-label">颜色去除</label>
+                        <div class="color-removal-tools">
+                            <div class="color-picker-group">
+                                <label>背景颜色:</label>
+                                <input type="color" id="backgroundColor" value="#ffffff" />
+                                <button type="button" id="pickColorBtn" class="btn btn-secondary">取色器</button>
+                            </div>
+                            <div class="color-picker-group">
+                                <label>容差范围:</label>
+                                <input type="range" id="colorTolerance" min="0" max="100" value="20" />
+                                <span id="colorToleranceValue">20</span>
+                            </div>
+                            <div class="color-picker-group">
+                                <label>处理范围:</label>
+                                <select id="colorRange" class="tool-select">
+                                    <option value="similar">相似颜色</option>
+                                    <option value="exact">精确颜色</option>
+                                    <option value="range">颜色范围</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 高级设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">高级设置</label>
+                        <div class="advanced-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="preserveShadows" />
+                                <span class="checkmark"></span>
+                                保留阴影
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="enhanceEdges" checked />
+                                <span class="checkmark"></span>
+                                增强边缘
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="smoothTransitions" checked />
+                                <span class="checkmark"></span>
+                                平滑过渡
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="removeNoise" />
+                                <span class="checkmark"></span>
+                                去除噪点
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="autoDetect" checked />
+                                <span class="checkmark"></span>
+                                自动检测
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="previewMode" />
+                                <span class="checkmark"></span>
+                                预览模式
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 输出设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">输出设置</label>
+                        <select id="outputFormat" class="format-select">
+                            <option value="png">PNG (.png) - 支持透明</option>
+                            <option value="webp">WebP (.webp) - 支持透明</option>
+                            <option value="gif">GIF (.gif) - 支持透明</option>
+                        </select>
+                        
+                        <label class="setting-label">输出质量</label>
+                        <div class="quality-control">
+                            <input type="range" id="qualitySlider" min="60" max="100" value="95" />
+                            <span id="qualityValue">95%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="processBtn" class="btn btn-primary">开始处理</button>
+                    <button id="previewBtn" class="btn btn-secondary">预览效果</button>
+                    <button id="clearBtn" class="btn btn-outline">清空列表</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 图片列表区域 -->
+        <section class="images-section" id="imagesSection" style="display: none;">
+            <div class="images-container">
+                <h3>图片列表</h3>
+                <div class="images-grid" id="imagesGrid">
+                    <!-- 图片项将动态添加到这里 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 进度区域 -->
+        <section class="progress-section" id="progressSection" style="display: none;">
+            <div class="progress-container">
+                <h3>处理进度</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">准备中...</div>
+            </div>
+        </section>
+
+        <!-- 结果区域 -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-container">
+                <h3>处理结果</h3>
+                <div class="results-actions">
+                    <button id="downloadAllBtn" class="btn btn-success">下载全部</button>
+                    <button id="downloadZipBtn" class="btn btn-info">打包下载</button>
+                </div>
+                <div class="results-grid" id="resultsGrid">
+                    <!-- 处理结果将显示在这里 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 使用说明 -->
+        <section class="instructions-section">
+            <div class="instructions-container">
+                <h3>使用说明</h3>
+                <div class="instructions-content">
+                    <div class="instruction-item">
+                        <h4>🤖 智能识别</h4>
+                        <p>自动识别图片主体并移除背景，适合大多数图片处理需求</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>✋ 手动选择</h4>
+                        <p>手动选择要保留的区域，精确控制抠图效果</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>🎨 颜色去除</h4>
+                        <p>选择特定颜色进行移除，适合单色背景图片</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>⚙️ 高级功能</h4>
+                        <p>边缘处理、阴影保留、噪点去除等专业功能</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Navigation menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            // Check if mobile device
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                }
+            }
+            
+            // Add event listeners only for mobile
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            
+            // Close mobile menu when clicking menu items
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (isMobile()) {
+                        closeMenu();
+                    }
+                });
+            });
+            
+            // Close menu when window is resized
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                }
+            });
+        });
+    </script>
+    <script src="removebg.js"></script>
+</body>
+</html>

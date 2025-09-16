@@ -23,11 +23,39 @@
 </head>
 <body>
     <header class="header-div">
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="crop/crop.html" class="nav-link">Image Crop Tool</a>
+                    <a href="convert/convert.html" class="nav-link">Format Converter</a>
+                    <a href="icon/icon.html" class="nav-link">Icon Generator</a>
+                    <a href="compress/compress.html" class="nav-link">Image Compressor</a>
+                    <a href="blank/blank.html" class="nav-link">Color to B&W</a>
+                    <a href="watermark/watermark.html" class="nav-link">Add Watermark</a>
+                    <a href="removewm/removewm.html" class="nav-link">Remove Watermark</a>
+                    <a href="nine/nine.html" class="nav-link">Nine Grid Cut</a>
+                    <a href="text/text.html" class="nav-link">Text to Image</a>
+                    <a href="join/join.html" class="nav-link">Image Join</a>
+                    <a href="textToimage/textToimage.html" class="nav-link">Add Text to Image</a>
+                    <a href="corner/corner.html" class="nav-link">Corner Processing</a>
+                    <a href="expand/expand.html" class="nav-link">Image Enlarge</a>
+                    <a href="old/old.html" class="nav-link">Old Photo Repair</a>
+                    <a href="bg/bg.html" class="nav-link">Colorize B&W</a>
+                    <a href="removebg/removebg.html" class="nav-link">Remove Background</a>
+                    <a href="changebg/changebg.html" class="nav-link">Change Background</a>
+                </div>
+            </div>
+        </nav>
         <h1 class="header-title">Image Mosaic</h1>
-        <div class="header-link">
-            <a href="https://www.openai2025.com" class="text-white link-a" target="_blank">Chuandao software toolbox</a>
-        </div>
     </header>
+
+    <!-- Mobile menu overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <main class="main-div">
         <section class="frame-div upload-section">
@@ -58,6 +86,62 @@
     <script type="text/javascript">
 
         var pix = 5;
+
+        // Navigation menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            // Check if mobile device
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    console.log('Toggle menu clicked');
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                    console.log('Menu classes:', navMenu.className);
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                }
+            }
+            
+            // Add event listeners only for mobile
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            
+            // Close mobile menu when clicking menu items
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (isMobile()) {
+                        closeMenu();
+                    }
+                });
+            });
+            
+            // Close menu when window is resized
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                }
+            });
+        });
 
         document.getElementById("fileBtn").addEventListener("change",function (e){
             if (window.FileReader) {

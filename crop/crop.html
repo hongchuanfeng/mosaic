@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线图片裁剪工具</title>
+    <meta name="keywords" content="在线图片裁剪工具,图片裁剪,免费图片编辑,图片处理工具" />
+    <meta name="description" content="免费在线图片裁剪工具，支持拖拽选择裁剪区域，实时预览，一键下载" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-V0YFLKRH7D');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css.css">
+    <link rel="stylesheet" href="crop.css">
+    <style>
+        /* 导航图标与布局 */
+        .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; }
+        .nav-link { padding: 0; display: inline-flex; align-items: center; }
+        .nav-ico { display: inline-block; margin-right: 0; font-size: 16px; line-height: 1; }
+        .nav-toggle { display: none; background: transparent; border: none; padding: 8px; cursor: pointer; }
+        .hamburger { display: block; width: 22px; height: 2px; background: #333; margin: 5px 0; transition: transform .25s ease, opacity .25s ease; }
+        /* PC端 nav-link 间距 */
+        @media (min-width: 769px) { .nav-link { padding: 5px 0; } }
+        /* 移动端抽屉菜单 */
+        @media (max-width: 768px) {
+            .nav-toggle { display: inline-block; }
+            .nav-menu {
+                position: fixed; top:0; bottom:0; left:0; width:78%; max-width:360px;
+                background:#fff; box-shadow:2px 0 10px rgba(0,0,0,.12);
+                display:block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y:auto; -webkit-overflow-scrolling:touch;
+                transform: translateX(-100%); transition: transform .25s ease; z-index:10001; will-change: transform;
+            }
+            .nav-menu.nav-menu-active { transform: translateX(0); }
+            .nav-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:10000; display:block; }
+            .nav-overlay.nav-overlay-active { opacity:1; pointer-events:auto; }
+            .nav-menu .nav-link { margin:10px 0; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(1){transform:translateY(7px) rotate(45deg);} 
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(2){opacity:0;} 
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(3){transform:translateY(-7px) rotate(-45deg);} 
+        }
+    </style>
+</head>
+<body>
+    <header class="header-div">
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle" aria-label="切换导航菜单">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="../index.html" class="nav-link"><span class="nav-ico">🧩</span>马赛克</a>
+                    <a href="crop.html" class="nav-link"><span class="nav-ico">✂️</span>图片裁剪</a>
+                    <a href="../convert/convert.html" class="nav-link"><span class="nav-ico">🗂️</span>格式转换</a>
+                    <a href="../icon/icon.html" class="nav-link"><span class="nav-ico">🧩</span>icon生成</a>
+                    <a href="../compress/compress.html" class="nav-link"><span class="nav-ico">🗜️</span>图片压缩</a>
+                    <a href="../blank/blank.html" class="nav-link"><span class="nav-ico">🌓</span>彩图转黑白</a>
+                    <a href="../watermark/watermark.html" class="nav-link"><span class="nav-ico">💧</span>图片加水印</a>
+                    <a href="../removewm/removewm.html" class="nav-link"><span class="nav-ico">🧼</span>图片去水印</a>
+                    <a href="../nine/nine.html" class="nav-link"><span class="nav-ico">#</span>九宫格切图</a>
+                    <a href="../text/text.html" class="nav-link"><span class="nav-ico">🔤</span>文字转图片</a>
+                    <a href="../join/join.html" class="nav-link"><span class="nav-ico">🧱</span>图片拼接</a>
+                    <a href="../textToimage/textToimage.html" class="nav-link"><span class="nav-ico">🖊️</span>图片加文字</a>
+                    <a href="../corner/corner.html" class="nav-link"><span class="nav-ico">◻️</span>圆角处理</a>
+                    <a href="../expand/expand.html" class="nav-link"><span class="nav-ico">🔍</span>图片放大</a>
+                    <a href="../old/old.html" class="nav-link"><span class="nav-ico">🖼️</span>老照片修复</a>
+                    <a href="../bg/bg.html" class="nav-link"><span class="nav-ico">🎨</span>黑白上色</a>
+                    <a href="../removebg/removebg.html" class="nav-link"><span class="nav-ico">🪄</span>背景透明</a>
+                    <a href="../changebg/changebg.html" class="nav-link"><span class="nav-ico">🌄</span>背景更换</a>
+                </div>
+            </div>
+        </nav>
+        <h1 class="header-title">图片裁剪工具</h1>
+    </header>
+
+    <!-- 移动端菜单遮罩层 -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <main class="main-container">
+        <!-- 文件上传区域 -->
+        <section class="upload-section">
+            <div class="upload-area">
+                <label for="fileInput" class="file-label">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">点击选择图片或拖拽到此处</div>
+                    <div class="upload-hint">支持 JPG, PNG, GIF, BMP, WebP 格式</div>
+                </label>
+                <input type="file" id="fileInput" accept="image/*" />
+            </div>
+        </section>
+
+        <!-- 图片编辑区域 -->
+        <section class="editor-section" id="editorSection" style="display: none;">
+            <div class="editor-container">
+                <!-- 工具栏 -->
+                <div class="toolbar">
+                    <div class="tool-group">
+                        <button id="cropBtn" class="tool-btn active">裁剪</button>
+                        <button id="moveBtn" class="tool-btn">移动</button>
+                        <button id="resetBtn" class="tool-btn">重置</button>
+                    </div>
+                    <div class="tool-group">
+                        <button id="downloadBtn" class="tool-btn download-btn">下载裁剪图片</button>
+                    </div>
+                </div>
+
+                <!-- 图片显示区域 -->
+                <div class="image-container">
+                    <div class="image-wrapper" id="imageWrapper">
+                        <img id="sourceImage" alt="源图片" />
+                        <div class="crop-overlay" id="cropOverlay">
+                            <div class="crop-box" id="cropBox">
+                                <div class="crop-handle nw"></div>
+                                <div class="crop-handle ne"></div>
+                                <div class="crop-handle sw"></div>
+                                <div class="crop-handle se"></div>
+                                <div class="crop-handle n"></div>
+                                <div class="crop-handle s"></div>
+                                <div class="crop-handle w"></div>
+                                <div class="crop-handle e"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 预览区域 -->
+                <div class="preview-section">
+                    <h3>裁剪预览</h3>
+                    <div class="preview-container">
+                        <canvas id="previewCanvas"></canvas>
+                    </div>
+                    <div class="preview-info">
+                        <span id="cropSize">尺寸: 0 x 0</span>
+                        <span id="cropRatio">比例: 1:1</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div style="max-width:1000px;margin:12px auto 0;color:#666;font-size:14px;line-height:1.6;padding:0 12px;">
+        <div style="margin-top:8px;color:#999;">版权：传道AI</div>
+    </div>
+
+    <script>
+        // Navigation menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            const navOriginalContainer = navMenu ? navMenu.parentElement : null;
+            
+            // Check if mobile device
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                }
+            }
+            
+            // Add event listeners only for mobile
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            
+            // 移动端点击跳转与抽屉层级处理
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                let startX = 0, startY = 0, startT = 0;
+                const threshold = 8;
+                function onStart(e){ if(!isMobile()) return; const t=e.touches?e.touches[0]:e; startX=t.clientX; startY=t.clientY; startT=Date.now(); }
+                function onEnd(e){ if(!isMobile()) return; const t=e.changedTouches?e.changedTouches[0]:e; const dx=Math.abs(t.clientX-startX); const dy=Math.abs(t.clientY-startY); const dt=Date.now()-startT; if(dx<threshold&&dy<threshold&&dt<1500){ const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href); } } }
+                link.addEventListener('touchstart', onStart, {passive:true, capture:true});
+                link.addEventListener('touchend', onEnd, {passive:false, capture:true});
+                link.addEventListener('mousedown', onStart, true);
+                link.addEventListener('mouseup', onEnd, true);
+                link.addEventListener('click', function(e){ if(!isMobile()) return; const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href);} }, true);
+            });
+            
+            // Close menu when window is resized
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                }
+                // 提升菜单到 body 直下确保层级
+                if (isMobile()) {
+                    if (navMenu.parentElement !== document.body) document.body.appendChild(navMenu);
+                } else if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
+                    navOriginalContainer.appendChild(navMenu);
+                }
+            });
+        });
+    </script>
+    <script src="crop.js"></script>
+</body>
+</html>

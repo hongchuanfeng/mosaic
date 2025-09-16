@@ -20,15 +20,95 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css.css">
+    <style>
+        /* 页面长度适当加长 */
+        body { min-height: 120vh; }
+        .main-div { padding-bottom: 48px; }
+        /* 基础布局 */
+        .navbar { position: relative; z-index: auto; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; }
+        .nav-link { padding: 0; display: inline-flex; align-items: center; }
+        .nav-ico { display: inline-block; margin-right: 0; font-size: 16px; line-height: 1; }
+        .nav-toggle { display: none; background: transparent; border: none; padding: 8px; cursor: pointer; }
+        .hamburger { display: block; width: 22px; height: 2px; background: #333; margin: 5px 0; transition: transform .25s ease, opacity .25s ease; }
+        .nav-overlay { display: none; }
+
+        /* PC端 nav-link 间距 */
+        @media (min-width: 769px) {
+            .nav-link { padding: 5px 0; }
+        }
+
+        /* 桌面端加宽版面，避免导航拥挤 */
+        @media (min-width: 1025px) {
+            html, body { min-width: 1600px; }
+            .header-div, .main-div, .navbar, .nav-container { max-width: none; }
+        }
+
+        /* 移动端抽屉菜单 */
+        @media (max-width: 768px) {
+            /* 避免父级裁剪或创建新定位上下文导致抽屉被截断 */
+            .header-div, .navbar, .nav-container { overflow: visible !important; }
+            .header-div, .navbar, .nav-container { transform: none !important; -webkit-transform: none !important; }
+            .header-div, .navbar, .nav-container { contain: unset !important; }
+            .nav-toggle { display: inline-block; }
+            .nav-menu {
+                position: fixed; top: 0; bottom: 0; left: 0; width: 78%; max-width: 360px;
+                background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,.12);
+                display: block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+                transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; will-change: transform;
+            }
+            .nav-menu .nav-link { display: flex; align-items: center; padding: 0; border-bottom: 1px solid #f2f2f2; }
+            .nav-menu.nav-menu-active { transform: translateX(0); }
+
+            .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 10000; display: block; }
+            .nav-overlay.nav-overlay-active { opacity: 1; pointer-events: auto; }
+
+            /* 汉堡动画 */
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(2) { opacity: 0; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            /* 移动端上下间隙（PC 端不生效） */
+            .nav-menu .nav-link { margin: 10px 0; }
+        }
+    </style>
 
 </head>
 <body>
     <header class="header-div">
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle" aria-label="切换导航菜单">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="crop/crop.html" class="nav-link">图片裁剪</a>
+                    <a href="convert/convert.html" class="nav-link">格式转换</a>
+                    <a href="icon/icon.html" class="nav-link">icon生成</a>
+                    <a href="compress/compress.html" class="nav-link">图片压缩</a>
+                    <a href="blank/blank.html" class="nav-link">彩图转黑白</a>
+                    <a href="watermark/watermark.html" class="nav-link">图片加水印</a>
+                    <a href="removewm/removewm.html" class="nav-link">图片去水印</a>
+                    <a href="nine/nine.html" class="nav-link">九宫格切图</a>
+                    <a href="text/text.html" class="nav-link">文字转图片</a>
+                    <a href="join/join.html" class="nav-link">图片拼接</a>
+                    <a href="textToimage/textToimage.html" class="nav-link">图片加文字</a>
+                    <a href="corner/corner.html" class="nav-link">圆角处理</a>
+                    <a href="expand/expand.html" class="nav-link">图片放大</a>
+                    <a href="old/old.html" class="nav-link">老照片修复</a>
+                    <a href="bg/bg.html" class="nav-link">黑白上色</a>
+                    <a href="removebg/removebg.html" class="nav-link">背景透明</a>
+                    <a href="changebg/changebg.html" class="nav-link">背景更换</a>
+                </div>
+            </div>
+        </nav>
         <h1 class="header-title">图片马赛克</h1>
-        <div class="header-link">
-            <a href="https://www.openai2025.com" class="text-white link-a" target="_blank">传道软件工具箱</a>
-        </div>
     </header>
+
+    <!-- 移动端菜单遮罩层 -->
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <main class="main-div">
         <section class="frame-div upload-section">
@@ -36,8 +116,9 @@
                 <label for="fileBtn" class="file-label">选择图片</label>
                 <input type="file" id="fileBtn" accept="image/jpeg,image/gif,image/png,image/bmp,image/webp" />
             </div>
-            <div class="frame-center">
+            <div class="frame-center" id="leftFrameCenter" style="position:relative">
                 <img id="img" alt="马赛克前图片" style="display:none"/>
+                <canvas id="overlayCanvas" style="display:none;position:absolute;left:0;top:0;pointer-events:auto"></canvas>
                 <div class="placeholder-text">请选择一张图片</div>
             </div>
         </section>
@@ -47,6 +128,19 @@
                     <label for="rangeInput" class="range-label">马赛克强度: <span id="rangeValue">5</span></label>
                     <input type="range" id="rangeInput" min="1" max="10" value="5" />
                 </div>
+                <div class="controls-group">
+                    <label for="modeSelect" class="range-label">模式:</label>
+                    <select id="modeSelect">
+                        <option value="full">全部马赛克</option>
+                        <option value="rect">矩形区域</option>
+                        <option value="brush">自定义画笔</option>
+                    </select>
+                </div>
+                <div class="controls-group" id="brushGroup" style="display:none">
+                    <label for="brushSize" class="range-label">画笔大小: <span id="brushValue">30</span></label>
+                    <input type="range" id="brushSize" min="5" max="200" value="30" />
+                    <button type="button" id="clearMaskBtn" class="download-btn" style="margin-left:8px">清除选择</button>
+                </div>
                 <button type="button" id="downloadBtn" class="download-btn">下载图片</button>
             </div>
             <div class="frame-center">
@@ -55,10 +149,121 @@
             </div>
         </section>
     </main>
-    <center>(<a href="./index.html">简体中文</a> | <a href="./index-en.html">English</a>)</center>
+    <div style="max-width:1000px;margin:12px auto 0;color:#666;font-size:14px;line-height:1.6;padding:0 12px;">
+        <div><b>矩形区域使用说明：</b></div>
+        <div>1. 右侧“模式”选择“矩形区域”。</div>
+        <div>2. 在左侧图片上按下鼠标左键并拖拽，框选需要打马赛克的区域，松开鼠标即可应用。</div>
+        <div>3. 可重复框选多个区域，效果会叠加；如需清空，请切换到“自定义画笔”模式并点击“清除选择”。</div>
+        <div style="margin-top:8px;color:#999;">版权：传道AI</div>
+    </div>
     <script type="text/javascript">
 
         var pix = 5;
+        // 模式与掩膜状态
+        var mode = 'full'; // full | rect | brush
+        var brushSize = 30;
+        var rectSelecting = false;
+        var rectStart = null;
+        var maskCanvas = null; // 与原图同像素尺寸
+
+        // 导航菜单切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            const navOriginalContainer = navMenu ? navMenu.parentElement : null;
+            
+            // 检查是否为移动端
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    console.log('Toggle menu clicked');
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                    console.log('Menu classes:', navMenu.className);
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                }
+            }
+
+            // 将菜单在移动端提到 body 直下，避免任何父级层叠上下文/裁剪影响层级
+            function promoteMenuForMobile(){
+                if (!navMenu) return;
+                if (isMobile()) {
+                    if (navMenu.parentElement !== document.body) {
+                        document.body.appendChild(navMenu);
+                    }
+                } else {
+                    if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
+                        navOriginalContainer.appendChild(navMenu);
+                    }
+                }
+            }
+            promoteMenuForMobile();
+            
+            // 只在移动端添加事件监听器
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            
+            // 点击菜单项后关闭移动端菜单
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                let startX = 0, startY = 0, startT = 0;
+                const threshold = 8; // 允许的手指抖动
+                function onStart(e){
+                    if (!isMobile()) return;
+                    const t = e.touches ? e.touches[0] : e;
+                    startX = t.clientX; startY = t.clientY; startT = Date.now();
+                }
+                function onEnd(e){
+                    if (!isMobile()) return;
+                    const t = e.changedTouches ? e.changedTouches[0] : e;
+                    const dx = Math.abs(t.clientX - startX);
+                    const dy = Math.abs(t.clientY - startY);
+                    const dt = Date.now() - startT;
+                    if (dx < threshold && dy < threshold && dt < 1500) {
+                        const href = link.getAttribute('href');
+                        if (href) {
+                            e.preventDefault(); e.stopPropagation();
+                            window.location.assign(href);
+                        }
+                    }
+                }
+                link.addEventListener('touchstart', onStart, {passive:true, capture:true});
+                link.addEventListener('touchend', onEnd, {passive:false, capture:true});
+                link.addEventListener('mousedown', onStart, true);
+                link.addEventListener('mouseup', onEnd, true);
+                // 兜底：点击事件（防止某些环境未触发指针序列）
+                link.addEventListener('click', function(e){
+                    if (!isMobile()) return;
+                    const href = link.getAttribute('href');
+                    if (href) { e.preventDefault(); e.stopPropagation(); window.location.assign(href); }
+                }, true);
+            });
+            
+            // 窗口大小改变时重新检查
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                }
+                promoteMenuForMobile();
+            });
+        });
 
         document.getElementById("fileBtn").addEventListener("change",function (e){
             if (window.FileReader) {
@@ -81,6 +286,9 @@
                     img.onload = function() {
                         convertImg.style.width = img.offsetWidth + 'px';
                         convertImg.style.height = img.offsetHeight + 'px';
+                        if (typeof window.__syncOverlaySize === 'function') {
+                            window.__syncOverlaySize();
+                        }
                     };
                 };
                 reader.readAsDataURL(file);
@@ -191,7 +399,299 @@
             evObj.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
             $a.dispatchEvent(evObj);
         };
+
         
+        // ========= 覆盖层尺寸同步 =========
+        (function(){
+            var overlayCanvas = document.getElementById('overlayCanvas');
+            if(!overlayCanvas) return;
+            function syncOverlaySize(){
+                var img = document.getElementById('img');
+                if(!img || img.style.display!=="block") return;
+                // 同步尺寸
+                overlayCanvas.width = img.offsetWidth;
+                overlayCanvas.height = img.offsetHeight;
+                overlayCanvas.style.width = img.offsetWidth + 'px';
+                overlayCanvas.style.height = img.offsetHeight + 'px';
+                // 同步位置（相对其定位父容器）
+                overlayCanvas.style.left = img.offsetLeft + 'px';
+                overlayCanvas.style.top = img.offsetTop + 'px';
+            }
+            document.getElementById('img').addEventListener('load', function(){
+                syncOverlaySize();
+            });
+            window.addEventListener('resize', function(){
+                syncOverlaySize();
+            });
+            // 暴露到全局以便文件载入回调也可调用
+            window.__syncOverlaySize = syncOverlaySize;
+        })();
+
+        // ========= 掩膜与缩放 =========
+        function ensureMaskCanvas(){
+            var img = document.getElementById('img');
+            if(!img || !img.naturalWidth) return;
+            if(!maskCanvas || maskCanvas.width!==img.naturalWidth || maskCanvas.height!==img.naturalHeight){
+                maskCanvas = document.createElement('canvas');
+                maskCanvas.width = img.naturalWidth;
+                maskCanvas.height = img.naturalHeight;
+                var mctx = maskCanvas.getContext('2d');
+                mctx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
+            }
+        }
+
+        function getScale(){
+            var img = document.getElementById('img');
+            var sx = img.naturalWidth / img.offsetWidth;
+            var sy = img.naturalHeight / img.offsetHeight;
+            return {sx, sy};
+        }
+
+        // ========= 覆盖层交互（矩形与画笔） =========
+        (function(){
+            var overlayCanvas = document.getElementById('overlayCanvas');
+            if(!overlayCanvas) return;
+            var octx = overlayCanvas.getContext('2d');
+            var isDrawing = false;
+            var startPoint = null;
+
+            function drawBrush(x,y){
+                // 预览
+                octx.fillStyle = 'rgba(255,0,0,0.25)';
+                octx.beginPath();
+                octx.arc(x,y, brushSize/2, 0, Math.PI*2);
+                octx.fill();
+                // 掩膜
+                ensureMaskCanvas();
+                if(!maskCanvas) return;
+                var {sx, sy} = getScale();
+                var mctx = maskCanvas.getContext('2d');
+                mctx.fillStyle = 'rgba(255,255,255,1)';
+                mctx.beginPath();
+                mctx.arc(x*sx, y*sy, (brushSize/2)*sx, 0, Math.PI*2);
+                mctx.fill();
+            }
+
+            function drawRectPreview(p1, p2){
+                octx.clearRect(0,0,overlayCanvas.width,overlayCanvas.height);
+                octx.fillStyle = 'rgba(255,0,0,0.25)';
+                var x = Math.min(p1.x, p2.x);
+                var y = Math.min(p1.y, p2.y);
+                var w = Math.abs(p1.x - p2.x);
+                var h = Math.abs(p1.y - p2.y);
+                octx.fillRect(x,y,w,h);
+            }
+
+            function commitRect(p1, p2){
+                ensureMaskCanvas();
+                if(!maskCanvas) return;
+                var {sx, sy} = getScale();
+                var mx = Math.min(p1.x, p2.x) * sx;
+                var my = Math.min(p1.y, p2.y) * sy;
+                var mw = Math.abs(p1.x - p2.x) * sx;
+                var mh = Math.abs(p1.y - p2.y) * sy;
+                var mctx = maskCanvas.getContext('2d');
+                mctx.fillStyle = 'rgba(255,255,255,1)';
+                mctx.fillRect(mx,my,mw,mh);
+            }
+
+            function getPos(e){
+                var rect = overlayCanvas.getBoundingClientRect();
+                return {x: e.clientX - rect.left, y: e.clientY - rect.top};
+            }
+
+            // 鼠标事件
+            overlayCanvas.addEventListener('mousedown', function(e){
+                if(mode==='full') return;
+                isDrawing = true;
+                var p = getPos(e);
+                if(mode==='brush'){
+                    drawBrush(p.x, p.y);
+                }else if(mode==='rect'){
+                    rectSelecting = true;
+                    startPoint = p;
+                    drawRectPreview(startPoint, startPoint);
+                }
+            });
+            overlayCanvas.addEventListener('mousemove', function(e){
+                if(!isDrawing) return;
+                var p = getPos(e);
+                if(mode==='brush'){
+                    drawBrush(p.x, p.y);
+                }else if(mode==='rect' && rectSelecting){
+                    drawRectPreview(startPoint, p);
+                }
+            });
+            window.addEventListener('mouseup', function(e){
+                if(!isDrawing) return;
+                isDrawing = false;
+                if(mode==='rect' && rectSelecting){
+                    var p = getPos(e);
+                    // 不清空掩膜，新的矩形与已有选择叠加
+                    commitRect(startPoint, p);
+                    rectSelecting = false;
+                    // 清理预览
+                    octx.clearRect(0,0,overlayCanvas.width,overlayCanvas.height);
+                }
+                showConvertPic();
+            });
+
+            // 触摸事件
+            overlayCanvas.addEventListener('touchstart', function(e){
+                if(mode==='full') return;
+                var t = e.touches[0];
+                var evt = {clientX:t.clientX, clientY:t.clientY};
+                isDrawing = true;
+                var p = getPos(evt);
+                if(mode==='brush'){
+                    drawBrush(p.x, p.y);
+                }else if(mode==='rect'){
+                    rectSelecting = true;
+                    startPoint = p;
+                    drawRectPreview(startPoint, startPoint);
+                }
+                e.preventDefault();
+            }, {passive:false});
+            overlayCanvas.addEventListener('touchmove', function(e){
+                if(!isDrawing) return;
+                var t = e.touches[0];
+                var evt = {clientX:t.clientX, clientY:t.clientY};
+                var p = getPos(evt);
+                if(mode==='brush'){
+                    drawBrush(p.x, p.y);
+                }else if(mode==='rect' && rectSelecting){
+                    drawRectPreview(startPoint, p);
+                }
+                e.preventDefault();
+            }, {passive:false});
+            overlayCanvas.addEventListener('touchend', function(e){
+                if(!isDrawing) return;
+                isDrawing = false;
+                if(mode==='rect' && rectSelecting){
+                    rectSelecting = false;
+                }
+                showConvertPic();
+                e.preventDefault();
+            }, {passive:false});
+        })();
+
+        // ========= 模式与画笔控件 =========
+        (function(){
+            var modeSelect = document.getElementById('modeSelect');
+            var brushInput = document.getElementById('brushSize');
+            var brushGroup = document.getElementById('brushGroup');
+            var overlayCanvas = document.getElementById('overlayCanvas');
+            var clearBtn = document.getElementById('clearMaskBtn');
+
+            if(modeSelect){
+                modeSelect.addEventListener('change', function(e){
+                    mode = e.target.value;
+                    if(mode==='brush'){
+                        brushGroup.style.display = 'inline-flex';
+                        if(document.getElementById('img').style.display==='block') overlayCanvas.style.display = 'block';
+                    }else if(mode==='rect'){
+                        brushGroup.style.display = 'none';
+                        if(document.getElementById('img').style.display==='block') overlayCanvas.style.display = 'block';
+                    }else{
+                        brushGroup.style.display = 'none';
+                        overlayCanvas.style.display = 'none';
+                    }
+                    showConvertPic();
+                });
+            }
+            if(brushInput){
+                brushInput.addEventListener('input', function(e){
+                    brushSize = parseInt(e.target.value,10);
+                    document.getElementById('brushValue').textContent = brushSize;
+                });
+            }
+            if(clearBtn){
+                clearBtn.addEventListener('click', function(){
+                    var octx = overlayCanvas.getContext('2d');
+                    octx.clearRect(0,0,overlayCanvas.width,overlayCanvas.height);
+                    if(maskCanvas){
+                        var mctx = maskCanvas.getContext('2d');
+                        mctx.clearRect(0,0,maskCanvas.width,maskCanvas.height);
+                    }
+                    showConvertPic();
+                });
+            }
+        })();
+
+        // ========= 覆盖 createRevertPic 以支持掩膜 =========
+        (function(){
+            var originalCreate = createRevertPic;
+            createRevertPic = function(img){
+                var canvas = document.createElement("canvas");
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+                var c = ctx.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
+                var height = c.height;
+                var width = c.width;
+
+                var useMask = (mode !== 'full');
+                var maskData = null;
+                if(useMask){
+                    ensureMaskCanvas();
+                    if(maskCanvas){
+                        var mctx = maskCanvas.getContext('2d');
+                        maskData = mctx.getImageData(0,0,maskCanvas.width,maskCanvas.height).data;
+                    }
+                }
+
+                for(var i = 0; i < height; i+=pix){
+                    for(var j = 0; j < width; j+=pix){
+                        if(useMask){
+                            // 以块中心像素判断是否在掩膜中，命中更稳定
+                            var ci = Math.min(i + Math.floor(pix/2), height - 1);
+                            var cj = Math.min(j + Math.floor(pix/2), width - 1);
+                            var mIndex = (ci*width + cj) * 4;
+                            var marked = maskData && maskData[mIndex+3] > 0;
+                            if(!marked){
+                                continue;
+                            }
+                        }
+                        var rAvg = 0, gAvg = 0, bAvg = 0, aAvg = 0, count = 0;
+                        outerFor: for (var iPix = i; iPix < i+pix; iPix++) {
+                            for (var jPix = j; jPix < j+pix; jPix++) {
+                                if (iPix > height) {
+                                    break;
+                                } else if(jPix>width){
+                                    break outerFor;
+                                }
+                                var x = iPix*4*width + 4*jPix;
+                                count++;
+                                rAvg += c.data[x];
+                                gAvg += c.data[x+1];
+                                bAvg += c.data[x+2];
+                                aAvg += c.data[x+3];
+                            }
+                        }
+                        rAvg /= count; gAvg /= count; bAvg /= count; aAvg /= count;
+                        outerFor: for (var iPix2 = i; iPix2 < i+pix; iPix2++) {
+                            for (var jPix2 = j; jPix2 < j+pix; jPix2++) {
+                                if (iPix2 > height) {
+                                    break;
+                                } else if(jPix2>width){
+                                    break outerFor;
+                                }
+                                var x2 = iPix2*4*width + 4*jPix2;
+                                c.data[x2] = rAvg;
+                                c.data[x2+1] = gAvg;
+                                c.data[x2+2] = bAvg;
+                                c.data[x2+3] = aAvg;
+                            }
+                        }
+                    }
+                }
+                ctx.putImageData(c,0,0);
+                return canvas.toDataURL();
+            }
+        })();
+
+         
     </script>  
 
 </body>

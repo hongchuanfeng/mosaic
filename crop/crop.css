@@ -1,0 +1,450 @@
+/* 基础样式重置 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 头部样式 */
+.header-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto 20px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+}
+
+.header-title {
+    margin: 0 0 10px 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.header-link {
+    margin-top: 10px;
+}
+
+.link-a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.link-a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 主容器 */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* 上传区域 */
+.upload-section {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.upload-area {
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.file-label {
+    display: block;
+    cursor: pointer;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    padding: 40px 20px;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.file-label:hover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.upload-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.upload-hint {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+#fileInput {
+    display: none;
+}
+
+/* 编辑器区域 */
+.editor-section {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* 工具栏 */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tool-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.tool-btn {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.tool-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #007bff;
+}
+
+.tool-btn.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.download-btn {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.download-btn:hover {
+    background-color: #218838;
+}
+
+/* 图片容器 */
+.image-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    position: relative;
+}
+
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#sourceImage {
+    max-width: 100%;
+    max-height: 500px;
+    display: block;
+    user-select: none;
+}
+
+/* 裁剪遮罩 */
+.crop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: crosshair;
+    display: none;
+}
+
+.crop-overlay.active {
+    display: block;
+}
+
+/* 裁剪框 */
+.crop-box {
+    position: absolute;
+    border: 2px solid #007bff;
+    background-color: transparent;
+    cursor: move;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.crop-box::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border: 1px solid white;
+    pointer-events: none;
+}
+
+/* 裁剪手柄 */
+.crop-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #007bff;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.crop-handle.nw {
+    top: -5px;
+    left: -5px;
+    cursor: nw-resize;
+}
+
+.crop-handle.ne {
+    top: -5px;
+    right: -5px;
+    cursor: ne-resize;
+}
+
+.crop-handle.sw {
+    bottom: -5px;
+    left: -5px;
+    cursor: sw-resize;
+}
+
+.crop-handle.se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}
+
+.crop-handle.n {
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: n-resize;
+}
+
+.crop-handle.s {
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: s-resize;
+}
+
+.crop-handle.w {
+    top: 50%;
+    left: -5px;
+    transform: translateY(-50%);
+    cursor: w-resize;
+}
+
+.crop-handle.e {
+    top: 50%;
+    right: -5px;
+    transform: translateY(-50%);
+    cursor: e-resize;
+}
+
+/* 预览区域 */
+.preview-section {
+    padding: 20px;
+    border-top: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+.preview-section h3 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.preview-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+#previewCanvas {
+    max-width: 200px;
+    max-height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.preview-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+    .main-container {
+        padding: 0 5px;
+    }
+    
+    .header-title {
+        font-size: 1.5rem;
+    }
+    
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .tool-group {
+        justify-content: center;
+    }
+    
+    .image-container {
+        min-height: 300px;
+        padding: 10px;
+    }
+    
+    .image-wrapper {
+        max-height: 400px;
+    }
+    
+    #sourceImage {
+        max-height: 400px;
+    }
+    
+    .preview-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header-div {
+        padding: 15px;
+    }
+    
+    .header-title {
+        font-size: 1.3rem;
+    }
+    
+    .upload-area {
+        padding: 20px 15px;
+    }
+    
+    .upload-text {
+        font-size: 1rem;
+    }
+    
+    .tool-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .image-container {
+        min-height: 250px;
+        padding: 5px;
+    }
+    
+    .image-wrapper {
+        max-height: 300px;
+    }
+    
+    #sourceImage {
+        max-height: 300px;
+    }
+    
+    #previewCanvas {
+        max-width: 150px;
+        max-height: 150px;
+    }
+}
+
+/* 拖拽状态 */
+.upload-area.dragover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+}
+
+.upload-area.dragover .file-label {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+}
+
+/* 加载状态 */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -19,35 +19,136 @@ body {
     align-items: center;
     text-align: center;
     margin: 0 auto 20px auto;
-    padding: 20px;
+    padding: 0;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
+    overflow: hidden;
 }
 
-.header-title {
-    margin: 0 0 10px 0;
-    font-size: 2rem;
-    font-weight: 700;
+/* 导航栏样式 */
+.navbar {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.header-link {
-    margin-top: 10px;
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    position: relative;
 }
 
-.link-a {
+.nav-menu {
+    display: flex;
+    gap: 4px;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+.nav-link {
     color: white;
     text-decoration: none;
-    padding: 8px 16px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    transition: background-color 0.3s ease;
+    padding: 4px 6px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+    display: block;
 }
 
-.link-a:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+/* 汉堡菜单按钮样式 */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+/* PC端隐藏关闭按钮和菜单头部 */
+.nav-close-btn {
+    display: none;
+}
+
+.nav-menu-header {
+    display: none;
+}
+
+.hamburger {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.nav-toggle-active .hamburger:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle-active .hamburger:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle-active .hamburger:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* 移动端菜单遮罩层 */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.nav-overlay-active {
+    opacity: 1;
+    visibility: visible;
+    display: block;
+}
+
+
+.header-title {
+    margin: 20px 0;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 0 20px;
 }
 
 /* 主内容区域 */
@@ -201,6 +302,106 @@ center a:hover {
 }
 
 /* 响应式设计 */
+@media screen and (max-width: 1024px) {
+    .nav-menu {
+        gap: 3px;
+    }
+    
+    .nav-link {
+        padding: 3px 5px;
+        font-size: 0.7rem;
+    }
+}
+
+/* PC端导航菜单样式重置 */
+@media screen and (min-width: 769px) {
+    .nav-menu {
+        position: static;
+        left: auto;
+        width: 100%;
+        height: auto;
+        background: transparent;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        gap: 4px;
+        box-shadow: none;
+        overflow: visible;
+    }
+    
+    .nav-link {
+        padding: 4px 6px;
+        font-size: 0.75rem;
+        border-radius: 12px;
+        text-align: center;
+        flex: 1;
+        min-width: 0;
+        background-color: rgba(255, 255, 255, 0.15);
+        color: white;
+        border: none;
+        margin-bottom: 0;
+        transition: all 0.3s ease;
+        box-shadow: none;
+        font-weight: normal;
+        display: block;
+        text-decoration: none;
+    }
+    
+    .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-1px);
+        color: white;
+        box-shadow: none;
+    }
+    
+    .nav-close-btn {
+        display: none !important;
+    }
+    
+    .nav-menu-header {
+        display: none !important;
+    }
+}
+
+/* 统一为所有页面的导航项添加图标（无需改各页面HTML） */
+.nav-link::before {
+    display: inline-block;
+    margin-right: 0; /* 与文字紧贴 */
+    font-size: 16px;
+    line-height: 1;
+}
+.nav-link[href$="index.html"]::before { content: "🧩"; }
+.nav-link[href$="crop.html"]::before { content: "✂️"; }
+.nav-link[href$="convert.html"]::before { content: "🗂️"; }
+.nav-link[href$="icon.html"]::before { content: "🧩"; }
+.nav-link[href$="compress.html"]::before { content: "🗜️"; }
+.nav-link[href$="blank.html"]::before { content: "🌓"; }
+.nav-link[href$="watermark.html"]::before { content: "💧"; }
+.nav-link[href$="removewm.html"]::before { content: "🧼"; }
+.nav-link[href$="nine.html"]::before { content: "#"; }
+.nav-link[href$="text.html"]::before { content: "🔤"; }
+.nav-link[href$="join.html"]::before { content: "🧱"; }
+.nav-link[href$="textToimage.html"]::before { content: "🖊️"; }
+.nav-link[href$="corner.html"]::before { content: "◻️"; }
+.nav-link[href$="expand.html"]::before { content: "🔍"; }
+.nav-link[href$="old.html"]::before { content: "🖼️"; }
+.nav-link[href$="bg.html"]::before { content: "🎨"; }
+.nav-link[href$="removebg.html"]::before { content: "🪄"; }
+.nav-link[href$="changebg.html"]::before { content: "🌄"; }
+
+/* 底部统一版权（所有页面生效） */
+body { padding-bottom: 42px; }
+body::after {
+    content: "版权：传道AI";
+    position: fixed;
+    left: 0; right: 0; bottom: 8px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    pointer-events: none;
+}
+
 @media screen and (max-width: 768px) {
     body {
         padding: 5px;
@@ -210,8 +411,29 @@ center a:hover {
         margin: 0 auto 15px auto;
     }
     
+    .nav-container {
+        padding: 0 15px;
+        height: 50px;
+        justify-content: space-between;
+    }
+    
+    /* 显示汉堡菜单按钮 */
+    .nav-toggle {
+        display: flex;
+    }
+    
+    /* 隐藏PC端菜单 */
+    .nav-menu {
+        display: none;
+    }
+    /* 防止父级裁剪/新层叠上下文导致抽屉被遮挡 */
+    .header-div, .navbar, .nav-container { overflow: visible !important; }
+    .header-div, .navbar, .nav-container { transform: none !important; -webkit-transform: none !important; }
+    .header-div, .navbar, .nav-container { contain: unset !important; }
+    
     .header-title {
         font-size: 1.5rem;
+        margin: 15px 0;
     }
     
     .main-div {
@@ -241,11 +463,33 @@ center a:hover {
 
 @media screen and (max-width: 480px) {
     .header-div {
-        padding: 15px;
+        padding: 0;
+    }
+    
+    .nav-container {
+        padding: 0 10px;
+        height: 45px;
+    }
+    
+    .nav-menu {
+        width: 85%;
+        max-width: 280px;
+    }
+    
+    .nav-menu-title {
+        padding: 16px;
+        font-size: 1rem;
+    }
+    
+    .nav-link {
+        padding: 16px 18px;
+        font-size: 0.95rem;
     }
     
     .header-title {
         font-size: 1.3rem;
+        margin: 12px 0;
+        padding: 0 15px;
     }
     
     .frame-top {
@@ -272,6 +516,87 @@ center a:hover {
     }
 }
 
+
+/* 移动端菜单样式 - 当菜单激活时显示 */
+@media screen and (max-width: 768px) {
+    .nav-menu-active {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        background: #ffffff;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        padding: 0;
+        gap: 0;
+        z-index: 10001;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+    }
+    
+    .nav-menu-active .nav-menu-title {
+        padding: 20px;
+        background: #f8f9fa;
+        color: #333;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-align: center;
+        margin: 0;
+        border-bottom: 2px solid #e9ecef;
+    }
+    
+    .nav-menu-active .nav-link {
+        padding: 18px 20px;
+        font-size: 1rem;
+        border-radius: 0;
+        text-align: left;
+        flex: none;
+        min-width: auto;
+        background-color: white;
+        color: #333;
+        border-bottom: 1px solid #f0f0f0;
+        margin: 0;
+        transition: background-color 0.2s ease;
+        box-shadow: none;
+        font-weight: 500;
+        display: block;
+        text-decoration: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    /* 确保移动端菜单显示图标，并与文字保持间距 */
+    .nav-menu-active .nav-link::before {
+        display: inline-block;
+        font-size: 18px;
+        margin-right: 6px;
+    }
+    
+    .nav-menu-active .nav-link:hover {
+        background-color: #f8f9fa;
+        color: #007bff;
+    }
+    
+    .nav-menu-active .nav-link:active {
+        background-color: #e9ecef;
+        color: #0056b3;
+    }
+    
+    /* 确保遮罩层在移动端正确显示 */
+    .nav-overlay-active {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+    }
+}
+
 /* 大屏幕优化 */
 @media screen and (min-width: 1200px) {
     .main-div {
@@ -281,4 +606,10 @@ center a:hover {
     .frame-center {
         min-height: 400px;
     }
+}
+
+/* 与 index.html 保持一致的桌面端宽度策略 */
+@media screen and (min-width: 1025px) {
+    html, body { min-width: 1600px; }
+    .header-div, .nav-container, .main-div, .main-container { max-width: none !important; }
 }

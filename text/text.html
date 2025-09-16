@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文字生成图片工具</title>
+    <meta name="keywords" content="文字转图片,文字生成图片,图片制作,文字设计,图片生成器" />
+    <meta name="description" content="免费在线文字生成图片工具，支持自定义文字颜色、背景颜色、字体大小，快速生成精美图片" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-V0YFLKRH7D');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css.css">
+    <link rel="stylesheet" href="text.css">
+</head>
+<body>
+    <header class="header-div">
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle" aria-label="切换导航菜单">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="../index.html" class="nav-link">马赛克</a>
+                    <a href="../crop/crop.html" class="nav-link">图片裁剪</a>
+                    <a href="../convert/convert.html" class="nav-link">格式转换</a>
+                    <a href="../icon/icon.html" class="nav-link">icon生成</a>
+                    <a href="../compress/compress.html" class="nav-link">图片压缩</a>
+                    <a href="../blank/blank.html" class="nav-link">彩图转黑白</a>
+                    <a href="../watermark/watermark.html" class="nav-link">图片加水印</a>
+                    <a href="../removewm/removewm.html" class="nav-link">图片去水印</a>
+                    <a href="../nine/nine.html" class="nav-link">九宫格切图</a>
+                    <a href="text.html" class="nav-link">文字转图片</a>
+                    <a href="../join/join.html" class="nav-link">图片拼接</a>
+                    <a href="../textToimage/textToimage.html" class="nav-link">图片加文字</a>
+                    <a href="../corner/corner.html" class="nav-link">圆角处理</a>
+                    <a href="../expand/expand.html" class="nav-link">图片放大</a>
+                    <a href="../old/old.html" class="nav-link">老照片修复</a>
+                    <a href="../bg/bg.html" class="nav-link">黑白上色</a>
+                    <a href="../removebg/removebg.html" class="nav-link">背景透明</a>
+                    <a href="../changebg/changebg.html" class="nav-link">背景更换</a>
+                </div>
+            </div>
+        </nav>
+        <h1 class="header-title">文字生成图片</h1>
+    </header>
+
+    <!-- 移动端菜单遮罩层 -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <main class="main-container">
+        <!-- 文字输入区域 -->
+        <section class="input-section">
+            <div class="input-container">
+                <h3>文字设置</h3>
+                <div class="input-group">
+                    <label for="textInput" class="input-label">输入文字</label>
+                    <textarea id="textInput" class="text-input" placeholder="请输入要生成图片的文字内容..." rows="4"></textarea>
+                </div>
+                
+                <div class="settings-grid">
+                    <!-- 字体设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">字体设置</label>
+                        <div class="font-controls">
+                            <div class="font-family-group">
+                                <label>字体</label>
+                                <select id="fontFamily" class="font-select">
+                                    <option value="Arial, sans-serif">Arial</option>
+                                    <option value="'Microsoft YaHei', sans-serif">微软雅黑</option>
+                                    <option value="'SimSun', serif">宋体</option>
+                                    <option value="'SimHei', sans-serif">黑体</option>
+                                    <option value="'KaiTi', serif">楷体</option>
+                                    <option value="'FangSong', serif">仿宋</option>
+                                    <option value="'Times New Roman', serif">Times New Roman</option>
+                                    <option value="'Courier New', monospace">Courier New</option>
+                                    <option value="'Georgia', serif">Georgia</option>
+                                    <option value="'Verdana', sans-serif">Verdana</option>
+                                </select>
+                            </div>
+                            <div class="font-size-group">
+                                <label>字体大小</label>
+                                <input type="range" id="fontSize" min="12" max="200" value="48" />
+                                <span id="fontSizeValue">48px</span>
+                            </div>
+                            <div class="font-weight-group">
+                                <label>字体粗细</label>
+                                <select id="fontWeight" class="font-select">
+                                    <option value="normal">正常</option>
+                                    <option value="bold">粗体</option>
+                                    <option value="lighter">细体</option>
+                                    <option value="bolder">特粗</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 颜色设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">颜色设置</label>
+                        <div class="color-controls">
+                            <div class="color-group">
+                                <label>文字颜色</label>
+                                <div class="color-input-group">
+                                    <input type="color" id="textColor" value="#000000" />
+                                    <input type="text" id="textColorHex" value="#000000" class="color-hex" />
+                                </div>
+                            </div>
+                            <div class="color-group">
+                                <label>背景颜色</label>
+                                <div class="color-input-group">
+                                    <input type="color" id="backgroundColor" value="#ffffff" />
+                                    <input type="text" id="backgroundColorHex" value="#ffffff" class="color-hex" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 布局设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">布局设置</label>
+                        <div class="layout-controls">
+                            <div class="canvas-size-group">
+                                <label>画布尺寸</label>
+                                <div class="size-inputs">
+                                    <input type="number" id="canvasWidth" min="100" max="2000" value="800" placeholder="宽度" />
+                                    <span>×</span>
+                                    <input type="number" id="canvasHeight" min="100" max="2000" value="400" placeholder="高度" />
+                                </div>
+                            </div>
+                            <div class="text-align-group">
+                                <label>文字对齐</label>
+                                <div class="align-buttons">
+                                    <button class="align-btn" data-align="left">左对齐</button>
+                                    <button class="align-btn active" data-align="center">居中</button>
+                                    <button class="align-btn" data-align="right">右对齐</button>
+                                </div>
+                            </div>
+                            <div class="padding-group">
+                                <label>内边距</label>
+                                <input type="range" id="padding" min="0" max="100" value="20" />
+                                <span id="paddingValue">20px</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 效果设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">效果设置</label>
+                        <div class="effect-controls">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="addShadow" />
+                                <span class="checkmark"></span>
+                                添加阴影
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="addBorder" />
+                                <span class="checkmark"></span>
+                                添加边框
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="addGradient" />
+                                <span class="checkmark"></span>
+                                渐变背景
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="generateBtn" class="btn btn-primary">生成图片</button>
+                    <button id="previewBtn" class="btn btn-secondary">预览效果</button>
+                    <button id="clearBtn" class="btn btn-outline">清空内容</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 预览区域 -->
+        <section class="preview-section" id="previewSection" style="display: none;">
+            <div class="preview-container">
+                <h3>预览效果</h3>
+                <div class="preview-canvas-container">
+                    <canvas id="previewCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="preview-actions">
+                    <button id="downloadBtn" class="btn btn-success">下载图片</button>
+                    <button id="downloadPngBtn" class="btn btn-info">下载PNG</button>
+                    <button id="downloadJpgBtn" class="btn btn-warning">下载JPG</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 使用说明 -->
+        <section class="instructions-section">
+            <div class="instructions-container">
+                <h3>使用说明</h3>
+                <div class="instructions-content">
+                    <div class="instruction-item">
+                        <h4>✏️ 文字输入</h4>
+                        <p>在文字输入框中输入要生成图片的文字内容，支持多行文字</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>🎨 样式设置</h4>
+                        <p>自定义字体、大小、颜色、背景色等样式，打造个性化图片</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>📐 布局调整</h4>
+                        <p>调整画布尺寸、文字对齐方式、内边距等布局参数</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>✨ 特效添加</h4>
+                        <p>添加阴影、边框、渐变背景等特效，让图片更加精美</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Navigation menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            // Check if mobile device
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                }
+            }
+            
+            // Add event listeners only for mobile
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            
+            // Close mobile menu when clicking menu items
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (isMobile()) {
+                        closeMenu();
+                    }
+                });
+            });
+            
+            // Close menu when window is resized
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                }
+            });
+        });
+    </script>
+    <script src="text.js"></script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>高级图片去水印工具 - 无干扰智能处理</title>
+    <meta name="keywords" content="图片去水印,在线去水印工具,水印移除,图片修复,AI去水印,智能去水印,边缘检测,纹理分析" />
+    <meta name="description" content="免费在线高级图片去水印工具，采用边缘检测和纹理分析技术，多遍处理确保水印完全移除，无任何干扰，支持批量处理" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-V0YFLKRH7D');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css.css">
+    <link rel="stylesheet" href="removewm.css">
+</head>
+<body>
+    <header class="header-div">
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle" aria-label="切换导航菜单">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="../index.html" class="nav-link">马赛克</a>
+                    <a href="../crop/crop.html" class="nav-link">图片裁剪</a>
+                    <a href="../convert/convert.html" class="nav-link">格式转换</a>
+                    <a href="../icon/icon.html" class="nav-link">icon生成</a>
+                    <a href="../compress/compress.html" class="nav-link">图片压缩</a>
+                    <a href="../blank/blank.html" class="nav-link">彩图转黑白</a>
+                    <a href="../watermark/watermark.html" class="nav-link">图片加水印</a>
+                    <a href="removewm.html" class="nav-link">图片去水印</a>
+                    <a href="../nine/nine.html" class="nav-link">九宫格切图</a>
+                    <a href="../text/text.html" class="nav-link">文字转图片</a>
+                    <a href="../join/join.html" class="nav-link">图片拼接</a>
+                    <a href="../textToimage/textToimage.html" class="nav-link">图片加文字</a>
+                    <a href="../corner/corner.html" class="nav-link">圆角处理</a>
+                    <a href="../expand/expand.html" class="nav-link">图片放大</a>
+                    <a href="../old/old.html" class="nav-link">老照片修复</a>
+                    <a href="../bg/bg.html" class="nav-link">黑白上色</a>
+                    <a href="../removebg/removebg.html" class="nav-link">背景透明</a>
+                    <a href="../changebg/changebg.html" class="nav-link">背景更换</a>
+                </div>
+            </div>
+        </nav>
+        <h1 class="header-title">图片去水印</h1>
+    </header>
+
+    <!-- 移动端菜单遮罩层 -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <main class="main-container">
+        <!-- 文件上传区域 -->
+        <section class="upload-section">
+            <div class="upload-area">
+                <label for="fileInput" class="file-label">
+                    <div class="upload-icon">🔧</div>
+                    <div class="upload-text">点击选择图片或拖拽到此处</div>
+                    <div class="upload-hint">支持 JPG, PNG, GIF, BMP, WebP 格式</div>
+                    <div class="upload-hint">支持批量上传，最多5张图片</div>
+                </label>
+                <input type="file" id="fileInput" accept="image/*" multiple />
+            </div>
+        </section>
+
+        <!-- 去水印设置区域 -->
+        <section class="settings-section" id="settingsSection" style="display: none;">
+            <div class="settings-container">
+                <h3>去水印设置</h3>
+                
+                <div class="settings-grid">
+                    <!-- 去水印方法选择 -->
+                    <div class="setting-group">
+                        <label class="setting-label">去水印方法</label>
+                        <div class="removal-methods">
+                            <label class="radio-label">
+                                <input type="radio" name="removalMethod" value="ai" checked />
+                                <span class="radio-mark"></span>
+                                AI智能去水印 (推荐)
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="removalMethod" value="manual" />
+                                <span class="radio-mark"></span>
+                                手动选择区域
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="removalMethod" value="auto" />
+                                <span class="radio-mark"></span>
+                                自动检测水印
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- AI去水印设置 -->
+                    <div class="setting-group" id="aiSettingsGroup">
+                        <label class="setting-label">AI处理强度</label>
+                        <div class="ai-intensity-control">
+                            <input type="range" id="aiIntensitySlider" min="1" max="10" value="5" />
+                            <span id="aiIntensityValue">5</span>
+                        </div>
+                        <div class="ai-presets">
+                            <button type="button" class="ai-preset-btn" data-value="3">轻度处理</button>
+                            <button type="button" class="ai-preset-btn" data-value="5">标准处理</button>
+                            <button type="button" class="ai-preset-btn" data-value="8">强力处理</button>
+                        </div>
+                        
+                        <label class="setting-label">水印类型</label>
+                        <select id="watermarkType" class="watermark-type-select">
+                            <option value="text">文字水印</option>
+                            <option value="logo">Logo水印</option>
+                            <option value="stamp">印章水印</option>
+                            <option value="mixed">混合水印</option>
+                            <option value="auto">自动识别</option>
+                        </select>
+                    </div>
+
+                    <!-- 手动选择区域设置 -->
+                    <div class="setting-group" id="manualSettingsGroup" style="display: none;">
+                        <label class="setting-label">选择工具</label>
+                        <div class="tool-selection">
+                            <label class="radio-label">
+                                <input type="radio" name="selectionTool" value="rectangle" checked />
+                                <span class="radio-mark"></span>
+                                矩形选择
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="selectionTool" value="circle" />
+                                <span class="radio-mark"></span>
+                                圆形选择
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="selectionTool" value="polygon" />
+                                <span class="radio-mark"></span>
+                                多边形选择
+                            </label>
+                        </div>
+                        
+                        <label class="setting-label">修复算法</label>
+                        <select id="repairAlgorithm" class="algorithm-select">
+                            <option value="inpaint">智能修复</option>
+                            <option value="clone">克隆修复</option>
+                            <option value="blur">模糊处理</option>
+                            <option value="average">平均填充</option>
+                        </select>
+                    </div>
+
+                    <!-- 自动检测设置 -->
+                    <div class="setting-group" id="autoSettingsGroup" style="display: none;">
+                        <label class="setting-label">检测敏感度</label>
+                        <div class="sensitivity-control">
+                            <input type="range" id="sensitivitySlider" min="1" max="10" value="5" />
+                            <span id="sensitivityValue">5</span>
+                        </div>
+                        
+                        <label class="setting-label">检测范围</label>
+                        <div class="detection-range">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="detectCorners" checked />
+                                <span class="checkmark"></span>
+                                检测角落
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="detectCenter" />
+                                <span class="checkmark"></span>
+                                检测中心
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="detectEdges" checked />
+                                <span class="checkmark"></span>
+                                检测边缘
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 高级设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">高级设置</label>
+                        <div class="advanced-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="preserveQuality" checked />
+                                <span class="checkmark"></span>
+                                保持原图质量
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="enhanceDetails" />
+                                <span class="checkmark"></span>
+                                增强细节
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="smoothEdges" checked />
+                                <span class="checkmark"></span>
+                                平滑边缘
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="colorMatch" checked />
+                                <span class="checkmark"></span>
+                                颜色匹配
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 输出设置 -->
+                    <div class="setting-group">
+                        <label class="setting-label">输出设置</label>
+                        <select id="outputFormat" class="format-select">
+                            <option value="original">保持原格式</option>
+                            <option value="jpeg">JPEG (.jpg)</option>
+                            <option value="png">PNG (.png)</option>
+                            <option value="webp">WebP (.webp)</option>
+                        </select>
+                        
+                        <label class="setting-label">输出质量</label>
+                        <div class="quality-control">
+                            <input type="range" id="qualitySlider" min="60" max="100" value="90" />
+                            <span id="qualityValue">90%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="removeWatermarkBtn" class="btn btn-primary">开始去水印</button>
+                    <button id="previewBtn" class="btn btn-secondary">预览效果</button>
+                    <button id="clearBtn" class="btn btn-outline">清空列表</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 图片编辑区域 -->
+        <section class="editor-section" id="editorSection" style="display: none;">
+            <div class="editor-container">
+                <h3>图片编辑</h3>
+                <div class="editor-tools">
+                    <button id="selectTool" class="tool-btn active">选择工具</button>
+                    <button id="zoomTool" class="tool-btn">缩放工具</button>
+                    <button id="panTool" class="tool-btn">平移工具</button>
+                    <button id="resetView" class="tool-btn">重置视图</button>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="editorCanvas"></canvas>
+                    <div id="selectionOverlay" class="selection-overlay"></div>
+                </div>
+                <div class="editor-actions">
+                    <button id="confirmSelection" class="btn btn-success">确认选择</button>
+                    <button id="cancelSelection" class="btn btn-outline">取消选择</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 图片列表区域 -->
+        <section class="images-section" id="imagesSection" style="display: none;">
+            <div class="images-container">
+                <h3>图片列表</h3>
+                <div class="images-grid" id="imagesGrid">
+                    <!-- 图片项将动态添加到这里 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 进度区域 -->
+        <section class="progress-section" id="progressSection" style="display: none;">
+            <div class="progress-container">
+                <h3>处理进度</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">准备中...</div>
+            </div>
+        </section>
+
+        <!-- 结果区域 -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-container">
+                <h3>处理结果</h3>
+                <div class="results-actions">
+                    <button id="downloadAllBtn" class="btn btn-success">下载全部</button>
+                    <button id="downloadZipBtn" class="btn btn-info">打包下载</button>
+                </div>
+                <div class="results-grid" id="resultsGrid">
+                    <!-- 处理结果将显示在这里 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 使用说明 -->
+        <section class="instructions-section">
+            <div class="instructions-container">
+                <h3>使用说明</h3>
+                <div class="instructions-content">
+                    <div class="instruction-item">
+                        <h4>🤖 AI智能去水印</h4>
+                        <p>使用先进的边缘检测和纹理分析技术，多遍处理确保水印完全移除，无任何干扰</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>✋ 手动选择区域</h4>
+                        <p>精确选择水印区域，支持多种选择工具，智能修复算法确保无缝填充</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>🔍 自动检测水印</h4>
+                        <p>智能识别图片中的水印位置，支持角落、中心、边缘区域检测</p>
+                    </div>
+                    <div class="instruction-item">
+                        <h4>⚙️ 高级优化</h4>
+                        <p>预处理降噪、后处理边缘保持、颜色匹配、细节增强，确保最佳处理效果</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Navigation menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            // Check if mobile device
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                }
+            }
+            
+            // Add event listeners only for mobile
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            
+            // Close mobile menu when clicking menu items
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (isMobile()) {
+                        closeMenu();
+                    }
+                });
+            });
+            
+            // Close menu when window is resized
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                }
+            });
+        });
+    </script>
+    <script src="removewm.js"></script>
+</body>
+</html>
