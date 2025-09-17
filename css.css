@@ -379,7 +379,7 @@ center a:hover {
 .nav-link[href$="blank.html"]::before { content: "🌓"; }
 .nav-link[href$="watermark.html"]::before { content: "💧"; }
 .nav-link[href$="removewm.html"]::before { content: "🧼"; }
-.nav-link[href$="nine.html"]::before { content: "#"; }
+.nav-link[href$="nine.html"]::before { content: "⊞"; color: #007bff; }
 .nav-link[href$="text.html"]::before { content: "🔤"; }
 .nav-link[href$="join.html"]::before { content: "🧱"; }
 .nav-link[href$="textToimage.html"]::before { content: "🖊️"; }
@@ -391,15 +391,14 @@ center a:hover {
 .nav-link[href$="changebg.html"]::before { content: "🌄"; }
 
 /* 底部统一版权（所有页面生效） */
-body { padding-bottom: 42px; }
 body::after {
     content: "版权：传道AI";
-    position: fixed;
-    left: 0; right: 0; bottom: 8px;
+    display: block;
     text-align: center;
     color: #999;
     font-size: 14px;
-    pointer-events: none;
+    margin-top: 20px;
+    padding: 10px 0;
 }
 
 @media screen and (max-width: 768px) {
@@ -425,6 +424,23 @@ body::after {
     /* 隐藏PC端菜单 */
     .nav-menu {
         display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 320px;
+        height: 100vh;
+        background: #ffffff;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        padding: 0;
+        gap: 0;
+        z-index: 10001;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        transform: translateX(-100%);
+        transition: transform .25s ease;
     }
     /* 防止父级裁剪/新层叠上下文导致抽屉被遮挡 */
     .header-div, .navbar, .nav-container { overflow: visible !important; }
@@ -472,8 +488,8 @@ body::after {
     }
     
     .nav-menu {
-        width: 85%;
-        max-width: 280px;
+        width: 90%;
+        max-width: 320px;
     }
     
     .nav-menu-title {
@@ -519,22 +535,29 @@ body::after {
 
 /* 移动端菜单样式 - 当菜单激活时显示 */
 @media screen and (max-width: 768px) {
+    /* 使用 html 锁定滚动，避免影响内部 fixed 容器滚动 */
+    
+    html.menu-open {
+        overflow: hidden !important;
+    }
     .nav-menu-active {
-        display: flex !important;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 280px;
-        height: 100vh;
-        background: #ffffff;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: stretch;
-        padding: 0;
-        gap: 0;
-        z-index: 10001;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-        overflow-y: auto;
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 320px !important;
+        height: calc(100vh - 48px) !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        z-index: 10001 !important;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        transform: translateX(0) !important;
+        touch-action: pan-y !important;
+        overscroll-behavior: contain !important;
     }
     
     .nav-menu-active .nav-menu-title {
@@ -549,7 +572,7 @@ body::after {
     }
     
     .nav-menu-active .nav-link {
-        padding: 18px 20px;
+        padding: 16px 20px;
         font-size: 1rem;
         border-radius: 0;
         text-align: left;
@@ -566,12 +589,18 @@ body::after {
         text-decoration: none;
         width: 100%;
         box-sizing: border-box;
+        min-height: 50px;
+        line-height: 1.2;
     }
     /* 确保移动端菜单显示图标，并与文字保持间距 */
     .nav-menu-active .nav-link::before {
         display: inline-block;
-        font-size: 18px;
-        margin-right: 6px;
+        font-size: 16px;
+        margin-right: 8px;
+    }
+    
+    .nav-menu-active .nav-link[href$="nine.html"]::before {
+        color: #007bff;
     }
     
     .nav-menu-active .nav-link:hover {

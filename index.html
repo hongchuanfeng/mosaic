@@ -149,12 +149,11 @@
             </div>
         </section>
     </main>
-    <div style="max-width:1000px;margin:12px auto 0;color:#666;font-size:14px;line-height:1.6;padding:0 12px;">
+    <div style="max-width:1000px;margin:12px auto 0;color:#666;font-size:14px;line-height:1.6;padding:0 12px;text-align:left;">
         <div><b>矩形区域使用说明：</b></div>
         <div>1. 右侧“模式”选择“矩形区域”。</div>
         <div>2. 在左侧图片上按下鼠标左键并拖拽，框选需要打马赛克的区域，松开鼠标即可应用。</div>
         <div>3. 可重复框选多个区域，效果会叠加；如需清空，请切换到“自定义画笔”模式并点击“清除选择”。</div>
-        <div style="margin-top:8px;color:#999;">版权：传道AI</div>
     </div>
     <script type="text/javascript">
 
@@ -184,6 +183,66 @@
                     navMenu.classList.toggle('nav-menu-active');
                     navToggle.classList.toggle('nav-toggle-active');
                     navOverlay.classList.toggle('nav-overlay-active');
+                    
+                    // 确保菜单显示时移除隐藏的transform
+                    if (navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(0)';
+                        // 禁用页面滚动
+                        document.body.classList.add('menu-open');
+                        document.documentElement.classList.add('menu-open');
+                        
+                        // 强制设置菜单滚动属性
+                        navMenu.style.overflowY = 'scroll';
+                        navMenu.style.overflowX = 'hidden';
+                        navMenu.style.height = '100vh';
+                        navMenu.style.touchAction = 'pan-y';
+                        navMenu.style.webkitOverflowScrolling = 'touch';
+                        
+                        // 诊断：统计子项高度总和
+                        const links = navMenu.querySelectorAll('.nav-link');
+                        let totalItemsHeight = 0;
+                        links.forEach(el => { totalItemsHeight += el.offsetHeight; });
+                        console.log('Menu opened with scroll enabled');
+                        console.log('Menu height:', navMenu.clientHeight, 'Content height:', navMenu.scrollHeight, 'Items sum:', totalItemsHeight, 'Count:', links.length);
+                        console.log('Menu computed overflow-y:', getComputedStyle(navMenu).overflowY);
+
+                        // 强制添加spacer确保可滚动
+                        let spacer = document.getElementById('__nav_spacer__');
+                        if (spacer && spacer.parentElement === navMenu) {
+                            navMenu.removeChild(spacer);
+                        }
+                        spacer = document.createElement('div');
+                        spacer.id = '__nav_spacer__';
+                        spacer.style.height = '300px';
+                        spacer.style.width = '100%';
+                        spacer.style.display = 'block';
+                        spacer.style.pointerEvents = 'none';
+                        spacer.style.backgroundColor = 'transparent';
+                        spacer.style.flexShrink = '0';
+                        navMenu.appendChild(spacer);
+                        
+                        // 强制重新计算布局
+                        navMenu.offsetHeight;
+                        
+                        // 再次输出高度以验证
+                        setTimeout(function(){
+                            console.log('After spacer -> Menu height:', navMenu.clientHeight, 'Content height:', navMenu.scrollHeight);
+                            console.log('Spacer height:', spacer.offsetHeight);
+                            console.log('Can scroll:', navMenu.scrollHeight > navMenu.clientHeight);
+                            console.log('Scroll top:', navMenu.scrollTop, 'Max scroll:', navMenu.scrollHeight - navMenu.clientHeight);
+                        }, 50);
+                    } else {
+                        navMenu.style.transform = 'translateX(-100%)';
+                        // 恢复页面滚动
+                        document.body.classList.remove('menu-open');
+                        document.documentElement.classList.remove('menu-open');
+                        // 清理占位
+                        const spacer = document.getElementById('__nav_spacer__');
+                        if (spacer && spacer.parentElement === navMenu) {
+                            navMenu.removeChild(spacer);
+                        }
+                    }
+                    
                     console.log('Menu classes:', navMenu.className);
                 }
             }
@@ -193,6 +252,10 @@
                     navMenu.classList.remove('nav-menu-active');
                     navToggle.classList.remove('nav-toggle-active');
                     navOverlay.classList.remove('nav-overlay-active');
+                    navMenu.style.transform = 'translateX(-100%)';
+                    // 恢复页面滚动
+                    document.body.classList.remove('menu-open');
+                    document.documentElement.classList.remove('menu-open');
                 }
             }
 
@@ -203,10 +266,56 @@
                     if (navMenu.parentElement !== document.body) {
                         document.body.appendChild(navMenu);
                     }
+                    // 确保移动端菜单有正确的样式
+                    navMenu.style.display = 'flex';
+                    navMenu.style.position = 'fixed';
+                    navMenu.style.top = '0';
+                    navMenu.style.left = '0';
+                    navMenu.style.width = '320px';
+                    navMenu.style.height = '100vh';
+                    navMenu.style.background = '#ffffff';
+                    navMenu.style.flexDirection = 'column';
+                    navMenu.style.justifyContent = 'flex-start';
+                    navMenu.style.alignItems = 'stretch';
+                    navMenu.style.padding = '0';
+                    navMenu.style.gap = '0';
+                    navMenu.style.zIndex = '10001';
+                    navMenu.style.boxShadow = '2px 0 10px rgba(0, 0, 0, 0.1)';
+                    navMenu.style.overflowY = 'scroll';
+                    navMenu.style.overflowX = 'hidden';
+                    navMenu.style.webkitOverflowScrolling = 'touch';
+                    navMenu.style.touchAction = 'pan-y';
+                    navMenu.style.transition = 'transform .25s ease';
+                    
+                    // 保持菜单的当前显示状态，不强制隐藏
+                    if (!navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(-100%)';
+                    } else {
+                        navMenu.style.transform = 'translateX(0)';
+                    }
                 } else {
                     if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
                         navOriginalContainer.appendChild(navMenu);
                     }
+                    // 重置PC端样式
+                    navMenu.style.display = '';
+                    navMenu.style.position = '';
+                    navMenu.style.top = '';
+                    navMenu.style.left = '';
+                    navMenu.style.width = '';
+                    navMenu.style.height = '';
+                    navMenu.style.background = '';
+                    navMenu.style.flexDirection = '';
+                    navMenu.style.justifyContent = '';
+                    navMenu.style.alignItems = '';
+                    navMenu.style.padding = '';
+                    navMenu.style.gap = '';
+                    navMenu.style.zIndex = '';
+                    navMenu.style.boxShadow = '';
+                    navMenu.style.overflowY = '';
+                    navMenu.style.webkitOverflowScrolling = '';
+                    navMenu.style.transform = '';
+                    navMenu.style.transition = '';
                 }
             }
             promoteMenuForMobile();
@@ -260,9 +369,35 @@
             window.addEventListener('resize', function() {
                 if (!isMobile()) {
                     closeMenu();
+                } else {
+                    // 移动端时只重新初始化样式，不改变菜单显示状态
+                    promoteMenuForMobile();
                 }
-                promoteMenuForMobile();
             });
+            
+            // 页面滚动时也重新检查菜单状态，但不重置菜单显示状态
+            window.addEventListener('scroll', function() {
+                if (isMobile()) {
+                    // 只确保菜单在正确的位置，不改变显示状态
+                    if (navMenu.parentElement !== document.body) {
+                        document.body.appendChild(navMenu);
+                    }
+                    // 保持菜单的当前显示状态
+                    if (navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(0)';
+                    } else {
+                        navMenu.style.transform = 'translateX(-100%)';
+                    }
+                }
+            });
+            
+            // 添加滚动测试监听器
+            if (navMenu) {
+                navMenu.addEventListener('scroll', function() {
+                    console.log('Menu scrolling detected:', navMenu.scrollTop);
+                });
+                console.log('Menu initialized with scroll listener');
+            }
         });
 
         document.getElementById("fileBtn").addEventListener("change",function (e){
