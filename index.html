@@ -72,6 +72,22 @@
             /* 移动端上下间隙（PC 端不生效） */
             .nav-menu .nav-link { margin: 10px 0; }
         }
+        
+        /* 按钮高度统一 */
+        .btn-unified {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            vertical-align: top;
+            border: none;
+            font-size: inherit;
+            line-height: 1;
+            box-sizing: border-box;
+            height: 40px;
+        }
     </style>
 
 </head>
@@ -114,8 +130,9 @@
     <main class="main-div">
         <section class="frame-div upload-section">
             <div class="frame-top">
-                <label for="fileBtn" class="file-label">选择图片</label>
-                <input type="file" id="fileBtn" accept="image/jpeg,image/gif,image/png,image/bmp,image/webp" />
+                <label for="fileBtn" class="btn-unified" style="background-color: #007bff; color: white; margin-right: 8px;">选择图片</label>
+                <input type="file" id="fileBtn" accept="image/jpeg,image/gif,image/png,image/bmp,image/webp" style="display: none;" />
+                <button type="button" id="removeMosaicBtn" class="btn-unified" style="background: #4CAF50; color: white; margin-left: 8px;">去除马赛克</button>
             </div>
             <div class="frame-center" id="leftFrameCenter" style="position:relative">
                 <img id="img" alt="马赛克前图片" style="display:none"/>
@@ -455,6 +472,32 @@
             } else {
                 alert("请先上传图片");
             }
+        });
+
+        // 去除马赛克按钮事件
+        document.getElementById("removeMosaicBtn").addEventListener("click", function(e){
+            var img = document.getElementById("img");
+            var convertImg = document.getElementById("convertImg");
+            if(!img.src){
+                alert("请先选择图片");
+                return;
+            }
+            
+            // 显示处理中的提示
+            var resultPlaceholder = convertImg.parentElement.querySelector('.placeholder-text');
+            resultPlaceholder.textContent = "正在处理中...";
+            resultPlaceholder.style.display = "block";
+            convertImg.style.display = "none";
+            
+            // 模拟去除马赛克处理（这里简单地将原图显示在右侧）
+            // 在实际应用中，这里应该调用AI去马赛克服务
+            setTimeout(function(){
+                convertImg.src = img.src; // 暂时显示原图，实际应该调用去马赛克API
+                convertImg.style.display = "block";
+                convertImg.style.width = img.offsetWidth + 'px';
+                convertImg.style.height = img.offsetHeight + 'px';
+                resultPlaceholder.style.display = "none";
+            }, 1000);
         });
 
         function showConvertPic(){

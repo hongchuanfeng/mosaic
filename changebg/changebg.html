@@ -48,12 +48,23 @@
             .hamburger { width: 22px; height: 3px; background: #333; margin: 3px 0; border-radius: 2px; }
             .nav-menu { position: fixed; top:0; bottom:0; left:0; width:78%; max-width:360px; background:#fff; box-shadow:2px 0 10px rgba(0,0,0,.12); display:block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y:auto; -webkit-overflow-scrolling:touch; transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; }
             .nav-menu.nav-menu-active { transform: translateX(0); }
-            .nav-menu .nav-link { display:flex; align-items:center; padding:0; border-bottom:1px solid #f2f2f2; margin:10px 0; }
+            .nav-menu .nav-link { display:flex; align-items:center; padding:0; border-bottom:1px solid #f2f2f2; margin:10px 0; text-align: left; }
             .nav-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:10000; display:block; }
             .nav-overlay.nav-overlay-active { opacity:1; pointer-events:auto; }
             .nav-toggle.nav-toggle-active .hamburger:nth-child(1){ transform: translateY(7px) rotate(45deg);} 
             .nav-toggle.nav-toggle-active .hamburger:nth-child(2){ opacity:0;} 
             .nav-toggle.nav-toggle-active .hamburger:nth-child(3){ transform: translateY(-7px) rotate(-45deg);} 
+        }
+        
+        /* PC端导航菜单左对齐 */
+        @media (min-width: 769px) {
+            .nav-menu {
+                justify-content: flex-start !important;
+            }
+            .nav-menu .nav-link {
+                text-align: left !important;
+                justify-content: flex-start !important;
+            }
         }
     </style>
 </head>

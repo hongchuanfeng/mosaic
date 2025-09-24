@@ -60,10 +60,21 @@
                 z-index: 10001;
             }
             .nav-menu.nav-menu-active { transform: translateX(0); }
-            .nav-menu .nav-link { display:flex; align-items:center; padding:0; border-bottom:1px solid #f2f2f2; margin:10px 0; }
+            .nav-menu .nav-link { display:flex; align-items:center; padding:0; border-bottom:1px solid #f2f2f2; margin:10px 0; text-align: left; }
 
             .nav-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:10000; display:block; }
             .nav-overlay.nav-overlay-active { opacity:1; pointer-events:auto; }
+        }
+        
+        /* PC端导航菜单左对齐 */
+        @media (min-width: 769px) {
+            .nav-menu {
+                justify-content: flex-start !important;
+            }
+            .nav-menu .nav-link {
+                text-align: left !important;
+                justify-content: flex-start !important;
+            }
         }
     </style>
 </head>

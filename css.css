@@ -331,7 +331,7 @@ center a:hover {
     }
     
     .nav-link {
-        padding: 4px 6px;
+        padding: 4px 0px;
         font-size: 0.75rem;
         border-radius: 12px;
         text-align: center;
