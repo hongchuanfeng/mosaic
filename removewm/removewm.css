@@ -1,4 +1,4 @@
-/* 基础样式重置 */
+/* Basic style reset */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -7,24 +7,27 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5;
+    background-color: transparent;
     color: #333;
     line-height: 1.6;
 }
 
-/* 头部样式 */
+/* Header styles */
 .header-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     margin: 0 auto 20px auto;
-    padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    padding: 0px;
+    background: transparent;
+    color: #333;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     max-width: 1200px;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
 }
 
 .header-title {
@@ -55,14 +58,14 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* 主容器 */
+/* Main container */
 .main-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px;
 }
 
-/* 通用卡片样式 */
+/* Common card styles */
 .section-card {
     background: white;
     border-radius: 10px;
@@ -71,7 +74,7 @@ body {
     overflow: hidden;
 }
 
-/* 上传区域 */
+/* Upload area */
 .upload-section {
     background: white;
     border-radius: 10px;
@@ -123,7 +126,7 @@ body {
     display: none;
 }
 
-/* 设置区域 */
+/* Settings area */
 .settings-section {
     background: white;
     border-radius: 10px;
@@ -161,14 +164,14 @@ body {
     font-size: 0.9rem;
 }
 
-/* 去水印方法 */
+/* Watermark removal methods */
 .removal-methods {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* AI强度控制 */
+/* AI intensity control */
 .ai-intensity-control {
     display: flex;
     align-items: center;
@@ -237,7 +240,7 @@ body {
     border-color: #007bff;
 }
 
-/* 水印类型选择 */
+/* Watermark type selection */
 .watermark-type-select {
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -253,14 +256,14 @@ body {
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
-/* 工具选择 */
+/* Tool selection */
 .tool-selection {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* 算法选择 */
+/* Algorithm selection */
 .algorithm-select {
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -276,7 +279,7 @@ body {
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
-/* 敏感度控制 */
+/* Sensitivity control */
 .sensitivity-control {
     display: flex;
     align-items: center;
@@ -318,21 +321,21 @@ body {
     min-width: 30px;
 }
 
-/* 检测范围 */
+/* Detection range */
 .detection-range {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* 高级选项 */
+/* Advanced options */
 .advanced-options {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* 输出格式 */
+/* Output format */
 .format-select {
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -349,7 +352,7 @@ body {
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
-/* 质量控制 */
+/* Quality control */
 .quality-control {
     display: flex;
     align-items: center;
@@ -390,7 +393,7 @@ body {
     min-width: 50px;
 }
 
-/* 复选框和单选框样式 */
+/* Checkbox and radio button styles */
 .checkbox-label, .radio-label {
     display: flex;
     align-items: center;
@@ -457,7 +460,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/* 按钮样式 */
+/* Button styles */
 .action-buttons {
     display: flex;
     gap: 15px;
@@ -525,7 +528,7 @@ body {
     background-color: #138496;
 }
 
-/* 编辑器区域 */
+/* Editor area */
 .editor-section {
     background: white;
     border-radius: 10px;
@@ -604,7 +607,7 @@ body {
     justify-content: center;
 }
 
-/* 图片列表区域 */
+/* Image list area */
 .images-section {
     background: white;
     border-radius: 10px;
@@ -674,7 +677,7 @@ body {
     font-size: 12px;
 }
 
-/* 进度区域 */
+/* Progress area */
 .progress-section {
     background: white;
     border-radius: 10px;
@@ -715,7 +718,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* 结果区域 */
+/* Results area */
 .results-section {
     background: white;
     border-radius: 10px;
@@ -794,7 +797,7 @@ body {
     font-size: 12px;
 }
 
-/* 使用说明区域 */
+/* Instructions area */
 .instructions-section {
     background: white;
     border-radius: 10px;
@@ -838,7 +841,7 @@ body {
     line-height: 1.5;
 }
 
-/* 拖拽状态 */
+/* Drag state */
 .upload-area.dragover {
     border-color: #007bff;
     background-color: #f0f8ff;
@@ -849,7 +852,7 @@ body {
     background-color: #f0f8ff;
 }
 
-/* 加载状态 */
+/* Loading state */
 .loading {
     position: relative;
 }
@@ -873,7 +876,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* 选择框样式 */
+/* Selection box styles */
 .selection-box {
     position: absolute;
     border: 2px dashed #007bff;
@@ -882,7 +885,7 @@ body {
     z-index: 5;
 }
 
-/* 响应式设计 */
+/* Responsive design */
 @media screen and (max-width: 768px) {
     .main-container {
         padding: 0 5px;
@@ -935,7 +938,7 @@ body {
 
 @media screen and (max-width: 480px) {
     .header-div {
-        padding: 15px;
+        padding: 0px;
     }
     
     .header-title {

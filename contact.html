@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link id="favicon" rel="icon" type="image/png" href="favicon.ico">
+    <title>联系我们 - 传道AI</title>
+    <meta name="keywords" content="联系我们, 支持, 传道ai, 帮助" />
+    <meta name="description" content="联系传道AI获取支持、问题解答或反馈。" />
+    <link rel="canonical" href="https://mosaic.openai2025.com/contact.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4SRJM5F5CT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4SRJM5F5CT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        body { min-height: 120vh; }
+        .navbar { position: relative; z-index: auto; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; }
+        .nav-link { padding: 0; display: inline-flex; align-items: center; }
+        .nav-toggle { display: none; background: transparent; border: none; padding: 8px; cursor: pointer; }
+        .hamburger { display: block; width: 22px; height: 2px; background: rgba(255, 255, 255, 0.9); margin: 5px 0; transition: transform .25s ease, opacity .25s ease; }
+        .nav-overlay { display: none; }
+
+        @media (min-width: 769px) {
+            .nav-link { padding: 5px 12px; }
+            .nav-menu { gap: 8px; }
+            .nav-item { display: inline-block; }
+        }
+
+        @media (min-width: 1025px) {
+            html, body { min-width: 1600px; }
+            .header-div, .main-div, .navbar, .nav-container { max-width: none; }
+        }
+
+        .lang-switch {
+            position: relative;
+            z-index: 2;
+            text-decoration: none;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.95);
+            margin-left: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            font-weight: 500;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        .lang-switch .ls-left {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-switch .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .lang-switch .divider {
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .lang-switch .label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .lang-switch .ls-right {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+        }
+        .lang-switch .arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.3s ease;
+        }
+        .lang-switch:hover .arrow {
+            transform: translateY(2px);
+        }
+        @media (max-width: 768px) {
+            .lang-switch {
+                position: fixed;
+                right: 12px;
+                top: 12px;
+                height: 38px;
+                padding: 0 14px;
+                z-index: 10002;
+                font-size: 13px;
+            }
+            .lang-switch .badge {
+                font-size: 11px;
+                padding: 3px 8px;
+            }
+            .lang-switch .label {
+                font-size: 12px;
+            }
+        }
+
+        .nav-item { 
+            position: relative; 
+            display: inline-block;
+        }
+        .dropdown-toggle { 
+            cursor: pointer; 
+            user-select: none;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            min-width: 600px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            border-radius: 8px;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 1000;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            pointer-events: none;
+            overflow: visible;
+            max-height: none;
+            height: auto;
+        }
+        .nav-item:hover .dropdown-menu,
+        .nav-item.dropdown-open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .dropdown-menu .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: background-color 0.2s ease;
+            margin: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+        .dropdown-menu .nav-link:hover {
+            background: #f5f5f5;
+            color: #007bff;
+        }
+        .dropdown-toggle::after {
+            content: ' ▼';
+            font-size: 10px;
+            margin-left: 4px;
+            opacity: 0.7;
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .dropdown-menu {
+                min-width: 480px;
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .dropdown-menu {
+                min-width: 600px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .dropdown-toggle::before {
+            content: "🤖";
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .nav-link[href="about.html"]::before {
+            content: "ℹ️";
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .nav-link[href="contact.html"]::before {
+            content: "📧";
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
+        }
+        
+        @media (min-width: 769px) {
+            .nav-item .dropdown-toggle {
+                color: rgba(255, 255, 255, 0.9);
+                background-color: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 8px 16px;
+                display: inline-block;
+                font-weight: 500;
+            }
+            .nav-item:hover .dropdown-toggle {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: #fff;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-div, .navbar, .nav-container { overflow: visible !important; }
+            .header-div, .navbar, .nav-container { transform: none !important; -webkit-transform: none !important; }
+            .header-div, .navbar, .nav-container { contain: unset !important; }
+            .nav-toggle { display: inline-block; }
+            .nav-menu {
+                position: fixed; top: 0; bottom: 0; left: 0; width: 85%; max-width: 420px;
+                background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,.12);
+                display: block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+                transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; will-change: transform;
+            }
+            .nav-menu .nav-link { display: flex; align-items: center; padding: 0; border-bottom: 1px solid #f2f2f2; }
+            .nav-menu.nav-menu-active { transform: translateX(0); }
+            .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 10000; display: block; }
+            .nav-overlay.nav-overlay-active { opacity: 1; pointer-events: auto; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(2) { opacity: 0; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            .nav-menu .nav-link { margin: 10px 0; }
+            .nav-item {
+                width: 100%;
+                border-bottom: 1px solid #f2f2f2;
+            }
+            .dropdown-toggle {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding: 16px 20px;
+                color: #333;
+                background: white;
+                border: none;
+                text-align: left;
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                transform: none;
+                box-shadow: none;
+                background: #f8f9fa;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                transition: opacity 0.3s ease, max-height 0.3s ease;
+                border-radius: 0;
+                display: block !important;
+                grid-template-columns: 1fr !important;
+                min-width: auto !important;
+            }
+            .nav-item.dropdown-open .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 2000px;
+            }
+            .dropdown-menu .nav-link {
+                padding: 12px 20px 12px 40px;
+                font-size: 14px;
+                border-bottom: 1px solid #e9ecef;
+                color: #333;
+                text-align: left;
+            }
+            .dropdown-menu .nav-link:hover {
+                background: #e9ecef;
+            }
+        }
+
+        .content-page {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            line-height: 1.8;
+        }
+
+        .content-card h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .content-card h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .content-card p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .contact-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+
+        .contact-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-form {
+            margin-top: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <header class="header-div">
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle" aria-label="切换导航菜单">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <div class="nav-item">
+                        <span class="nav-link dropdown-toggle">图片AI工具</span>
+                        <div class="dropdown-menu">
+                            <a href="index.html" class="nav-link">图片马赛克</a>
+                            <a href="crop/crop.html" class="nav-link">裁剪图片</a>
+                            <a href="convert/convert.html" class="nav-link">格式转换</a>
+                            <a href="icon/icon.html" class="nav-link">图标生成器</a>
+                            <a href="compress/compress.html" class="nav-link">压缩图片</a>
+                            <a href="blank/blank.html" class="nav-link">灰度处理</a>
+                            <a href="watermark/watermark.html" class="nav-link">添加水印</a>
+                            <a href="removewm/removewm.html" class="nav-link">去除水印</a>
+                            <a href="nine/nine.html" class="nav-link">图片网格</a>
+                            <a href="text/text.html" class="nav-link">文字转图片</a>
+                            <a href="join/join.html" class="nav-link">合并图片</a>
+                            <a href="textToimage/textToimage.html" class="nav-link">添加文字</a>
+                            <a href="corner/corner.html" class="nav-link">圆角处理</a>
+                            <a href="expand/expand.html" class="nav-link">放大图片</a>
+                            <a href="old/old.html" class="nav-link">照片修复</a>
+                            <a href="bg/bg.html" class="nav-link">图片上色</a>
+                            <a href="removebg/removebg.html" class="nav-link">去除背景</a>
+                            <a href="changebg/changebg.html" class="nav-link">更换背景</a>
+                        </div>
+                    </div>
+                    <a href="about.html" class="nav-link">关于</a>
+                    <a href="contact.html" class="nav-link">联系我们</a>
+                </div>
+                <a class="lang-switch" href="https://mosaic.openai2025.com/" rel="nofollow" aria-label="切换到中文版本">
+                    <span class="ls-left">
+                        <span class="badge">CN</span>
+                        <span class="divider"></span>
+                        <span class="label">中文</span>
+                    </span>
+                    <span class="ls-right"><i class="arrow"></i></span>
+                </a>
+            </div>
+        </nav>
+        <h1 class="header-title">联系我们</h1>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <main class="content-page">
+        <div class="content-card">
+            <h1>联系我们</h1>
+            
+            <p>我们随时为您提供帮助！如果您有任何问题、反馈或需要支持，请随时与我们联系。</p>
+
+            <div class="contact-info">
+                <h3>联系方式</h3>
+                <p><strong>邮箱：</strong> <a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                <p><strong>响应时间：</strong> 我们通常在24-48小时内回复</p>
+                <p><strong>支持时间：</strong> 周一至周五，上午9:00 - 下午6:00（UTC）</p>
+            </div>
+
+            <h2>发送消息</h2>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">您的姓名 *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">您的邮箱 *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">主题 *</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">消息内容 *</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">发送消息</button>
+            </form>
+
+            <h2>常见问题</h2>
+            <p>在联系我们之前，您可以在我们的常见问题部分找到常见问题的答案：</p>
+            <ul>
+                <li><strong>如何使用图像处理工具？</strong> 查看主页上的<a href="index.html">使用指南</a>。</li>
+                <li><strong>我的图像是否存储在您的服务器上？</strong> 不会，所有图像都经过安全处理，不会存储。更多详情请参阅我们的<a href="privacy.html">隐私政策</a>。</li>
+                <li><strong>你们提供高级功能吗？</strong> 是的，我们提供包含额外功能的会员计划。请查看我们的<a href="index.html#pricing">定价页面</a>。</li>
+                <li><strong>我可以商业使用你们的工具吗？</strong> 请参阅我们的<a href="terms.html">服务条款</a>了解使用权限和限制。</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <p>传道AI提供前沿的图像处理工具，帮助您轻松创建、编辑和增强图像。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <p>邮箱：<a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                    <p>我们随时为您解答任何问题或疑虑。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>隐私政策</h3>
+                    <p>我们尊重您的隐私。所有上传的图像都经过安全处理，不会存储在我们的服务器上。</p>
+                    <a href="privacy.html" class="footer-link">了解更多</a>
+                </div>
+                <div class="footer-column">
+                    <h3>服务条款</h3>
+                    <p>使用我们的服务，即表示您同意我们的条款和条件。</p>
+                    <a href="terms.html" class="footer-link">了解更多</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>版权所有 © 传道AI。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                }
+            }
+            
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            const navItem = document.querySelector('.nav-item');
+            
+            if (dropdownToggle && dropdownMenu && navItem) {
+                if (!isMobile()) {
+                    let hideTimer = null;
+                    
+                    function showMenu() {
+                        if (hideTimer) {
+                            clearTimeout(hideTimer);
+                            hideTimer = null;
+                        }
+                        navItem.classList.add('dropdown-open');
+                    }
+                    
+                    function hideMenu() {
+                        hideTimer = setTimeout(function() {
+                            navItem.classList.remove('dropdown-open');
+                        }, 200);
+                    }
+                    
+                    navItem.addEventListener('mouseenter', showMenu);
+                    dropdownMenu.addEventListener('mouseenter', showMenu);
+                    
+                    navItem.addEventListener('mouseleave', function(e) {
+                        if (e.relatedTarget && dropdownMenu.contains(e.relatedTarget)) {
+                            return;
+                        }
+                        hideMenu();
+                    });
+                    
+                    dropdownMenu.addEventListener('mouseleave', function(e) {
+                        if (e.relatedTarget && navItem.contains(e.relatedTarget)) {
+                            return;
+                        }
+                        hideMenu();
+                    });
+                }
+                
+                dropdownToggle.addEventListener('click', function(e) {
+                    if (isMobile()) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        navItem.classList.toggle('dropdown-open');
+                    }
+                });
+                
+                document.addEventListener('click', function(e) {
+                    if (isMobile() && !navItem.contains(e.target)) {
+                        navItem.classList.remove('dropdown-open');
+                    }
+                });
+            }
+
+            // 联系表单处理
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('感谢您的消息！我们会尽快回复您。');
+                    this.reset();
+                    
+                    // 这里可以添加实际的表单提交逻辑
+                    // fetch('/api/contact', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({
+                    //         name: document.getElementById('name').value,
+                    //         email: document.getElementById('email').value,
+                    //         subject: document.getElementById('subject').value,
+                    //         message: document.getElementById('message').value
+                    //     })
+                    // })
+                    // .then(response => response.json())
+                    // .then(data => {
+                    //     alert('感谢您的消息！');
+                    //     contactForm.reset();
+                    // })
+                    // .catch(error => {
+                    //     alert('发送消息失败。请重试。');
+                    // });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

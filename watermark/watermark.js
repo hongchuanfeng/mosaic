@@ -16,34 +16,34 @@ class WatermarkProcessor {
     }
 
     bindEvents() {
-        // 文件上传
+        // File upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag and drop upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 水印图片上传
+        // Watermark image upload
         document.getElementById('watermarkImageInput').addEventListener('change', (e) => this.handleWatermarkImageSelect(e));
         
-        // 滑块控制
+        // Slider controls
         document.getElementById('fontSizeSlider').addEventListener('input', (e) => this.updateFontSizeValue(e));
         document.getElementById('opacitySlider').addEventListener('input', (e) => this.updateOpacityValue(e));
         document.getElementById('watermarkSizeSlider').addEventListener('input', (e) => this.updateWatermarkSizeValue(e));
         document.getElementById('watermarkOpacitySlider').addEventListener('input', (e) => this.updateWatermarkOpacityValue(e));
         document.getElementById('rotationSlider').addEventListener('input', (e) => this.updateRotationValue(e));
         
-        // 自定义位置切换
+        // Custom position toggle
         document.getElementById('customPosition').addEventListener('change', (e) => this.toggleCustomPosition(e));
         
-        // 旋转切换
+        // Rotation toggle
         document.getElementById('rotateWatermark').addEventListener('change', (e) => this.toggleRotation(e));
         
-        // 按钮事件
+        // Button events
         document.getElementById('addWatermarkBtn').addEventListener('click', () => this.addWatermarkToAll());
         document.getElementById('previewBtn').addEventListener('click', () => this.previewWatermark());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
@@ -78,12 +78,12 @@ class WatermarkProcessor {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 10) {
-            alert('最多只能上传10张图片');
+            alert('Maximum 10 images allowed');
             return;
         }
 
@@ -154,8 +154,8 @@ class WatermarkProcessor {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="watermarkProcessor.addWatermarkToSingle('${imageData.id}')">添加水印</button>
-                    <button class="btn btn-secondary" onclick="watermarkProcessor.removeImage('${imageData.id}')">删除</button>
+                    <button class="btn btn-primary" onclick="watermarkProcessor.addWatermarkToSingle('${imageData.id}')">Add Watermark</button>
+                    <button class="btn btn-secondary" onclick="watermarkProcessor.removeImage('${imageData.id}')">Remove</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -209,7 +209,7 @@ class WatermarkProcessor {
     }
 
     setPosition(e) {
-        // 更新按钮状态
+        // Update button state
         document.querySelectorAll('.position-btn').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -278,7 +278,7 @@ class WatermarkProcessor {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `正在处理: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `Processing: ${imageData.name}`);
             
             try {
                 const watermarkedImage = await this.addWatermark(imageData);
@@ -287,12 +287,12 @@ class WatermarkProcessor {
                 }
                 completed++;
             } catch (error) {
-                console.error('添加水印失败:', error);
+                console.error('Failed to add watermark:', error);
                 completed++;
             }
         }
 
-        this.updateProgress(totalImages, totalImages, '处理完成');
+        this.updateProgress(totalImages, totalImages, 'Processing complete');
         this.isProcessing = false;
         this.displayResults();
     }
@@ -305,10 +305,10 @@ class WatermarkProcessor {
             canvas.width = imageData.width;
             canvas.height = imageData.height;
             
-            // 绘制原图
+            // Draw original image
             ctx.drawImage(imageData.img, 0, 0);
             
-            // 获取水印设置
+            // Get watermark settings
             const settings = this.getWatermarkSettings();
             
             if (settings.watermarkType === 'text') {
@@ -317,7 +317,7 @@ class WatermarkProcessor {
                 this.addImageWatermark(ctx, settings, canvas.width, canvas.height);
             }
             
-            // 获取输出格式
+            // Get output format
             let mimeType = imageData.file.type;
             let fileExtension = this.getFileExtension(imageData.file.name);
             
@@ -338,10 +338,10 @@ class WatermarkProcessor {
                 }
             }
             
-            // 生成数据URL
+            // Generate data URL
             const dataUrl = canvas.toDataURL(mimeType, settings.maintainQuality ? 1.0 : 0.9);
             
-            // 创建Blob
+            // Create Blob
             const byteString = atob(dataUrl.split(',')[1]);
             const ab = new ArrayBuffer(byteString.length);
             const ia = new Uint8Array(ab);
@@ -350,7 +350,7 @@ class WatermarkProcessor {
             }
             const blob = new Blob([ab], { type: mimeType });
             
-            // 生成文件名
+            // Generate file name
             const originalName = imageData.name.split('.')[0];
             const fileName = `${originalName}_watermarked.${fileExtension}`;
             
@@ -416,30 +416,30 @@ class WatermarkProcessor {
         
         if (!watermarkText) return;
         
-        // 设置字体
+        // Set font
         ctx.font = `${fontSize}px ${fontFamily}`;
         ctx.fillStyle = textColor;
         ctx.globalAlpha = opacity;
         
-        // 计算文字位置
+        // Calculate text position
         const textMetrics = ctx.measureText(watermarkText);
         const textWidth = textMetrics.width;
         const textHeight = fontSize;
         
         const positionCoords = this.calculatePosition(position, textWidth, textHeight, canvasWidth, canvasHeight);
         
-        // 保存当前状态
+        // Save current state
         ctx.save();
         
-        // 移动到文字位置
+        // Move to text position
         ctx.translate(positionCoords.x, positionCoords.y);
         
-        // 旋转
+        // Rotate
         if (rotateWatermark) {
             ctx.rotate((rotation * Math.PI) / 180);
         }
         
-        // 添加阴影
+        // Add shadow
         if (addShadow) {
             ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
             ctx.shadowBlur = 4;
@@ -447,17 +447,17 @@ class WatermarkProcessor {
             ctx.shadowOffsetY = 2;
         }
         
-        // 添加边框
+        // Add border
         if (addBorder) {
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
             ctx.lineWidth = 2;
             ctx.strokeText(watermarkText, 0, textHeight);
         }
         
-        // 绘制文字
+        // Draw text
         ctx.fillText(watermarkText, 0, textHeight);
         
-        // 恢复状态
+        // Restore state
         ctx.restore();
     }
 
@@ -466,29 +466,29 @@ class WatermarkProcessor {
         
         if (!this.watermarkImage) return;
         
-        // 计算水印图片尺寸
+        // Calculate watermark image size
         const aspectRatio = this.watermarkImage.width / this.watermarkImage.height;
         let watermarkWidth = watermarkSize;
         let watermarkHeight = watermarkSize / aspectRatio;
         
-        // 计算位置
+        // Calculate position
         const positionCoords = this.calculatePosition(position, watermarkWidth, watermarkHeight, canvasWidth, canvasHeight);
         
-        // 保存当前状态
+        // Save current state
         ctx.save();
         
-        // 移动到水印位置
+        // Move to watermark position
         ctx.translate(positionCoords.x + watermarkWidth / 2, positionCoords.y + watermarkHeight / 2);
         
-        // 旋转
+        // Rotate
         if (rotateWatermark) {
             ctx.rotate((rotation * Math.PI) / 180);
         }
         
-        // 设置透明度
+        // Set opacity
         ctx.globalAlpha = watermarkOpacity;
         
-        // 添加阴影
+        // Add shadow
         if (addShadow) {
             ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
             ctx.shadowBlur = 4;
@@ -496,17 +496,17 @@ class WatermarkProcessor {
             ctx.shadowOffsetY = 2;
         }
         
-        // 添加边框
+        // Add border
         if (addBorder) {
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
             ctx.lineWidth = 2;
             ctx.strokeRect(-watermarkWidth / 2, -watermarkHeight / 2, watermarkWidth, watermarkHeight);
         }
         
-        // 绘制水印图片
+        // Draw watermark image
         ctx.drawImage(this.watermarkImage, -watermarkWidth / 2, -watermarkHeight / 2, watermarkWidth, watermarkHeight);
         
-        // 恢复状态
+        // Restore state
         ctx.restore();
     }
 
@@ -562,7 +562,7 @@ class WatermarkProcessor {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="watermarkProcessor.downloadSingleImage('${imageData.name}')">下载</button>
+                    <button class="btn btn-success" onclick="watermarkProcessor.downloadSingleImage('${imageData.name}')">Download</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -573,7 +573,7 @@ class WatermarkProcessor {
 
     async previewWatermark() {
         if (this.images.length === 0) {
-            alert('请先选择图片');
+            alert('Please select images first');
             return;
         }
 
@@ -581,12 +581,12 @@ class WatermarkProcessor {
         const watermarkedImage = await this.addWatermark(firstImage);
         
         if (watermarkedImage) {
-            // 创建预览窗口
+            // Create preview window
             const previewWindow = window.open('', '_blank', 'width=1000,height=600');
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>水印预览</title>
+                        <title>Watermark Preview</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
                             .preview-container { display: flex; gap: 20px; justify-content: center; }
@@ -596,15 +596,15 @@ class WatermarkProcessor {
                         </style>
                     </head>
                     <body>
-                        <h2>水印预览</h2>
+                        <h2>Watermark Preview</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>原图</h3>
-                                <img src="${firstImage.dataUrl}" alt="原图" />
+                                <h3>Original</h3>
+                                <img src="${firstImage.dataUrl}" alt="Original" />
                             </div>
                             <div class="preview-item">
-                                <h3>加水印后</h3>
-                                <img src="${watermarkedImage.dataUrl}" alt="加水印后" />
+                                <h3>With Watermark</h3>
+                                <img src="${watermarkedImage.dataUrl}" alt="With Watermark" />
                             </div>
                         </div>
                     </body>
@@ -633,13 +633,13 @@ class WatermarkProcessor {
 
     async downloadAsZip() {
         if (this.watermarkedImages.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images available for download');
             return;
         }
 
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // Here is an alternative: download files one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -663,7 +663,7 @@ class WatermarkProcessor {
     }
 }
 
-// 初始化应用
+// Initialize application
 let watermarkProcessor;
 document.addEventListener('DOMContentLoaded', () => {
     watermarkProcessor = new WatermarkProcessor();

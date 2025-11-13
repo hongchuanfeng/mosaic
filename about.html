@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link id="favicon" rel="icon" type="image/png" href="favicon.ico">
+    <title>关于我们 - 传道AI</title>
+    <meta name="keywords" content="关于我们, 传道ai, 图像处理, ai工具" />
+    <meta name="description" content="了解更多关于传道AI的信息，以及我们提供前沿图像处理工具的使命。" />
+    <link rel="canonical" href="https://mosaic.openai2025.com/about.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4SRJM5F5CT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4SRJM5F5CT');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        body { min-height: 120vh; }
+        .navbar { position: relative; z-index: auto; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; }
+        .nav-link { padding: 0; display: inline-flex; align-items: center; }
+        .nav-toggle { display: none; background: transparent; border: none; padding: 8px; cursor: pointer; }
+        .hamburger { display: block; width: 22px; height: 2px; background: rgba(255, 255, 255, 0.9); margin: 5px 0; transition: transform .25s ease, opacity .25s ease; }
+        .nav-overlay { display: none; }
+
+        @media (min-width: 769px) {
+            .nav-link { padding: 5px 12px; }
+            .nav-menu { gap: 8px; }
+            .nav-item { display: inline-block; }
+        }
+
+        @media (min-width: 1025px) {
+            html, body { min-width: 1600px; }
+            .header-div, .main-div, .navbar, .nav-container { max-width: none; }
+        }
+
+        /* Language switch */
+        .lang-switch {
+            position: relative;
+            z-index: 2;
+            text-decoration: none;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.95);
+            margin-left: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            font-weight: 500;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        .lang-switch .ls-left {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-switch .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .lang-switch .divider {
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .lang-switch .label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .lang-switch .ls-right {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+        }
+        .lang-switch .arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.3s ease;
+        }
+        .lang-switch:hover .arrow {
+            transform: translateY(2px);
+        }
+        @media (max-width: 768px) {
+            .lang-switch {
+                position: fixed;
+                right: 12px;
+                top: 12px;
+                height: 38px;
+                padding: 0 14px;
+                z-index: 10002;
+                font-size: 13px;
+            }
+            .lang-switch .badge {
+                font-size: 11px;
+                padding: 3px 8px;
+            }
+            .lang-switch .label {
+                font-size: 12px;
+            }
+        }
+
+        /* 下拉菜单样式 */
+        .nav-item { 
+            position: relative; 
+            display: inline-block;
+        }
+        .dropdown-toggle { 
+            cursor: pointer; 
+            user-select: none;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            min-width: 600px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            border-radius: 8px;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 1000;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            pointer-events: none;
+            overflow: visible;
+            max-height: none;
+            height: auto;
+        }
+        .nav-item:hover .dropdown-menu,
+        .nav-item.dropdown-open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .dropdown-menu .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: background-color 0.2s ease;
+            margin: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+        .dropdown-menu .nav-link:hover {
+            background: #f5f5f5;
+            color: #007bff;
+        }
+        .dropdown-toggle::after {
+            content: ' ▼';
+            font-size: 10px;
+            margin-left: 4px;
+            opacity: 0.7;
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .dropdown-menu {
+                min-width: 480px;
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .dropdown-menu {
+                min-width: 600px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .dropdown-toggle::before,
+        .nav-link[href="about.html"]::before,
+        .nav-link[href="contact.html"]::before {
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .dropdown-toggle::before {
+            content: "🤖";
+        }
+        .nav-link[href="about.html"]::before {
+            content: "ℹ️";
+        }
+        .nav-link[href="contact.html"]::before {
+            content: "📧";
+        }
+        
+        @media (min-width: 769px) {
+            .nav-item .dropdown-toggle {
+                color: rgba(255, 255, 255, 0.9);
+                background-color: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 8px 16px;
+                display: inline-block;
+                font-weight: 500;
+            }
+            .nav-item:hover .dropdown-toggle {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: #fff;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-div, .navbar, .nav-container { overflow: visible !important; }
+            .header-div, .navbar, .nav-container { transform: none !important; -webkit-transform: none !important; }
+            .header-div, .navbar, .nav-container { contain: unset !important; }
+            .nav-toggle { display: inline-block; }
+            .nav-menu {
+                position: fixed; top: 0; bottom: 0; left: 0; width: 85%; max-width: 420px;
+                background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,.12);
+                display: block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+                transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; will-change: transform;
+            }
+            .nav-menu .nav-link { display: flex; align-items: center; padding: 0; border-bottom: 1px solid #f2f2f2; }
+            .nav-menu.nav-menu-active { transform: translateX(0); }
+            .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 10000; display: block; }
+            .nav-overlay.nav-overlay-active { opacity: 1; pointer-events: auto; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(2) { opacity: 0; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            .nav-menu .nav-link { margin: 10px 0; }
+            .nav-item {
+                width: 100%;
+                border-bottom: 1px solid #f2f2f2;
+            }
+            .dropdown-toggle {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding: 16px 20px;
+                color: #333;
+                background: white;
+                border: none;
+                text-align: left;
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                transform: none;
+                box-shadow: none;
+                background: #f8f9fa;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                transition: opacity 0.3s ease, max-height 0.3s ease;
+                border-radius: 0;
+                display: block !important;
+                grid-template-columns: 1fr !important;
+                min-width: auto !important;
+            }
+            .nav-item.dropdown-open .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 2000px;
+            }
+            .dropdown-menu .nav-link {
+                padding: 12px 20px 12px 40px;
+                font-size: 14px;
+                border-bottom: 1px solid #e9ecef;
+                color: #333;
+                text-align: left;
+            }
+            .dropdown-menu .nav-link:hover {
+                background: #e9ecef;
+            }
+            .dropdown-toggle::before,
+            .nav-link[href="about.html"]::before,
+            .nav-link[href="contact.html"]::before {
+                display: inline-block;
+                margin-right: 8px;
+                font-size: 18px;
+            }
+        }
+
+        /* 内容页面样式 */
+        .content-page {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            line-height: 1.8;
+        }
+
+        .content-card h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .content-card h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .content-card h3 {
+            font-size: 1.4rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .content-card p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .content-card ul, .content-card ol {
+            margin-bottom: 20px;
+            padding-left: 30px;
+            color: #666;
+        }
+
+        .content-card li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-div">
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle" aria-label="切换导航菜单">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <div class="nav-item">
+                        <span class="nav-link dropdown-toggle">图片AI工具</span>
+                        <div class="dropdown-menu">
+                            <a href="index.html" class="nav-link">图片马赛克</a>
+                            <a href="crop/crop.html" class="nav-link">裁剪图片</a>
+                            <a href="convert/convert.html" class="nav-link">格式转换</a>
+                            <a href="icon/icon.html" class="nav-link">图标生成器</a>
+                            <a href="compress/compress.html" class="nav-link">压缩图片</a>
+                            <a href="blank/blank.html" class="nav-link">灰度处理</a>
+                            <a href="watermark/watermark.html" class="nav-link">添加水印</a>
+                            <a href="removewm/removewm.html" class="nav-link">去除水印</a>
+                            <a href="nine/nine.html" class="nav-link">图片网格</a>
+                            <a href="text/text.html" class="nav-link">文字转图片</a>
+                            <a href="join/join.html" class="nav-link">合并图片</a>
+                            <a href="textToimage/textToimage.html" class="nav-link">添加文字</a>
+                            <a href="corner/corner.html" class="nav-link">圆角处理</a>
+                            <a href="expand/expand.html" class="nav-link">放大图片</a>
+                            <a href="old/old.html" class="nav-link">照片修复</a>
+                            <a href="bg/bg.html" class="nav-link">图片上色</a>
+                            <a href="removebg/removebg.html" class="nav-link">去除背景</a>
+                            <a href="changebg/changebg.html" class="nav-link">更换背景</a>
+                        </div>
+                    </div>
+                    <a href="about.html" class="nav-link">关于</a>
+                    <a href="contact.html" class="nav-link">联系我们</a>
+                </div>
+                <a class="lang-switch" href="https://mosaic.openai2025.com/" rel="nofollow" aria-label="切换到中文版本">
+                    <span class="ls-left">
+                        <span class="badge">CN</span>
+                        <span class="divider"></span>
+                        <span class="label">中文</span>
+                    </span>
+                    <span class="ls-right"><i class="arrow"></i></span>
+                </a>
+            </div>
+        </nav>
+        <h1 class="header-title">关于我们</h1>
+    </header>
+
+    <!-- 移动端菜单遮罩层 -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- 内容区域 -->
+    <main class="content-page">
+        <div class="content-card">
+            <h1>关于传道AI</h1>
+            
+            <p>传道AI是一家领先的提供前沿图像处理工具的提供商，由人工智能驱动。我们的使命是让每个人都能使用先进的图像编辑和处理工具，无论他们的技术水平如何。</p>
+
+            <h2>我们的使命</h2>
+            <p>我们相信每个人都应该能够使用专业级的图像处理工具。我们的平台将AI的强大功能与直观的界面相结合，提供既强大又易于使用的工具。</p>
+
+            <h2>我们提供的服务</h2>
+            <p>我们的图像处理工具套件包括：</p>
+            <ul>
+                <li><strong>图片马赛克：</strong>通过像素化或模糊图像中的敏感区域来保护隐私</li>
+                <li><strong>裁剪和调整大小：</strong>轻松裁剪和调整图像到您所需的尺寸</li>
+                <li><strong>格式转换：</strong>在不同格式之间转换图像（JPG、PNG、GIF、WebP等）</li>
+                <li><strong>背景去除：</strong>使用AI驱动的精确度去除或更换背景</li>
+                <li><strong>图像增强：</strong>放大、修复和增强图像质量</li>
+                <li><strong>水印工具：</strong>为图像添加或去除水印</li>
+                <li><strong>以及更多：</strong>包含18+种图像处理工具的综合套件</li>
+            </ul>
+
+            <h2>我们的价值观</h2>
+            <ul>
+                <li><strong>隐私优先：</strong>所有图像都经过安全处理，不会存储在我们的服务器上</li>
+                <li><strong>用户友好：</strong>直观的界面，无需技术知识</li>
+                <li><strong>高质量：</strong>由先进的AI算法驱动的专业级结果</li>
+                <li><strong>可访问性：</strong>为所有人提供免费工具，为高级用户提供高级功能</li>
+            </ul>
+
+            <h2>技术</h2>
+            <p>我们的工具由最先进的人工智能和机器学习算法驱动。我们不断改进技术，为用户提供最佳结果。</p>
+
+            <h2>联系我们</h2>
+            <p>如果您有任何问题、建议或反馈，请随时<a href="contact.html">联系我们</a>。我们很高兴听到用户的声音，并致力于提供最佳服务。</p>
+        </div>
+    </main>
+
+    <!-- 页脚部分 -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <p>传道AI提供前沿的图像处理工具，帮助您轻松创建、编辑和增强图像。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <p>邮箱：<a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                    <p>我们随时为您解答任何问题或疑虑。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>隐私政策</h3>
+                    <p>我们尊重您的隐私。所有上传的图像都经过安全处理，不会存储在我们的服务器上。</p>
+                    <a href="privacy.html" class="footer-link">了解更多</a>
+                </div>
+                <div class="footer-column">
+                    <h3>服务条款</h3>
+                    <p>使用我们的服务，即表示您同意我们的条款和条件。</p>
+                    <a href="terms.html" class="footer-link">了解更多</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>版权所有 © 传道AI。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航菜单切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                }
+            }
+            
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            
+            // 下拉菜单点击处理（移动端）
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            const navItem = document.querySelector('.nav-item');
+            
+            if (dropdownToggle && dropdownMenu && navItem) {
+                // PC端：简洁的鼠标悬停逻辑
+                if (!isMobile()) {
+                    let hideTimer = null;
+                    
+                    function showMenu() {
+                        if (hideTimer) {
+                            clearTimeout(hideTimer);
+                            hideTimer = null;
+                        }
+                        navItem.classList.add('dropdown-open');
+                    }
+                    
+                    function hideMenu() {
+                        hideTimer = setTimeout(function() {
+                            navItem.classList.remove('dropdown-open');
+                        }, 200);
+                    }
+                    
+                    navItem.addEventListener('mouseenter', showMenu);
+                    dropdownMenu.addEventListener('mouseenter', showMenu);
+                    
+                    navItem.addEventListener('mouseleave', function(e) {
+                        if (e.relatedTarget && dropdownMenu.contains(e.relatedTarget)) {
+                            return;
+                        }
+                        hideMenu();
+                    });
+                    
+                    dropdownMenu.addEventListener('mouseleave', function(e) {
+                        if (e.relatedTarget && navItem.contains(e.relatedTarget)) {
+                            return;
+                        }
+                        hideMenu();
+                    });
+                }
+                
+                // 移动端点击处理
+                dropdownToggle.addEventListener('click', function(e) {
+                    if (isMobile()) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        navItem.classList.toggle('dropdown-open');
+                    }
+                });
+                
+                // 点击外部关闭下拉菜单（仅移动端）
+                document.addEventListener('click', function(e) {
+                    if (isMobile() && !navItem.contains(e.target)) {
+                        navItem.classList.remove('dropdown-open');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

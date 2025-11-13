@@ -13,18 +13,18 @@ class OldPhotoRestorer {
     }
 
     bindEvents() {
-        // 文件上传
+        // File Upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag and Drop Upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 滑块控制
+        // Slider Controls
         document.getElementById('intensitySlider').addEventListener('input', (e) => this.updateIntensityValue(e));
         document.getElementById('saturationSlider').addEventListener('input', (e) => this.updateSaturationValue(e));
         document.getElementById('contrastSlider').addEventListener('input', (e) => this.updateContrastValue(e));
@@ -33,7 +33,7 @@ class OldPhotoRestorer {
         document.getElementById('detailSlider').addEventListener('input', (e) => this.updateDetailValue(e));
         document.getElementById('qualitySlider').addEventListener('input', (e) => this.updateQualityValue(e));
         
-        // 按钮事件
+        // Button Events
         document.getElementById('restoreBtn').addEventListener('click', () => this.restoreAllImages());
         document.getElementById('previewBtn').addEventListener('click', () => this.previewRestoration());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
@@ -68,12 +68,12 @@ class OldPhotoRestorer {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 5) {
-            alert('最多只能上传5张图片');
+            alert('You can upload a maximum of 5 images');
             return;
         }
 
@@ -117,8 +117,8 @@ class OldPhotoRestorer {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="oldPhotoRestorer.restoreSingleImage('${imageData.id}')">修复</button>
-                    <button class="btn btn-outline" onclick="oldPhotoRestorer.removeImage('${imageData.id}')">删除</button>
+                    <button class="btn btn-primary" onclick="oldPhotoRestorer.restoreSingleImage('${imageData.id}')">Restore</button>
+                    <button class="btn btn-outline" onclick="oldPhotoRestorer.removeImage('${imageData.id}')">Remove</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -147,7 +147,7 @@ class OldPhotoRestorer {
     }
 
     setupPresetButtons() {
-        // 强度预设按钮
+        // Intensity Preset Buttons
         document.querySelectorAll('.intensity-preset-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.setIntensityPreset(e));
         });
@@ -161,7 +161,7 @@ class OldPhotoRestorer {
         slider.value = value;
         valueDisplay.textContent = value;
         
-        // 更新按钮状态
+        // Update Button States
         document.querySelectorAll('.intensity-preset-btn').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -219,7 +219,7 @@ class OldPhotoRestorer {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `正在修复: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `Restoring: ${imageData.name}`);
             
             try {
                 const restoredImage = await this.restoreImage(imageData);
@@ -228,12 +228,12 @@ class OldPhotoRestorer {
                 }
                 completed++;
             } catch (error) {
-                console.error('照片修复失败:', error);
+                console.error('Photo restoration failed:', error);
                 completed++;
             }
         }
 
-        this.updateProgress(totalImages, totalImages, '修复完成');
+        this.updateProgress(totalImages, totalImages, 'Restoration completed');
         this.isProcessing = false;
         this.displayResults();
     }
@@ -246,16 +246,16 @@ class OldPhotoRestorer {
             canvas.width = imageData.width;
             canvas.height = imageData.height;
             
-            // 绘制原图
+            // Draw Original Image
             ctx.drawImage(imageData.img, 0, 0);
             
-            // 获取修复设置
+            // Get Restoration Settings
             const settings = this.getRestorationSettings();
             
-            // 应用修复算法
+            // Apply Restoration Algorithm
             this.applyRestoration(ctx, settings, canvas.width, canvas.height);
             
-            // 获取输出格式
+            // Get Output Format
             let mimeType = imageData.file.type;
             let fileExtension = this.getFileExtension(imageData.file.name);
             
@@ -276,11 +276,11 @@ class OldPhotoRestorer {
                 }
             }
             
-            // 生成数据URL
+            // Generate Data URL
             const quality = settings.quality / 100;
             const dataUrl = canvas.toDataURL(mimeType, quality);
             
-            // 创建Blob
+            // Create Blob
             const byteString = atob(dataUrl.split(',')[1]);
             const ab = new ArrayBuffer(byteString.length);
             const ia = new Uint8Array(ab);
@@ -289,7 +289,7 @@ class OldPhotoRestorer {
             }
             const blob = new Blob([ab], { type: mimeType });
             
-            // 生成文件名
+            // Generate File Name
             const originalName = imageData.name.split('.')[0];
             const fileName = `${originalName}_restored.${fileExtension}`;
             
@@ -310,7 +310,7 @@ class OldPhotoRestorer {
         const imageData = ctx.getImageData(0, 0, width, height);
         const data = imageData.data;
         
-        // 根据修复类型应用不同的算法
+        // Apply Different Algorithms Based on Repair Type
         switch (settings.repairType) {
             case 'auto':
                 this.applyAutoRestoration(data, settings, width, height);
@@ -326,7 +326,7 @@ class OldPhotoRestorer {
                 break;
         }
         
-        // 应用后处理效果
+        // Apply Post-processing Effects
         if (settings.autoColorBalance) {
             this.applyColorBalance(data, width, height);
         }
@@ -357,7 +357,7 @@ class OldPhotoRestorer {
     applyAutoRestoration(data, settings, width, height) {
         const intensity = settings.intensity / 10;
         
-        // 自动检测并修复各种问题
+        // Auto-detect and Repair Various Issues
         this.applyColorRestoration(data, settings, width, height);
         this.applyDamageRestoration(data, settings, width, height);
         this.applyNoiseRestoration(data, settings, width, height);
@@ -374,17 +374,17 @@ class OldPhotoRestorer {
             let g = data[i + 1];
             let b = data[i + 2];
             
-            // 亮度调整
+            // Brightness Adjustment
             r = Math.min(255, Math.max(0, r * brightness));
             g = Math.min(255, Math.max(0, g * brightness));
             b = Math.min(255, Math.max(0, b * brightness));
             
-            // 对比度调整
+            // Contrast Adjustment
             r = Math.min(255, Math.max(0, (r - 128) * contrast + 128));
             g = Math.min(255, Math.max(0, (g - 128) * contrast + 128));
             b = Math.min(255, Math.max(0, (b - 128) * contrast + 128));
             
-            // 饱和度调整
+            // Saturation Adjustment
             const gray = (r + g + b) / 3;
             r = Math.min(255, Math.max(0, gray + (r - gray) * saturation));
             g = Math.min(255, Math.max(0, gray + (g - gray) * saturation));
@@ -399,14 +399,14 @@ class OldPhotoRestorer {
     applyDamageRestoration(data, settings, width, height) {
         const intensity = settings.intensity / 10;
         
-        // 检测并修复破损区域
+        // Detect and Repair Damaged Areas
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 检测异常像素
+                // Detect Abnormal Pixels
                 if (this.isDamagedPixel(data, width, height, x, y)) {
-                    // 使用周围像素修复
+                    // Repair Using Surrounding Pixels
                     const repaired = this.repairPixel(data, width, height, x, y);
                     data[index] = Math.round(data[index] * (1 - intensity) + repaired.r * intensity);
                     data[index + 1] = Math.round(data[index + 1] * (1 - intensity) + repaired.g * intensity);
@@ -424,7 +424,7 @@ class OldPhotoRestorer {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 中值滤波降噪
+                // Median Filter Noise Reduction
                 const median = this.calculateMedian(tempData, width, height, x, y);
                 
                 data[index] = Math.round(data[index] * (1 - intensity) + median.r * intensity);
@@ -435,11 +435,11 @@ class OldPhotoRestorer {
     }
 
     applyColorBalance(data, width, height) {
-        // 计算整体颜色统计
+        // Calculate Overall Color Statistics
         let rSum = 0, gSum = 0, bSum = 0;
         let count = 0;
         
-        for (let i = 0; i < data.length; i += 40) { // 采样
+        for (let i = 0; i < data.length; i += 40) { // Sampling
             rSum += data[i];
             gSum += data[i + 1];
             bSum += data[i + 2];
@@ -450,7 +450,7 @@ class OldPhotoRestorer {
         const gAvg = gSum / count;
         const bAvg = bSum / count;
         
-        // 白平衡校正
+        // White Balance Correction
         const maxAvg = Math.max(rAvg, gAvg, bAvg);
         const rFactor = maxAvg / rAvg;
         const gFactor = maxAvg / gAvg;
@@ -470,7 +470,7 @@ class OldPhotoRestorer {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 高斯模糊降噪
+                // Gaussian Blur Noise Reduction
                 const blurred = this.applyGaussianBlur(tempData, width, height, x, y);
                 
                 data[index] = Math.round(data[index] * 0.7 + blurred.r * 0.3);
@@ -487,7 +487,7 @@ class OldPhotoRestorer {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 拉普拉斯算子边缘增强
+                // Laplacian Operator Edge Enhancement
                 const laplacian = this.applyLaplacian(tempData, width, height, x, y);
                 
                 data[index] = Math.max(0, Math.min(255, data[index] + laplacian.r * 0.3));
@@ -498,12 +498,12 @@ class OldPhotoRestorer {
     }
 
     restoreTexture(data, width, height) {
-        // 纹理修复算法
+        // Texture Repair Algorithm
         for (let y = 2; y < height - 2; y++) {
             for (let x = 2; x < width - 2; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 计算局部纹理
+                // Calculate Local Texture
                 const texture = this.calculateLocalTexture(data, width, height, x, y);
                 
                 data[index] = Math.round(data[index] * 0.8 + texture.r * 0.2);
@@ -514,7 +514,7 @@ class OldPhotoRestorer {
     }
 
     removeScratches(data, width, height) {
-        // 划痕检测和修复
+        // Scratch Detection and Repair
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
@@ -530,7 +530,7 @@ class OldPhotoRestorer {
     }
 
     removeStains(data, width, height) {
-        // 污渍检测和修复
+        // Stain Detection and Repair
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
@@ -545,44 +545,44 @@ class OldPhotoRestorer {
         }
     }
 
-    // 辅助方法
+    // Helper Methods
     isDamagedPixel(data, width, height, x, y) {
         const index = (y * width + x) * 4;
         const r = data[index];
         const g = data[index + 1];
         const b = data[index + 2];
         
-        // 检测异常像素（过亮、过暗或颜色异常）
+        // Detect Abnormal Pixels (Overly Bright, Dark or Color Anomalies)
         const brightness = (r + g + b) / 3;
         return brightness < 10 || brightness > 245 || Math.abs(r - g) > 50 || Math.abs(g - b) > 50;
     }
 
     isScratchPixel(data, width, height, x, y) {
-        // 简化的划痕检测
+        // Simplified Scratch Detection
         const index = (y * width + x) * 4;
         const r = data[index];
         const g = data[index + 1];
         const b = data[index + 2];
         
-        // 检测线性异常
+        // Detect Linear Anomalies
         return Math.abs(r - g) < 5 && Math.abs(g - b) < 5 && (r + g + b) / 3 < 50;
     }
 
     isStainPixel(data, width, height, x, y) {
-        // 简化的污渍检测
+        // Simplified Stain Detection
         const index = (y * width + x) * 4;
         const r = data[index];
         const g = data[index + 1];
         const b = data[index + 2];
         
-        // 检测颜色异常
+        // Detect Color Anomalies
         return Math.abs(r - g) > 30 || Math.abs(g - b) > 30;
     }
 
     repairPixel(data, width, height, x, y) {
         let r = 0, g = 0, b = 0, count = 0;
         
-        // 使用周围8个像素的平均值
+        // Use Average of 8 Surrounding Pixels
         for (let dy = -1; dy <= 1; dy++) {
             for (let dx = -1; dx <= 1; dx++) {
                 if (dx === 0 && dy === 0) continue;
@@ -778,7 +778,7 @@ class OldPhotoRestorer {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="oldPhotoRestorer.downloadSingleImage('${imageData.name}')">下载</button>
+                    <button class="btn btn-success" onclick="oldPhotoRestorer.downloadSingleImage('${imageData.name}')">Download</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -789,7 +789,7 @@ class OldPhotoRestorer {
 
     async previewRestoration() {
         if (this.images.length === 0) {
-            alert('请先选择图片');
+            alert('Please select an image first');
             return;
         }
 
@@ -797,12 +797,12 @@ class OldPhotoRestorer {
         const restoredImage = await this.restoreImage(firstImage);
         
         if (restoredImage) {
-            // 创建预览窗口
+            // Create Preview Window
             const previewWindow = window.open('', '_blank', 'width=1200,height=800');
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>老照片修复预览</title>
+                        <title>Old Photo Restoration Preview</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f5f5f5; }
                             .preview-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
@@ -813,19 +813,19 @@ class OldPhotoRestorer {
                         </style>
                     </head>
                     <body>
-                        <h2>老照片修复预览</h2>
+                        <h2>Old Photo Restoration Preview</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>修复前</h3>
-                                <img src="${firstImage.dataUrl}" alt="修复前" />
-                                <div class="preview-info">尺寸: ${firstImage.width}×${firstImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(firstImage.size)}</div>
+                                <h3>Before Restoration</h3>
+                                <img src="${firstImage.dataUrl}" alt="Before Restoration" />
+                                <div class="preview-info">Size: ${firstImage.width}×${firstImage.height}</div>
+                                <div class="preview-info">File Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>修复后</h3>
-                                <img src="${restoredImage.dataUrl}" alt="修复后" />
-                                <div class="preview-info">尺寸: ${restoredImage.width}×${restoredImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(restoredImage.size)}</div>
+                                <h3>After Restoration</h3>
+                                <img src="${restoredImage.dataUrl}" alt="After Restoration" />
+                                <div class="preview-info">Size: ${restoredImage.width}×${restoredImage.height}</div>
+                                <div class="preview-info">File Size: ${this.formatFileSize(restoredImage.size)}</div>
                             </div>
                         </div>
                     </body>
@@ -854,13 +854,13 @@ class OldPhotoRestorer {
 
     async downloadAsZip() {
         if (this.restoredImages.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images available for download');
             return;
         }
 
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // Alternative solution: download one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -881,7 +881,7 @@ class OldPhotoRestorer {
     }
 }
 
-// 初始化应用
+// Initialize the application
 let oldPhotoRestorer;
 document.addEventListener('DOMContentLoaded', () => {
     oldPhotoRestorer = new OldPhotoRestorer();

@@ -13,18 +13,18 @@ class ImageConverter {
     }
 
     bindEvents() {
-        // 文件上传
+        // File upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag and drop upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 设置变化
+        // Settings changes
         document.getElementById('outputFormat').addEventListener('change', () => this.updateQualityVisibility());
         document.getElementById('qualitySlider').addEventListener('input', (e) => this.updateQualityValue(e));
         document.getElementById('resizeEnabled').addEventListener('change', (e) => this.toggleResizeInputs(e));
@@ -32,7 +32,7 @@ class ImageConverter {
         document.getElementById('widthInput').addEventListener('input', (e) => this.handleWidthChange(e));
         document.getElementById('heightInput').addEventListener('input', (e) => this.handleHeightChange(e));
         
-        // 按钮事件
+        // Button events
         document.getElementById('convertAllBtn').addEventListener('click', () => this.convertAllImages());
         document.getElementById('clearAllBtn').addEventListener('click', () => this.clearAllImages());
         document.getElementById('downloadAllBtn').addEventListener('click', () => this.downloadAllImages());
@@ -66,12 +66,12 @@ class ImageConverter {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 10) {
-            alert('最多只能上传10张图片');
+            alert('Maximum 10 images allowed');
             return;
         }
 
@@ -115,8 +115,8 @@ class ImageConverter {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="imageConverter.convertSingleImage('${imageData.id}')">转换</button>
-                    <button class="btn btn-secondary" onclick="imageConverter.removeImage('${imageData.id}')">删除</button>
+                    <button class="btn btn-primary" onclick="imageConverter.convertSingleImage('${imageData.id}')">Convert</button>
+                    <button class="btn btn-secondary" onclick="imageConverter.removeImage('${imageData.id}')">Remove</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -152,7 +152,7 @@ class ImageConverter {
         const format = document.getElementById('outputFormat').value;
         const qualityGroup = document.getElementById('qualityGroup');
         
-        // JPEG和WebP支持质量设置
+        // JPEG and WebP support quality settings
         if (format === 'jpeg' || format === 'webp') {
             qualityGroup.style.display = 'flex';
         } else {
@@ -170,7 +170,7 @@ class ImageConverter {
     }
 
     handleAspectRatioChange(e) {
-        // 保持宽高比的逻辑
+        // Keep aspect ratio logic
         if (e.target.checked) {
             this.aspectRatio = null;
         }
@@ -213,7 +213,7 @@ class ImageConverter {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `正在转换: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `Converting: ${imageData.name}`);
             
             try {
                 const convertedImage = await this.convertImage(imageData);
@@ -222,12 +222,12 @@ class ImageConverter {
                 }
                 completed++;
             } catch (error) {
-                console.error('转换失败:', error);
+                console.error('Conversion failed:', error);
                 completed++;
             }
         }
 
-        this.updateProgress(totalImages, totalImages, '转换完成');
+        this.updateProgress(totalImages, totalImages, 'Conversion completed');
         this.isConverting = false;
         this.displayResults();
     }
@@ -237,7 +237,7 @@ class ImageConverter {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            // 计算输出尺寸
+            // Calculate output dimensions
             let outputWidth = imageData.width;
             let outputHeight = imageData.height;
             
@@ -264,14 +264,14 @@ class ImageConverter {
             canvas.width = outputWidth;
             canvas.height = outputHeight;
             
-            // 绘制图片
+            // Draw image
             ctx.drawImage(imageData.img, 0, 0, outputWidth, outputHeight);
             
-            // 获取输出格式和质量
+            // Get output format and quality
             const outputFormat = document.getElementById('outputFormat').value;
             const quality = document.getElementById('qualitySlider').value / 100;
             
-            // 转换为指定格式
+            // Convert to specified format
             let mimeType = 'image/jpeg';
             let fileExtension = 'jpg';
             
@@ -293,10 +293,10 @@ class ImageConverter {
                     fileExtension = 'jpg';
             }
             
-            // 生成数据URL
+            // Generate data URL
             const dataUrl = canvas.toDataURL(mimeType, quality);
             
-            // 创建Blob
+            // Create Blob
             const byteString = atob(dataUrl.split(',')[1]);
             const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
             const ab = new ArrayBuffer(byteString.length);
@@ -306,7 +306,7 @@ class ImageConverter {
             }
             const blob = new Blob([ab], { type: mimeType });
             
-            // 生成文件名
+            // Generate filename
             const originalName = imageData.name.split('.')[0];
             const fileName = `${originalName}_converted.${fileExtension}`;
             
@@ -347,7 +347,7 @@ class ImageConverter {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="imageConverter.downloadSingleImage('${imageData.id}')">下载</button>
+                    <button class="btn btn-success" onclick="imageConverter.downloadSingleImage('${imageData.id}')">Download</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -376,16 +376,16 @@ class ImageConverter {
 
     async downloadAsZip() {
         if (this.convertedImages.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images to download');
             return;
         }
 
-        // 简单的打包下载 - 创建多个下载链接
+        // Simple batch download - create multiple download links
         const zipName = `converted_images_${new Date().getTime()}.zip`;
         
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // Here we provide an alternative: download one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -406,7 +406,7 @@ class ImageConverter {
     }
 }
 
-// 初始化应用
+// Initialize application
 let imageConverter;
 document.addEventListener('DOMContentLoaded', () => {
     imageConverter = new ImageConverter();

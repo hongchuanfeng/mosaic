@@ -4,80 +4,323 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>图片圆角处理工具</title>
-    <meta name="keywords" content="图片圆角,圆角处理,图片圆角化,圆角图片,图片编辑" />
-    <meta name="description" content="免费在线图片圆角处理工具，支持自定义圆角大小，一键生成圆角图片" />
+    <link id="favicon" rel="icon" type="image/png" href="../favicon.ico">
+    <title>在线免费图片马赛克 - 图片圆角工具</title>
+    <meta name="keywords" content="圆角图片,图片圆角处理,圆角生成,图片编辑,圆角半径" />
+    <meta name="description" content="免费在线图片圆角工具，支持自定义圆角半径，一键生成圆角图片。" />
     <link rel="canonical" href="https://mosaic.openai2025.com/corner/corner.html">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4SRJM5F5CT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        gtag('config', 'G-V0YFLKRH7D');
-    </script>
+  gtag('config', 'G-4SRJM5F5CT');
+</script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css.css">
     <link rel="stylesheet" href="corner.css">
     <style>
-        /* 与其它已修复页面保持一致的导航与层级 */
-        .navbar { 
-            background: rgba(255, 255, 255, 0.1) !important; 
-            backdrop-filter: blur(10px) !important; 
-            -webkit-backdrop-filter: blur(10px) !important; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important; 
+        body { min-height: 120vh; }
+        body { background-color: transparent; }
+        .navbar { position: relative; z-index: auto; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; }
+        .nav-link { padding: 0; display: inline-flex; align-items: center; }
+        .nav-toggle { display: none; background: transparent; border: none; padding: 8px; cursor: pointer; }
+        .hamburger { display: block; width: 22px; height: 2px; background: rgba(255, 255, 255, 0.9); margin: 5px 0; transition: transform .25s ease, opacity .25s ease; }
+        .nav-overlay { display: none; }
+
+        @media (min-width: 769px) {
+            .nav-link { padding: 5px 12px; }
+            .nav-menu { gap: 8px; }
+            .nav-item { display: inline-block; }
         }
-        .header-div { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; 
+
+        @media (min-width: 1025px) {
+            html, body { min-width: 1600px; }
+            .header-div, .main-div, .navbar, .nav-container { max-width: none; }
+        }
+
+        .lang-switch {
+            position: relative;
+            z-index: 2;
+            text-decoration: none;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.95);
+            margin-left: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            font-weight: 500;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        .lang-switch .ls-left {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-switch .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .lang-switch .divider {
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .lang-switch .label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .lang-switch .ls-right {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+        }
+        .lang-switch .arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.3s ease;
+        }
+        .lang-switch:hover .arrow {
+            transform: translateY(2px);
         }
         @media (max-width: 768px) {
-            /* 避免父层裁剪或新层叠上下文导致菜单被遮挡 */
+            .lang-switch {
+                position: fixed;
+                right: 12px;
+                height: 38px;
+                padding: 0 14px;
+                z-index: 10002;
+                font-size: 13px;
+            }
+            .lang-switch .badge {
+                font-size: 11px;
+                padding: 3px 8px;
+            }
+            .lang-switch .label {
+                font-size: 12px;
+            }
+        }
+
+        .nav-item { 
+            position: relative; 
+            display: inline-block;
+        }
+        .dropdown-toggle { 
+            cursor: pointer; 
+            user-select: none;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            min-width: 600px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            border-radius: 8px;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 1000;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            pointer-events: none;
+            overflow: visible;
+            max-height: none;
+            height: auto;
+        }
+        .nav-item:hover .dropdown-menu,
+        .nav-item.dropdown-open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .dropdown-menu .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: background-color 0.2s ease;
+            margin: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+        .dropdown-menu .nav-link:hover {
+            background: #f5f5f5;
+            color: #007bff;
+        }
+        .dropdown-toggle::after {
+            content: ' ▼';
+            font-size: 10px;
+            margin-left: 4px;
+            opacity: 0.7;
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .dropdown-menu {
+                min-width: 480px;
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .dropdown-menu {
+                min-width: 600px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .dropdown-toggle::before,
+        .nav-link[href="../about.html"]::before,
+        .nav-link[href="../contact.html"]::before {
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .dropdown-toggle::before {
+            content: "🤖";
+        }
+        .nav-link[href="../about.html"]::before {
+            content: "ℹ️";
+        }
+        .nav-link[href="../contact.html"]::before {
+            content: "📧";
+        }
+        
+        @media (min-width: 769px) {
+            .nav-item .dropdown-toggle {
+                color: rgba(255, 255, 255, 0.9);
+                background-color: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 8px 16px;
+                display: inline-block;
+                font-weight: 500;
+            }
+            .nav-item:hover .dropdown-toggle {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: #fff;
+            }
+        }
+
+        @media (max-width: 768px) {
             .header-div, .navbar, .nav-container { overflow: visible !important; }
             .header-div, .navbar, .nav-container { transform: none !important; -webkit-transform: none !important; }
             .header-div, .navbar, .nav-container { contain: unset !important; }
-
-            .nav-toggle { display: inline-block; position: relative; z-index: 10002; }
-            .nav-toggle { 
-                display: inline-flex; align-items: center; justify-content: center; 
-                width: 40px; height: 40px; padding: 0; margin-left: 8px; 
-                background: rgba(255,255,255,.55); border-radius: 8px; 
-                box-shadow: 0 1px 3px rgba(0,0,0,.2);
-            }
-            .hamburger { width: 22px; height: 3px; background: #333; margin: 3px 0; border-radius: 2px; }
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(1){ transform: translateY(7px) rotate(45deg);} 
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(2){ opacity:1; } 
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(3){ transform: translateY(-7px) rotate(-45deg);} 
-
-            .nav-menu { 
-                position: fixed; top: 0; bottom: 0; left: 0; 
-                width: 78%; max-width: 360px; background: #fff; 
-                box-shadow: 2px 0 10px rgba(0,0,0,.12); 
-                display: block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; 
-                overflow-y: auto; -webkit-overflow-scrolling: touch; 
-                transform: translateX(-100%); transition: transform .25s ease; 
-                z-index: 10001;
-            }
-            .nav-menu.nav-menu-active { transform: translateX(0); }
-            .nav-menu .nav-link { display:flex; align-items:center; padding:0; border-bottom:1px solid #f2f2f2; margin:10px 0; text-align: left; }
-
-            .nav-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:10000; display:block; }
-            .nav-overlay.nav-overlay-active { opacity:1; pointer-events:auto; }
-        }
-        
-        /* PC端导航菜单左对齐 */
-        @media (min-width: 769px) {
+            .nav-toggle { display: inline-block; }
             .nav-menu {
-                justify-content: flex-start !important;
+                position: fixed; top: 0; bottom: 0; left: 0; width: 85%; max-width: 420px;
+                background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,.12);
+                display: block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+                transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; will-change: transform;
             }
-            .nav-menu .nav-link {
-                text-align: left !important;
-                justify-content: flex-start !important;
+            .nav-menu .nav-link { display: flex; align-items: center; padding: 0; border-bottom: 1px solid #f2f2f2; }
+            .nav-menu.nav-menu-active { transform: translateX(0); }
+
+            .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 10000; display: block; }
+            .nav-overlay.nav-overlay-active { opacity: 1; pointer-events: auto; }
+
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(2) { opacity: 0; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            .nav-menu .nav-link { margin: 10px 0; }
+            
+            .nav-item {
+                width: 100%;
+                border-bottom: 1px solid #f2f2f2;
+            }
+            .dropdown-toggle {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding: 16px 20px;
+                color: #333;
+                background: white;
+                border: none;
+                text-align: left;
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                transform: none;
+                box-shadow: none;
+                background: #f8f9fa;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                transition: opacity 0.3s ease, max-height 0.3s ease;
+                border-radius: 0;
+                display: block !important;
+                grid-template-columns: 1fr !important;
+                min-width: auto !important;
+            }
+            .nav-item.dropdown-open .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 2000px;
+            }
+            .dropdown-menu .nav-link {
+                padding: 12px 20px 12px 40px;
+                font-size: 14px;
+                border-bottom: 1px solid #e9ecef;
+                color: #333;
+                text-align: left;
+            }
+            .dropdown-menu .nav-link:hover {
+                background: #e9ecef;
+            }
+            
+            .dropdown-toggle::before,
+            .nav-link[href="about.html"]::before,
+            .nav-link[href="contact.html"]::before {
+                display: inline-block;
+                margin-right: 8px;
+                font-size: 18px;
             }
         }
-        /* 上传区域提示文案颜色为白色 */
-        .upload-hint { color: #ffffff !important; }
     </style>
 </head>
 <body>
@@ -90,31 +333,46 @@
                     <span class="hamburger"></span>
                 </button>
                 <div class="nav-menu" id="navMenu">
-                    <a href="../index.html" class="nav-link">马赛克</a>
-                    <a href="../crop/crop.html" class="nav-link">图片裁剪</a>
-                    <a href="../convert/convert.html" class="nav-link">格式转换</a>
-                    <a href="../icon/icon.html" class="nav-link">icon生成</a>
-                    <a href="../compress/compress.html" class="nav-link">图片压缩</a>
-                    <a href="../blank/blank.html" class="nav-link">彩图转黑白</a>
-                    <a href="../watermark/watermark.html" class="nav-link">图片加水印</a>
-                    <a href="../removewm/removewm.html" class="nav-link">图片去水印</a>
-                    <a href="../nine/nine.html" class="nav-link">九宫格切图</a>
-                    <a href="../text/text.html" class="nav-link">文字转图片</a>
-                    <a href="../join/join.html" class="nav-link">图片拼接</a>
-                    <a href="../textToimage/textToimage.html" class="nav-link">图片加文字</a>
-                    <a href="corner.html" class="nav-link">圆角处理</a>
-                    <a href="../expand/expand.html" class="nav-link">图片放大</a>
-                    <a href="../old/old.html" class="nav-link">老照片修复</a>
-                    <a href="../bg/bg.html" class="nav-link">黑白上色</a>
-                    <a href="../removebg/removebg.html" class="nav-link">背景透明</a>
-                    <a href="../changebg/changebg.html" class="nav-link">背景更换</a>
+                    <div class="nav-item">
+                        <span class="nav-link dropdown-toggle">图片AI工具</span>
+                        <div class="dropdown-menu">
+                            <a href="../index.html" class="nav-link">图片马赛克</a>
+                            <a href="../crop/crop.html" class="nav-link">裁剪图片</a>
+                            <a href="../convert/convert.html" class="nav-link">格式转换</a>
+                            <a href="../icon/icon.html" class="nav-link">图标生成器</a>
+                            <a href="../compress/compress.html" class="nav-link">压缩图片</a>
+                            <a href="../blank/blank.html" class="nav-link">灰度处理</a>
+                            <a href="../watermark/watermark.html" class="nav-link">添加水印</a>
+                            <a href="../removewm/removewm.html" class="nav-link">去除水印</a>
+                            <a href="../nine/nine.html" class="nav-link">图片网格</a>
+                            <a href="../text/text.html" class="nav-link">文字转图片</a>
+                            <a href="../join/join.html" class="nav-link">合并图片</a>
+                            <a href="../textToimage/textToimage.html" class="nav-link">添加文字</a>
+                            <a href="../corner/corner.html" class="nav-link">圆角处理</a>
+                            <a href="../expand/expand.html" class="nav-link">放大图片</a>
+                            <a href="../old/old.html" class="nav-link">照片修复</a>
+                            <a href="../bg/bg.html" class="nav-link">图片上色</a>
+                            <a href="../removebg/removebg.html" class="nav-link">去除背景</a>
+                            <a href="../changebg/changebg.html" class="nav-link">更换背景</a>
+                        </div>
+                    </div>
+                    <a href="../about.html" class="nav-link">关于</a>
+                    <a href="../contact.html" class="nav-link">联系我们</a>
                 </div>
+                <a class="lang-switch" href="https://mosaic.openai2025.com/corner/corner.html" rel="nofollow" aria-label="切换到中文版本">
+                    <span class="ls-left">
+                        <span class="badge">CN</span>
+                        <span class="divider"></span>
+                        <span class="label">中文</span>
+                    </span>
+                    <span class="ls-right"><i class="arrow"></i></span>
+                </a>
             </div>
         </nav>
-        <h1 class="header-title">图片圆角处理</h1>
+        <h1 class="header-title">图片圆角</h1>
     </header>
 
-    <!-- 移动端菜单遮罩层 -->
+    <!-- Mobile menu overlay -->
     <div class="nav-overlay" id="navOverlay"></div>
 
     <main class="main-container">
@@ -123,9 +381,9 @@
             <div class="upload-area">
                 <label for="fileInput" class="file-label">
                     <div class="upload-icon">🖼️</div>
-                    <div class="upload-text">点击选择图片或拖拽到此处</div>
-                    <div class="upload-hint">支持 JPG, PNG, GIF, BMP, WebP 格式</div>
-                    <div class="upload-hint">选择图片后即可添加圆角效果</div>
+                    <div class="upload-text">点击选择图片或拖放到此处</div>
+                    <div class="upload-hint">支持 JPG、PNG、GIF、BMP、WebP 格式</div>
+                    <div class="upload-hint">选择图片后可添加圆角</div>
                 </label>
                 <input type="file" id="fileInput" accept="image/*" />
             </div>
@@ -137,7 +395,7 @@
                 <h3>圆角设置</h3>
                 
                 <div class="settings-grid">
-                    <!-- 圆角类型 -->
+                    <!-- Corner type -->
                     <div class="setting-group">
                         <label class="setting-label">圆角类型</label>
                         <div class="corner-types">
@@ -159,7 +417,7 @@
                         </div>
                     </div>
 
-                    <!-- 统一圆角设置 -->
+                    <!-- Uniform corner settings -->
                     <div class="setting-group" id="uniformCornerGroup">
                         <label class="setting-label">圆角大小</label>
                         <div class="corner-controls">
@@ -169,7 +427,7 @@
                                 <span id="cornerRadiusValue">30px</span>
                             </div>
                             <div class="corner-presets">
-                                <label>快速设置</label>
+                                <label>快捷设置</label>
                                 <div class="preset-buttons">
                                     <button class="preset-btn" data-radius="0">无圆角</button>
                                     <button class="preset-btn" data-radius="5">小圆角</button>
@@ -181,7 +439,7 @@
                         </div>
                     </div>
 
-                    <!-- 自定义圆角设置 -->
+                    <!-- Custom corner settings -->
                     <div class="setting-group" id="customCornerGroup" style="display: none;">
                         <label class="setting-label">自定义圆角</label>
                         <div class="custom-corner-controls">
@@ -208,7 +466,7 @@
                         </div>
                     </div>
 
-                    <!-- 圆形图片设置 -->
+                    <!-- Circular image settings -->
                     <div class="setting-group" id="circleGroup" style="display: none;">
                         <label class="setting-label">圆形设置</label>
                         <div class="circle-controls">
@@ -218,12 +476,12 @@
                                 <span id="circleSizeValue">200px</span>
                             </div>
                             <div class="circle-presets">
-                                <label>快速设置</label>
+                                <label>快捷设置</label>
                                 <div class="preset-buttons">
-                                    <button class="preset-btn" data-size="100">小圆形</button>
-                                    <button class="preset-btn" data-size="150">中圆形</button>
-                                    <button class="preset-btn" data-size="200">大圆形</button>
-                                    <button class="preset-btn" data-size="300">超大圆形</button>
+                                    <button class="preset-btn" data-size="100">小圆</button>
+                                    <button class="preset-btn" data-size="150">中圆</button>
+                                    <button class="preset-btn" data-size="200">大圆</button>
+                                    <button class="preset-btn" data-size="300">超大圆</button>
                                 </div>
                             </div>
                             <div class="circle-crop-option">
@@ -236,7 +494,7 @@
                         </div>
                     </div>
 
-                    <!-- 背景设置 -->
+                    <!-- Background settings -->
                     <div class="setting-group">
                         <label class="setting-label">背景设置</label>
                         <div class="background-controls">
@@ -271,7 +529,7 @@
                         </div>
                     </div>
 
-                    <!-- 尺寸设置 -->
+                    <!-- Size settings -->
                     <div class="setting-group">
                         <label class="setting-label">尺寸设置</label>
                         <div class="size-controls">
@@ -279,7 +537,7 @@
                                 <label class="radio-label">
                                     <input type="radio" name="sizeMode" value="original" checked />
                                     <span class="radio-mark"></span>
-                                    保持原尺寸
+                                    保持原始尺寸
                                 </label>
                             </div>
                             <div class="size-option">
@@ -302,14 +560,14 @@
                         </div>
                     </div>
 
-                    <!-- 输出设置 -->
+                    <!-- Output settings -->
                     <div class="setting-group">
                         <label class="setting-label">输出设置</label>
                         <div class="output-options">
                             <select id="outputFormat" class="format-select">
-                                <option value="png">PNG (.png)</option>
-                                <option value="jpeg">JPEG (.jpg)</option>
-                                <option value="webp">WebP (.webp)</option>
+                                <option value="png">PNG（.png）</option>
+                                <option value="jpeg">JPEG（.jpg）</option>
+                                <option value="webp">WebP（.webp）</option>
                             </select>
                             <div class="quality-group" id="qualityGroup" style="display: none;">
                                 <label>图片质量</label>
@@ -322,7 +580,7 @@
 
                 <div class="action-buttons">
                     <button id="previewBtn" class="btn btn-primary">预览效果</button>
-                    <button id="processBtn" class="btn btn-success">处理图片</button>
+                    <button id="processBtn" class="btn btn-success">生成图片</button>
                     <button id="clearBtn" class="btn btn-outline">重新选择</button>
                 </div>
             </div>
@@ -331,9 +589,13 @@
         <!-- 预览区域 -->
         <section class="preview-section" id="previewSection" style="display: none;">
             <div class="preview-container">
-                <h3>预览效果</h3>
+                <h3>裁剪预览</h3>
                 <div class="preview-canvas-container">
                     <canvas id="previewCanvas"></canvas>
+                </div>
+                <div class="preview-info">
+                    <span id="cropSize">尺寸：0 × 0</span>
+                    <span id="cropRatio">比例：1:1</span>
                 </div>
                 <div class="preview-actions">
                     <button id="downloadBtn" class="btn btn-success">下载图片</button>
@@ -343,93 +605,372 @@
             </div>
         </section>
 
-        <!-- 使用说明 -->
-        <section class="instructions-section">
-            <div class="instructions-container">
-                <h3>使用说明</h3>
-                <div class="instructions-content">
-                    <div class="instruction-item">
-                        <h4>🖼️ 图片上传</h4>
-                        <p>支持拖拽上传或点击选择图片，支持JPG、PNG、GIF等常见格式</p>
+    </main>
+
+    <!-- 功能说明与使用指南 -->
+    <section class="info-section">
+        <div class="info-container">
+            <!-- 功能说明 -->
+            <div class="info-card">
+                <h2>📋 功能说明</h2>
+                <p>我们的图片圆角工具为您的图片添加圆角提供了丰富的功能：</p>
+                <ul>
+                    <li><strong>多种圆角类型：</strong> 支持统一圆角、自定义圆角以及圆形裁剪</li>
+                    <li><strong>精准控制：</strong> 圆角半径可在0-100像素之间调节并实时预览</li>
+                    <li><strong>快捷预设：</strong> 一键应用常用圆角尺寸（小、中、大、超大）</li>
+                    <li><strong>背景选择：</strong> 支持透明背景、纯色背景或渐变背景</li>
+                    <li><strong>格式支持：</strong> 输出PNG、JPEG或WebP格式，可控制导出质量</li>
+                </ul>
+            </div>
+
+            <!-- 使用指南 -->
+            <div class="info-card">
+                <h2>💡 使用指南</h2>
+                <ol>
+                    <li>点击“选择图片”或拖放图片进行上传</li>
+                    <li>选择圆角类型：统一圆角、自定义圆角或圆形图片</li>
+                    <li>统一圆角模式下，使用滑块或快捷按钮设置圆角半径</li>
+                    <li>自定义圆角模式下，单独调节四个角的圆角半径</li>
+                    <li>圆形模式下，设置圆形尺寸并可选自动裁剪为正方形</li>
+                    <li>选择背景类型：透明、纯色或渐变，并设置背景颜色</li>
+                    <li>选择尺寸模式：保持原始尺寸或自定义尺寸</li>
+                    <li>选择输出格式（PNG、JPEG或WebP）并调节质量</li>
+                    <li>点击“预览效果”查看效果，满意后点击“生成图片”</li>
+                    <li>下载生成的圆角图片</li>
+                </ol>
+            </div>
+
+            <!-- 使用案例 -->
+            <div class="info-card">
+                <h2>🎨 使用案例</h2>
+                <div class="use-cases">
+                    <div class="use-case-item">
+                        <strong>头像制作：</strong> 为社交媒体、论坛或网站制作圆角头像
                     </div>
-                    <div class="instruction-item">
-                        <h4>🔘 圆角设置</h4>
-                        <p>支持统一圆角、自定义圆角和圆形图片，可精确控制每个角的圆角大小</p>
+                    <div class="use-case-item">
+                        <strong>产品图片：</strong> 为电商产品图添加圆角提升视觉效果
                     </div>
-                    <div class="instruction-item">
-                        <h4>🎨 背景控制</h4>
-                        <p>可选择透明背景、纯色背景或渐变背景，圆角处自动透明处理</p>
+                    <div class="use-case-item">
+                        <strong>UI 设计：</strong> 为应用界面、按钮或卡片生成圆角图片
                     </div>
-                    <div class="instruction-item">
-                        <h4>💾 格式输出</h4>
-                        <p>支持PNG、JPG、WebP等多种格式输出，满足不同使用需求</p>
+                    <div class="use-case-item">
+                        <strong>相册整理：</strong> 为照片集批量添加圆角，呈现统一风格
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <script>
-        // 统一的移动端导航逻辑
+    <!-- 视频教程 -->
+    <section class="examples-section">
+        <div class="examples-container">
+            <h2>📹 视频教程</h2>
+            <div class="examples-grid">
+                <div class="example-card example-video-card">
+                    <h3>如何为图片添加圆角</h3>
+                    <div class="example-video-wrapper">
+                        <video src="/static/image/corner.mp4" controls class="example-video" poster="">
+                            您的浏览器不支持视频标签。
+                        </video>
+                    </div>
+                    <p class="example-description">
+                        <strong>视频指南：</strong> 观看本教程视频，了解如何高效使用图片圆角工具，包括上传图片、选择圆角类型、调整半径、设置背景以及下载图片的完整流程。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 会员套餐 -->
+    <section class="pricing-section">
+        <div class="pricing-container">
+            <h2>💎 会员套餐</h2>
+            <div class="pricing-grid">
+                <!-- 月度套餐 -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>月度套餐</h3>
+                        <div class="price">$6.6<span>/月</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 无限圆角处理</li>
+                        <li>✓ 支持所有圆角类型</li>
+                        <li>✓ 支持全部背景选项</li>
+                        <li>✓ 优先客服支持</li>
+                        <li>✓ 无广告体验</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+
+                <!-- 季度套餐 -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">超值选择</div>
+                    <div class="pricing-header">
+                        <h3>季度套餐</h3>
+                        <div class="price">$16.66<span>/3个月</span></div>
+                        <div class="price-save">节省17%</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 包含月度套餐所有功能</li>
+                        <li>✓ 高级圆角效果</li>
+                        <li>✓ 批量处理</li>
+                        <li>✓ API访问</li>
+                        <li>✓ 自定义模板</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+
+                <!-- 年度套餐 -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>年度套餐</h3>
+                        <div class="price">$56.66<span>/年</span></div>
+                        <div class="price-save">节省33%</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 包含季度套餐所有功能</li>
+                        <li>✓ 无限存储</li>
+                        <li>✓ 白标选项</li>
+                        <li>✓ 专属支持</li>
+                        <li>✓ 新功能抢先体验</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 邮件订阅 -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <h2>📧 订阅我们的 newsletter</h2>
+            <p>获取使用指南、使用案例和独家会员优惠</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="输入您的邮箱地址" required class="newsletter-input">
+                <button type="submit" class="newsletter-btn">订阅</button>
+            </form>
+            <p class="newsletter-note">订阅后，您将收到使用指南、使用案例和会员信息。</p>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>分类</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">图片马赛克</a></li>
+                        <li><a href="../crop/crop.html">裁剪图片</a></li>
+                        <li><a href="../convert/convert.html">格式转换</a></li>
+                        <li><a href="../icon/icon.html">图标生成器</a></li>
+                        <li><a href="corner.html">圆角处理</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <p>传道AI提供前沿的图像处理工具，帮助您轻松创建、编辑和增强图像。</p>
+                    <a href="../about.html" class="footer-link">了解更多</a>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <p>邮箱：<a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                    <p>我们随时为您解答任何问题或疑虑。</p>
+                    <a href="../contact.html" class="footer-link">联系我们</a>
+                </div>
+                <div class="footer-column">
+                    <h3>法律信息</h3>
+                    <ul class="footer-links">
+                        <li><a href="../privacy.html">隐私政策</a></li>
+                        <li><a href="../terms.html">服务条款</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>版权所有 © 传道AI。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        // Mobile menu toggle logic
         document.addEventListener('DOMContentLoaded', function() {
             const navToggle = document.getElementById('navToggle');
             const navMenu = document.getElementById('navMenu');
             const navOverlay = document.getElementById('navOverlay');
+            const navItem = document.querySelector('.nav-item'); // For dropdown
+            const dropdownToggle = document.querySelector('.dropdown-toggle'); // For dropdown
+            const dropdownMenu = document.querySelector('.dropdown-menu'); // For dropdown
             const navOriginalContainer = navMenu ? navMenu.parentElement : null;
-
-            function isMobile(){ return window.innerWidth <= 768; }
-
-            function toggleMenu(){
-                if (!isMobile()) return;
-                navMenu.classList.toggle('nav-menu-active');
-                navToggle.classList.toggle('nav-toggle-active');
-                navOverlay.classList.toggle('nav-overlay-active');
-                if (navMenu.classList.contains('nav-menu-active')){
-                    navMenu.style.transform = 'translateX(0)';
-                    document.body.classList.add('menu-open');
-                    document.documentElement.classList.add('menu-open');
+            
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            // Move menu to body directly on mobile to avoid parent stacking context/clipping affecting z-index
+            function promoteMenuForMobile(){
+                if (!navMenu) return;
+                if (isMobile()) {
+                    if (navMenu.parentElement !== document.body) {
+                        document.body.appendChild(navMenu);
+                    }
+                    // Ensure mobile menu has correct styles
+                    navMenu.style.display = 'flex';
+                    navMenu.style.position = 'fixed';
+                    navMenu.style.top = '0';
+                    navMenu.style.left = '0';
+                    navMenu.style.width = '380px';
+                    navMenu.style.height = '100vh';
+                    navMenu.style.background = '#ffffff';
+                    navMenu.style.flexDirection = 'column';
+                    navMenu.style.justifyContent = 'flex-start';
+                    navMenu.style.alignItems = 'stretch';
+                    navMenu.style.padding = '0';
+                    navMenu.style.gap = '0';
+                    navMenu.style.zIndex = '10001';
+                    navMenu.style.boxShadow = '2px 0 10px rgba(0, 0, 0, 0.1)';
                     navMenu.style.overflowY = 'scroll';
                     navMenu.style.overflowX = 'hidden';
-                    navMenu.style.height = '100vh';
-                    navMenu.style.touchAction = 'pan-y';
                     navMenu.style.webkitOverflowScrolling = 'touch';
+                    navMenu.style.touchAction = 'pan-y';
+                    navMenu.style.transition = 'transform .25s ease';
+                    
+                    // Keep menu's current display state, don't force hide
+                    if (!navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(-100%)';
+                    } else {
+                        navMenu.style.transform = 'translateX(0)';
+                    }
                 } else {
-                    navMenu.style.transform = 'translateX(-100%)';
+                    if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
+                        navOriginalContainer.appendChild(navMenu);
+                    }
+                    // Reset PC styles
+                    navMenu.style.display = '';
+                    navMenu.style.position = '';
+                    navMenu.style.top = '';
+                    navMenu.style.left = '';
+                    navMenu.style.width = '';
+                    navMenu.style.height = '';
+                    navMenu.style.background = '';
+                    navMenu.style.flexDirection = '';
+                    navMenu.style.justifyContent = '';
+                    navMenu.style.alignItems = '';
+                    navMenu.style.padding = '';
+                    navMenu.style.gap = '';
+                    navMenu.style.zIndex = '';
+                    navMenu.style.boxShadow = '';
+                    navMenu.style.overflowY = '';
+                    navMenu.style.overflowX = '';
+                    navMenu.style.webkitOverflowScrolling = '';
+                    navMenu.style.touchAction = '';
+                    navMenu.style.transition = '';
+                    navMenu.style.transform = '';
+                }
+            }
+            
+            // Call on initialization
+            promoteMenuForMobile();
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                    document.body.classList.toggle('menu-open');
+                    document.documentElement.classList.toggle('menu-open');
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
                     document.body.classList.remove('menu-open');
                     document.documentElement.classList.remove('menu-open');
                 }
             }
 
-            function closeMenu(){
-                if (!isMobile()) return;
-                navMenu.classList.remove('nav-menu-active');
-                navToggle.classList.remove('nav-toggle-active');
-                navOverlay.classList.remove('nav-overlay-active');
-                navMenu.style.transform = 'translateX(-100%)';
-                document.body.classList.remove('menu-open');
-                document.documentElement.classList.remove('menu-open');
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
             }
-
-            function promoteMenuForMobile(){
-                if (!navMenu) return;
-                if (isMobile()){
-                    if (navMenu.parentElement !== document.body) document.body.appendChild(navMenu);
-                } else if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer){
-                    navOriginalContainer.appendChild(navMenu);
-                }
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
             }
-            promoteMenuForMobile();
-
-            if (navToggle) navToggle.addEventListener('click', toggleMenu);
-            if (navOverlay) navOverlay.addEventListener('click', closeMenu);
-
+            
+            // Mobile reliable navigation
             const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => { link.addEventListener('click', function(){ if(isMobile()) closeMenu(); }); });
-
-            window.addEventListener('resize', function(){
-                if (!isMobile()) closeMenu();
+            navLinks.forEach(link => {
+                let startX = 0, startY = 0, startT = 0;
+                const threshold = 8;
+                function onStart(e){ if(!isMobile()) return; const t=e.touches?e.touches[0]:e; startX=t.clientX; startY=t.clientY; startT=Date.now(); }
+                function onEnd(e){ if(!isMobile()) return; const t=e.changedTouches?e.changedTouches[0]:e; const dx=Math.abs(t.clientX-startX); const dy=Math.abs(t.clientY-startY); const dt=Date.now()-startT; if(dx<threshold&&dy<threshold&&dt<1500){ const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href); } } }
+                link.addEventListener('touchstart', onStart, {passive:true, capture:true});
+                link.addEventListener('touchend', onEnd, {passive:false, capture:true});
+                link.addEventListener('mousedown', onStart, true);
+                link.addEventListener('mouseup', onEnd, true);
+                link.addEventListener('click', function(e){ if(!isMobile()) return; const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href);} }, true);
+            });
+            
+            // Close menu when window size changes
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                }
                 promoteMenuForMobile();
             });
+            
+            // Add scroll listener to ensure menu position is correct
+            window.addEventListener('scroll', function() {
+                if (isMobile() && navMenu.classList.contains('nav-menu-active')) {
+                    // When menu is open, ensure position is correct
+                    navMenu.style.top = '0';
+                }
+            });
+            
+            // PC dropdown logic
+            if (!isMobile() && navItem && dropdownToggle && dropdownMenu) {
+                let hideTimer = null;
+
+                function showDropdown() {
+                    if (hideTimer) {
+                        clearTimeout(hideTimer);
+                        hideTimer = null;
+                    }
+                    navItem.classList.add('dropdown-open');
+                }
+
+                function hideDropdown() {
+                    hideTimer = setTimeout(function() {
+                        navItem.classList.remove('dropdown-open');
+                    }, 200);
+                }
+
+                navItem.addEventListener('mouseenter', showDropdown);
+                dropdownMenu.addEventListener('mouseenter', showDropdown);
+                navItem.addEventListener('mouseleave', function(e) {
+                    if (e.relatedTarget && dropdownMenu.contains(e.relatedTarget)) {
+                        return;
+                    }
+                    hideDropdown();
+                });
+                dropdownMenu.addEventListener('mouseleave', function(e) {
+                    if (e.relatedTarget && navItem.contains(e.relatedTarget)) {
+                        return;
+                    }
+                    hideDropdown();
+                });
+            }
+            
+            // Mobile dropdown toggle
+            if (isMobile() && dropdownToggle) {
+                dropdownToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    navItem.classList.toggle('dropdown-open');
+                });
+            }
         });
     </script>
     <script src="corner.js"></script>

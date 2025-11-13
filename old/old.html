@@ -4,66 +4,321 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>老照片修复工具 - 智能图像修复</title>
-    <meta name="keywords" content="老照片修复,旧照片修复,照片修复,图像修复,照片修复工具,在线修复照片" />
-    <meta name="description" content="免费在线老照片修复工具，智能修复破损、褪色、模糊的老照片，恢复照片原有色彩和细节，支持批量处理" />
+    <link id="favicon" rel="icon" type="image/png" href="../favicon.ico">
+    <title>在线免费图片马赛克 - 老照片修复工具</title>
+    <meta name="keywords" content="老照片修复,照片修复,图像修复,老照片修复工具,在线照片修复" />
+    <meta name="description" content="免费在线老照片修复工具，智能修复受损、褪色、模糊的老照片，还原原始色彩和细节，支持批量处理" />
     <link rel="canonical" href="https://mosaic.openai2025.com/old/old.html">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4SRJM5F5CT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        gtag('config', 'G-V0YFLKRH7D');
-    </script>
+  gtag('config', 'G-4SRJM5F5CT');
+</script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css.css">
     <link rel="stylesheet" href="old.css">
     <style>
-        /* 与 index.html 完全一致并提升优先级，兼容 WebKit */
-        .navbar { 
-            background: rgba(255, 255, 255, 0.1) !important;
-            backdrop-filter: blur(10px) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        body { min-height: 120vh; }
+        body { background-color: transparent; }
+        .navbar { position: relative; z-index: auto; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; }
+        .nav-link { padding: 0; display: inline-flex; align-items: center; }
+        .nav-toggle { display: none; background: transparent; border: none; padding: 8px; cursor: pointer; }
+        .hamburger { display: block; width: 22px; height: 2px; background: rgba(255, 255, 255, 0.9); margin: 5px 0; transition: transform .25s ease, opacity .25s ease; }
+        .nav-overlay { display: none; }
+
+        @media (min-width: 769px) {
+            .nav-link { padding: 5px 12px; }
+            .nav-menu { gap: 8px; }
+            .nav-item { display: inline-block; }
         }
-        /* 防止父级裁剪或新层叠上下文导致菜单被遮挡 */
-        .header-div, .navbar, .nav-container { overflow: visible !important; }
-        .header-div, .navbar, .nav-container { transform: none !important; -webkit-transform: none !important; }
-        .header-div, .navbar, .nav-container { contain: unset !important; }
-        /* 汉堡按钮抬升层级并优化视觉 */
+
+        @media (min-width: 1025px) {
+            html, body { min-width: 1600px; }
+            .header-div, .main-div, .navbar, .nav-container { max-width: none; }
+        }
+
+        .lang-switch {
+            position: relative;
+            z-index: 2;
+            text-decoration: none;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.95);
+            margin-left: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            font-weight: 500;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        .lang-switch .ls-left {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-switch .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .lang-switch .divider {
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .lang-switch .label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .lang-switch .ls-right {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+        }
+        .lang-switch .arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.3s ease;
+        }
+        .lang-switch:hover .arrow {
+            transform: translateY(2px);
+        }
         @media (max-width: 768px) {
-            .nav-toggle { 
-                display: inline-flex !important; align-items: center; justify-content: center; 
-                width: 40px; height: 40px; padding: 0; margin-left: 8px; 
-                background: rgba(255,255,255,.55); border-radius: 8px; 
-                box-shadow: 0 1px 3px rgba(0,0,0,.2); position: relative; z-index: 10002; 
+            .lang-switch {
+                position: fixed;
+                right: 12px;
+                height: 38px;
+                padding: 0 14px;
+                z-index: 10002;
+                font-size: 13px;
             }
-            .hamburger { width: 22px; height: 3px; background: #333; margin: 3px 0; border-radius: 2px; }
+            .lang-switch .badge {
+                font-size: 11px;
+                padding: 3px 8px;
+            }
+            .lang-switch .label {
+                font-size: 12px;
+            }
         }
-        /* 移动端抽屉菜单与 index 一致 */
-        @media (max-width: 768px) {
-            .nav-toggle { display: inline-block; }
-            .nav-menu { position: fixed; top:0; bottom:0; left:0; width:78%; max-width:360px; background:#fff; box-shadow:2px 0 10px rgba(0,0,0,.12); display:block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y:auto; -webkit-overflow-scrolling:touch; transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; }
-            .nav-menu.nav-menu-active { transform: translateX(0); }
-            .nav-menu .nav-link { display:flex; align-items:center; padding:0; border-bottom:1px solid #f2f2f2; margin:10px 0; text-align: left; }
-            .nav-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:10000; display:block; }
-            .nav-overlay.nav-overlay-active { opacity:1; pointer-events:auto; }
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(1){ transform: translateY(7px) rotate(45deg);} 
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(2){ opacity:0;} 
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(3){ transform: translateY(-7px) rotate(-45deg);} 
+
+        .nav-item { 
+            position: relative; 
+            display: inline-block;
+        }
+        .dropdown-toggle { 
+            cursor: pointer; 
+            user-select: none;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            min-width: 600px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            border-radius: 8px;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 1000;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            pointer-events: none;
+            overflow: visible;
+            max-height: none;
+            height: auto;
+        }
+        .nav-item:hover .dropdown-menu,
+        .nav-item.dropdown-open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .dropdown-menu .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: background-color 0.2s ease;
+            margin: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+        .dropdown-menu .nav-link:hover {
+            background: #f5f5f5;
+            color: #007bff;
+        }
+        .dropdown-toggle::after {
+            content: ' ▼';
+            font-size: 10px;
+            margin-left: 4px;
+            opacity: 0.7;
         }
         
-        /* PC端导航菜单左对齐 */
-        @media (min-width: 769px) {
-            .nav-menu {
-                justify-content: flex-start !important;
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .dropdown-menu {
+                min-width: 480px;
+                grid-template-columns: repeat(3, 1fr);
             }
-            .nav-menu .nav-link {
-                text-align: left !important;
-                justify-content: flex-start !important;
+        }
+        
+        @media (min-width: 1025px) {
+            .dropdown-menu {
+                min-width: 600px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .dropdown-toggle::before,
+        .nav-link[href="../about.html"]::before,
+        .nav-link[href="../contact.html"]::before {
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .dropdown-toggle::before {
+            content: "🤖";
+        }
+        .nav-link[href="../about.html"]::before {
+            content: "ℹ️";
+        }
+        .nav-link[href="../contact.html"]::before {
+            content: "📧";
+        }
+        
+        @media (min-width: 769px) {
+            .nav-item .dropdown-toggle {
+                color: rgba(255, 255, 255, 0.9);
+                background-color: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 8px 16px;
+                display: inline-block;
+                font-weight: 500;
+            }
+            .nav-item:hover .dropdown-toggle {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: #fff;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-div, .navbar, .nav-container { overflow: visible !important; }
+            .header-div, .navbar, .nav-container { transform: none !important; -webkit-transform: none !important; }
+            .header-div, .navbar, .nav-container { contain: unset !important; }
+            .nav-toggle { display: inline-block; }
+            .nav-menu {
+                position: fixed; top: 0; bottom: 0; left: 0; width: 85%; max-width: 420px;
+                background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,.12);
+                display: block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+                transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; will-change: transform;
+            }
+            .nav-menu .nav-link { display: flex; align-items: center; padding: 0; border-bottom: 1px solid #f2f2f2; }
+            .nav-menu.nav-menu-active { transform: translateX(0); }
+
+            .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 10000; display: block; }
+            .nav-overlay.nav-overlay-active { opacity: 1; pointer-events: auto; }
+
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(2) { opacity: 0; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            .nav-menu .nav-link { margin: 10px 0; }
+            
+            .nav-item {
+                width: 100%;
+                border-bottom: 1px solid #f2f2f2;
+            }
+            .dropdown-toggle {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding: 16px 20px;
+                color: #333;
+                background: white;
+                border: none;
+                text-align: left;
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                transform: none;
+                box-shadow: none;
+                background: #f8f9fa;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                transition: opacity 0.3s ease, max-height 0.3s ease;
+                border-radius: 0;
+                display: block !important;
+                grid-template-columns: 1fr !important;
+                min-width: auto !important;
+            }
+            .nav-item.dropdown-open .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 2000px;
+            }
+            .dropdown-menu .nav-link {
+                padding: 12px 20px 12px 40px;
+                font-size: 14px;
+                border-bottom: 1px solid #e9ecef;
+                color: #333;
+                text-align: left;
+            }
+            .dropdown-menu .nav-link:hover {
+                background: #e9ecef;
+            }
+            
+            .dropdown-toggle::before,
+            .nav-link[href="../about.html"]::before,
+            .nav-link[href="../contact.html"]::before {
+                display: inline-block;
+                margin-right: 8px;
+                font-size: 18px;
             }
         }
     </style>
@@ -78,66 +333,81 @@
                     <span class="hamburger"></span>
                 </button>
                 <div class="nav-menu" id="navMenu">
-                    <a href="../index.html" class="nav-link">马赛克</a>
-                    <a href="../crop/crop.html" class="nav-link">图片裁剪</a>
-                    <a href="../convert/convert.html" class="nav-link">格式转换</a>
-                    <a href="../icon/icon.html" class="nav-link">icon生成</a>
-                    <a href="../compress/compress.html" class="nav-link">图片压缩</a>
-                    <a href="../blank/blank.html" class="nav-link">彩图转黑白</a>
-                    <a href="../watermark/watermark.html" class="nav-link">图片加水印</a>
-                    <a href="../removewm/removewm.html" class="nav-link">图片去水印</a>
-                    <a href="../nine/nine.html" class="nav-link">九宫格切图</a>
-                    <a href="../text/text.html" class="nav-link">文字转图片</a>
-                    <a href="../join/join.html" class="nav-link">图片拼接</a>
-                    <a href="../textToimage/textToimage.html" class="nav-link">图片加文字</a>
-                    <a href="../corner/corner.html" class="nav-link">圆角处理</a>
-                    <a href="../expand/expand.html" class="nav-link">图片放大</a>
-                    <a href="old.html" class="nav-link">老照片修复</a>
-                    <a href="../bg/bg.html" class="nav-link">黑白上色</a>
-                    <a href="../removebg/removebg.html" class="nav-link">背景透明</a>
-                    <a href="../changebg/changebg.html" class="nav-link">背景更换</a>
+                    <div class="nav-item">
+                        <span class="nav-link dropdown-toggle">图片AI工具</span>
+                        <div class="dropdown-menu">
+                            <a href="../index.html" class="nav-link">图片马赛克</a>
+                            <a href="../crop/crop.html" class="nav-link">裁剪图片</a>
+                            <a href="../convert/convert.html" class="nav-link">格式转换</a>
+                            <a href="../icon/icon.html" class="nav-link">图标生成器</a>
+                            <a href="../compress/compress.html" class="nav-link">压缩图片</a>
+                            <a href="../blank/blank.html" class="nav-link">灰度处理</a>
+                            <a href="../watermark/watermark.html" class="nav-link">添加水印</a>
+                            <a href="../removewm/removewm.html" class="nav-link">去除水印</a>
+                            <a href="../nine/nine.html" class="nav-link">图片网格</a>
+                            <a href="../text/text.html" class="nav-link">文字转图片</a>
+                            <a href="../join/join.html" class="nav-link">合并图片</a>
+                            <a href="../textToimage/textToimage.html" class="nav-link">添加文字</a>
+                            <a href="../corner/corner.html" class="nav-link">圆角处理</a>
+                            <a href="../expand/expand.html" class="nav-link">放大图片</a>
+                            <a href="old.html" class="nav-link">照片修复</a>
+                            <a href="../bg/bg.html" class="nav-link">图片上色</a>
+                            <a href="../removebg/removebg.html" class="nav-link">去除背景</a>
+                            <a href="../changebg/changebg.html" class="nav-link">更换背景</a>
+                        </div>
+                    </div>
+                    <a href="../about.html" class="nav-link">关于</a>
+                    <a href="../contact.html" class="nav-link">联系我们</a>
                 </div>
+                <a class="lang-switch" href="https://mosaic.openai2025.com/old/old.html" rel="nofollow" aria-label="切换到中文版本">
+                    <span class="ls-left">
+                        <span class="badge">CN</span>
+                        <span class="divider"></span>
+                        <span class="label">中文</span>
+                    </span>
+                    <span class="ls-right"><i class="arrow"></i></span>
+                </a>
             </div>
         </nav>
-        <h1 class="header-title">老照片修复工具</h1>
+        <h1 class="header-title">老照片修复</h1>
     </header>
 
-    <!-- 移动端菜单遮罩层 -->
+    <!-- Mobile menu overlay -->
     <div class="nav-overlay" id="navOverlay"></div>
 
     <main class="main-container">
-        <!-- 文件上传区域 -->
+        <!-- File Upload Area -->
         <section class="upload-section">
             <div class="upload-area">
                 <label for="fileInput" class="file-label">
                     <div class="upload-icon">🖼️</div>
-                    <div class="upload-text">点击选择老照片或拖拽到此处</div>
-                    <div class="upload-hint">支持 JPG, PNG, GIF, BMP, WebP 格式</div>
-                    <div class="upload-hint">支持批量上传，最多5张照片</div>
+                    <div class="upload-text">点击选择老照片或拖放到此处</div>
+                    <div class="upload-hint">支持 JPG、PNG、GIF、BMP、WebP 格式</div>
+                    <div class="upload-hint">支持批量处理，最多5张照片</div>
                 </label>
                 <input type="file" id="fileInput" accept="image/*" multiple />
             </div>
         </section>
 
-        <!-- 修复设置区域 -->
+        <!-- Restoration Settings Area -->
         <section class="settings-section" id="settingsSection" style="display: none;">
             <div class="settings-container">
                 <h3>修复设置</h3>
                 
                 <div class="settings-grid">
-                    <!-- 修复类型选择 -->
+                    <!-- Repair Type Selection -->
                     <div class="setting-group">
                         <label class="setting-label">修复类型</label>
                         <div class="repair-types">
                             <label class="radio-label">
                                 <input type="radio" name="repairType" value="auto" checked />
                                 <span class="radio-mark"></span>
-                                智能修复 (推荐)
+                                智能修复（推荐）
                             </label>
                             <label class="radio-label">
                                 <input type="radio" name="repairType" value="color" />
                                 <span class="radio-mark"></span>
-                                色彩修复
+                                颜色修复
                             </label>
                             <label class="radio-label">
                                 <input type="radio" name="repairType" value="damage" />
@@ -147,12 +417,12 @@
                             <label class="radio-label">
                                 <input type="radio" name="repairType" value="noise" />
                                 <span class="radio-mark"></span>
-                                噪点修复
+                                降噪修复
                             </label>
                         </div>
                     </div>
 
-                    <!-- 修复强度设置 -->
+                    <!-- Repair Intensity Settings -->
                     <div class="setting-group">
                         <label class="setting-label">修复强度</label>
                         <div class="intensity-control">
@@ -162,50 +432,50 @@
                         <div class="intensity-presets">
                             <button type="button" class="intensity-preset-btn" data-value="3">轻度修复</button>
                             <button type="button" class="intensity-preset-btn" data-value="5">标准修复</button>
-                            <button type="button" class="intensity-preset-btn" data-value="8">强力修复</button>
+                            <button type="button" class="intensity-preset-btn" data-value="8">深度修复</button>
                         </div>
                     </div>
 
-                    <!-- 色彩增强设置 -->
+                    <!-- Color Enhancement Settings -->
                     <div class="setting-group">
                         <label class="setting-label">色彩增强</label>
                         <div class="color-controls">
                             <div class="color-slider-group">
-                                <label>饱和度:</label>
+                                <label>饱和度：</label>
                                 <input type="range" id="saturationSlider" min="0" max="200" value="100" />
                                 <span id="saturationValue">100%</span>
                             </div>
                             <div class="color-slider-group">
-                                <label>对比度:</label>
+                                <label>对比度：</label>
                                 <input type="range" id="contrastSlider" min="0" max="200" value="100" />
                                 <span id="contrastValue">100%</span>
                             </div>
                             <div class="color-slider-group">
-                                <label>亮度:</label>
+                                <label>亮度：</label>
                                 <input type="range" id="brightnessSlider" min="0" max="200" value="100" />
                                 <span id="brightnessValue">100%</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 细节增强设置 -->
+                    <!-- Detail Enhancement Settings -->
                     <div class="setting-group">
                         <label class="setting-label">细节增强</label>
                         <div class="detail-controls">
                             <div class="detail-slider-group">
-                                <label>锐化强度:</label>
+                                <label>锐化：</label>
                                 <input type="range" id="sharpenSlider" min="0" max="100" value="30" />
                                 <span id="sharpenValue">30%</span>
                             </div>
                             <div class="detail-slider-group">
-                                <label>细节增强:</label>
+                                <label>细节增强：</label>
                                 <input type="range" id="detailSlider" min="0" max="100" value="20" />
                                 <span id="detailValue">20%</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 高级选项 -->
+                    <!-- Advanced Options -->
                     <div class="setting-group">
                         <label class="setting-label">高级选项</label>
                         <div class="advanced-options">
@@ -232,24 +502,24 @@
                             <label class="checkbox-label">
                                 <input type="checkbox" id="scratchRemoval" />
                                 <span class="checkmark"></span>
-                                划痕修复
+                                划痕去除
                             </label>
                             <label class="checkbox-label">
                                 <input type="checkbox" id="stainRemoval" />
                                 <span class="checkmark"></span>
-                                污渍修复
+                                污渍去除
                             </label>
                         </div>
                     </div>
 
-                    <!-- 输出设置 -->
+                    <!-- Output Settings -->
                     <div class="setting-group">
                         <label class="setting-label">输出设置</label>
                         <select id="outputFormat" class="format-select">
-                            <option value="original">保持原格式</option>
-                            <option value="jpeg">JPEG (.jpg)</option>
-                            <option value="png">PNG (.png)</option>
-                            <option value="webp">WebP (.webp)</option>
+                            <option value="original">保持原始格式</option>
+                            <option value="jpeg">JPEG（.jpg）</option>
+                            <option value="png">PNG（.png）</option>
+                            <option value="webp">WebP（.webp）</option>
                         </select>
                         
                         <label class="setting-label">输出质量</label>
@@ -262,26 +532,26 @@
 
                 <div class="action-buttons">
                     <button id="restoreBtn" class="btn btn-primary">开始修复</button>
-                    <button id="previewBtn" class="btn btn-secondary">预览效果</button>
-                    <button id="clearBtn" class="btn btn-outline">清空列表</button>
+                    <button id="previewBtn" class="btn btn-secondary">预览结果</button>
+                    <button id="clearBtn" class="btn btn-outline">清除列表</button>
                 </div>
             </div>
         </section>
 
-        <!-- 图片列表区域 -->
+        <!-- Image List Area -->
         <section class="images-section" id="imagesSection" style="display: none;">
             <div class="images-container">
-                <h3>照片列表</h3>
+                    <h3>照片列表</h3>
                 <div class="images-grid" id="imagesGrid">
-                    <!-- 图片项将动态添加到这里 -->
+                    <!-- Image items will be dynamically added here -->
                 </div>
             </div>
         </section>
 
-        <!-- 进度区域 -->
+        <!-- Progress Area -->
         <section class="progress-section" id="progressSection" style="display: none;">
             <div class="progress-container">
-                <h3>修复进度</h3>
+                    <h3>修复进度</h3>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
@@ -289,107 +559,387 @@
             </div>
         </section>
 
-        <!-- 结果区域 -->
+        <!-- Results Area -->
         <section class="results-section" id="resultsSection" style="display: none;">
             <div class="results-container">
-                <h3>修复结果</h3>
+                    <h3>修复结果</h3>
                 <div class="results-actions">
                     <button id="downloadAllBtn" class="btn btn-success">下载全部</button>
-                    <button id="downloadZipBtn" class="btn btn-info">打包下载</button>
+                    <button id="downloadZipBtn" class="btn btn-info">下载ZIP</button>
                 </div>
                 <div class="results-grid" id="resultsGrid">
-                    <!-- 处理结果将显示在这里 -->
+                    <!-- Processing results will be displayed here -->
                 </div>
             </div>
         </section>
 
-        <!-- 使用说明 -->
-        <section class="instructions-section">
-            <div class="instructions-container">
-                <h3>使用说明</h3>
-                <div class="instructions-content">
-                    <div class="instruction-item">
-                        <h4>🤖 智能修复</h4>
-                        <p>自动检测照片问题并应用最佳修复算法，适合大多数老照片修复需求</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h4>🎨 色彩修复</h4>
-                        <p>专门针对褪色、偏色问题，恢复照片原有色彩和饱和度</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h4>🔧 破损修复</h4>
-                        <p>修复撕裂、缺失、划痕等物理损伤，重建照片完整性</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h4>✨ 细节增强</h4>
-                        <p>锐化、降噪、边缘增强等高级功能，让老照片焕发新生</p>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <script>
-        // 统一的移动端导航逻辑
+    <!-- Feature description and usage guide section -->
+    <section class="info-section">
+        <div class="info-container">
+            <!-- Feature description -->
+            <div class="info-card">
+                <h2>📋 功能说明</h2>
+                <p>我们的老照片修复工具提供强大的AI修复能力，帮助您恢复老照片：</p>
+                <ul>
+                    <li><strong>多种修复类型：</strong> 支持智能修复、颜色修复、破损修复和降噪修复</li>
+                    <li><strong>智能检测：</strong> 自动识别照片问题并应用最佳修复算法</li>
+                    <li><strong>色彩增强：</strong> 调整饱和度、对比度和亮度，恢复原始色彩</li>
+                    <li><strong>细节增强：</strong> 通过锐化和细节增强找回丢失的细节</li>
+                    <li><strong>高级选项：</strong> 自动色彩平衡、降噪、边缘增强、纹理修复、划痕与污渍去除</li>
+                </ul>
+            </div>
+
+            <!-- Usage guide -->
+            <div class="info-card">
+                <h2>💡 使用指南</h2>
+                <ol>
+                    <li>点击选择老照片或拖放上传（最多5张照片）</li>
+                    <li>选择修复类型：智能修复（推荐）、颜色修复、破损修复或降噪修复</li>
+                    <li>通过滑块或预设按钮调整修复强度（轻度、标准或深度）</li>
+                    <li>微调色彩增强：饱和度、对比度和亮度</li>
+                    <li>调整细节增强：锐化和细节增强程度</li>
+                    <li>按需启用高级选项：自动色彩平衡、降噪、边缘增强、纹理修复、划痕去除、污渍去除</li>
+                    <li>选择输出格式：保持原始格式、JPEG、PNG或WebP</li>
+                    <li>调整输出质量（60% 至 100%）</li>
+                    <li>点击“预览结果”查看修复效果</li>
+                    <li>点击“开始修复”开始处理</li>
+                    <li>下载单张修复照片或将全部照片打包ZIP下载</li>
+                </ol>
+            </div>
+
+            <!-- Use cases -->
+            <div class="info-card">
+                <h2>🎨 使用案例</h2>
+                <div class="use-cases">
+                    <div class="use-case-item">
+                        <strong>家庭照片：</strong> 修复褪色或受损的家庭照片，保留珍贵回忆
+                    </div>
+                    <div class="use-case-item">
+                        <strong>历史文档：</strong> 修复旧的历史照片和文档，用于档案保存
+                    </div>
+                    <div class="use-case-item">
+                        <strong>复古收藏：</strong> 恢复复古照片收藏的原有风貌
+                    </div>
+                    <div class="use-case-item">
+                        <strong>专业修复：</strong> 为受损或老化的照片提供专业级修复
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video tutorial section -->
+    <section class="examples-section">
+        <div class="examples-container">
+            <h2>📹 视频教程</h2>
+            <div class="examples-grid">
+                <div class="example-card example-video-card">
+                    <h3>如何修复老照片</h3>
+                    <div class="example-video-wrapper">
+                        <video src="/static/image/old.mp4" controls class="example-video" poster="">
+                            您的浏览器不支持视频标签。
+                        </video>
+                    </div>
+                    <p class="example-description">
+                        <strong>视频指南：</strong> 观看本教程视频，了解如何高效使用我们的老照片修复工具。查看上传照片、选择修复类型、调整修复设置以及下载修复照片的分步说明。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership plans section -->
+    <section class="pricing-section">
+        <div class="pricing-container">
+            <h2>💎 会员套餐</h2>
+            <div class="pricing-grid">
+                <!-- Monthly plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>月度套餐</h3>
+                        <div class="price">$6.6<span>/月</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 无限照片修复</li>
+                        <li>✓ 支持所有修复类型</li>
+                        <li>✓ 批量处理（最多10张照片）</li>
+                        <li>✓ 优先客服支持</li>
+                        <li>✓ 无广告体验</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+
+                <!-- Quarterly plan -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">超值选择</div>
+                    <div class="pricing-header">
+                        <h3>季度套餐</h3>
+                        <div class="price">$16.66<span>/3个月</span></div>
+                        <div class="price-save">节省17%</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 包含月度套餐所有功能</li>
+                        <li>✓ 无限批量处理</li>
+                        <li>✓ 高级AI修复</li>
+                        <li>✓ API访问</li>
+                        <li>✓ 自定义修复预设</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+
+                <!-- Annual plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>年度套餐</h3>
+                        <div class="price">$56.66<span>/年</span></div>
+                        <div class="price-save">节省33%</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 包含季度套餐所有功能</li>
+                        <li>✓ 无限存储</li>
+                        <li>✓ 白标选项</li>
+                        <li>✓ 专属支持</li>
+                        <li>✓ 新功能抢先体验</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter subscription section -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <h2>📧 订阅我们的 newsletter</h2>
+            <p>获取使用指南、使用案例和独家会员优惠</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="输入您的邮箱地址" required class="newsletter-input">
+                <button type="submit" class="newsletter-btn">订阅</button>
+            </form>
+            <p class="newsletter-note">订阅后，您将收到使用指南、使用案例和会员信息。</p>
+        </div>
+    </section>
+
+    <!-- Footer section -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>分类</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">图片马赛克</a></li>
+                        <li><a href="../crop/crop.html">裁剪图片</a></li>
+                        <li><a href="../convert/convert.html">格式转换</a></li>
+                        <li><a href="../icon/icon.html">图标生成器</a></li>
+                        <li><a href="old.html">照片修复</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <p>传道AI提供前沿的图像处理工具，帮助您轻松创建、编辑和增强图像。</p>
+                    <a href="../about.html" class="footer-link">了解更多</a>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <p>邮箱：<a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                    <p>我们随时为您解答任何问题或疑虑。</p>
+                    <a href="../contact.html" class="footer-link">联系我们</a>
+                </div>
+                <div class="footer-column">
+                    <h3>法律信息</h3>
+                    <ul class="footer-links">
+                        <li><a href="../privacy.html">隐私政策</a></li>
+                        <li><a href="../terms.html">服务条款</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>版权所有 © 传道AI。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        // Mobile menu toggle logic
         document.addEventListener('DOMContentLoaded', function() {
             const navToggle = document.getElementById('navToggle');
             const navMenu = document.getElementById('navMenu');
             const navOverlay = document.getElementById('navOverlay');
+            const navItem = document.querySelector('.nav-item'); // For dropdown
+            const dropdownToggle = document.querySelector('.dropdown-toggle'); // For dropdown
+            const dropdownMenu = document.querySelector('.dropdown-menu'); // For dropdown
             const navOriginalContainer = navMenu ? navMenu.parentElement : null;
-
-            function isMobile(){ return window.innerWidth <= 768; }
-
-            function toggleMenu(){
-                if (!isMobile()) return;
-                navMenu.classList.toggle('nav-menu-active');
-                navToggle.classList.toggle('nav-toggle-active');
-                navOverlay.classList.toggle('nav-overlay-active');
-                if (navMenu.classList.contains('nav-menu-active')){
-                    navMenu.style.transform = 'translateX(0)';
-                    document.body.classList.add('menu-open');
-                    document.documentElement.classList.add('menu-open');
+            
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            // Move menu to body directly on mobile to avoid parent stacking context/clipping affecting z-index
+            function promoteMenuForMobile(){
+                if (!navMenu) return;
+                if (isMobile()) {
+                    if (navMenu.parentElement !== document.body) {
+                        document.body.appendChild(navMenu);
+                    }
+                    // Ensure mobile menu has correct styles
+                    navMenu.style.display = 'flex';
+                    navMenu.style.position = 'fixed';
+                    navMenu.style.top = '0';
+                    navMenu.style.left = '0';
+                    navMenu.style.width = '380px';
+                    navMenu.style.height = '100vh';
+                    navMenu.style.background = '#ffffff';
+                    navMenu.style.flexDirection = 'column';
+                    navMenu.style.justifyContent = 'flex-start';
+                    navMenu.style.alignItems = 'stretch';
+                    navMenu.style.padding = '0';
+                    navMenu.style.gap = '0';
+                    navMenu.style.zIndex = '10001';
+                    navMenu.style.boxShadow = '2px 0 10px rgba(0, 0, 0, 0.1)';
                     navMenu.style.overflowY = 'scroll';
                     navMenu.style.overflowX = 'hidden';
-                    navMenu.style.height = '100vh';
-                    navMenu.style.touchAction = 'pan-y';
                     navMenu.style.webkitOverflowScrolling = 'touch';
+                    navMenu.style.touchAction = 'pan-y';
+                    navMenu.style.transition = 'transform .25s ease';
+                    
+                    // Keep menu's current display state, don't force hide
+                    if (!navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(-100%)';
+                    } else {
+                        navMenu.style.transform = 'translateX(0)';
+                    }
                 } else {
-                    navMenu.style.transform = 'translateX(-100%)';
+                    if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
+                        navOriginalContainer.appendChild(navMenu);
+                    }
+                    // Reset PC styles
+                    navMenu.style.display = '';
+                    navMenu.style.position = '';
+                    navMenu.style.top = '';
+                    navMenu.style.left = '';
+                    navMenu.style.width = '';
+                    navMenu.style.height = '';
+                    navMenu.style.background = '';
+                    navMenu.style.flexDirection = '';
+                    navMenu.style.justifyContent = '';
+                    navMenu.style.alignItems = '';
+                    navMenu.style.padding = '';
+                    navMenu.style.gap = '';
+                    navMenu.style.zIndex = '';
+                    navMenu.style.boxShadow = '';
+                    navMenu.style.overflowY = '';
+                    navMenu.style.overflowX = '';
+                    navMenu.style.webkitOverflowScrolling = '';
+                    navMenu.style.touchAction = '';
+                    navMenu.style.transition = '';
+                    navMenu.style.transform = '';
+                }
+            }
+            
+            // Call on initialization
+            promoteMenuForMobile();
+            
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                    document.body.classList.toggle('menu-open');
+                    document.documentElement.classList.toggle('menu-open');
+                }
+            }
+            
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
                     document.body.classList.remove('menu-open');
                     document.documentElement.classList.remove('menu-open');
                 }
             }
 
-            function closeMenu(){
-                if (!isMobile()) return;
-                navMenu.classList.remove('nav-menu-active');
-                navToggle.classList.remove('nav-toggle-active');
-                navOverlay.classList.remove('nav-overlay-active');
-                navMenu.style.transform = 'translateX(-100%)';
-                document.body.classList.remove('menu-open');
-                document.documentElement.classList.remove('menu-open');
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
             }
-
-            function promoteMenuForMobile(){
-                if (!navMenu) return;
-                if (isMobile()){
-                    if (navMenu.parentElement !== document.body) document.body.appendChild(navMenu);
-                } else if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer){
-                    navOriginalContainer.appendChild(navMenu);
-                }
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
             }
-            promoteMenuForMobile();
-
-            if (navToggle) navToggle.addEventListener('click', toggleMenu);
-            if (navOverlay) navOverlay.addEventListener('click', closeMenu);
-
+            
+            // Mobile reliable navigation
             const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => { link.addEventListener('click', function(){ if(isMobile()) closeMenu(); }); });
-
-            window.addEventListener('resize', function(){
-                if (!isMobile()) closeMenu();
+            navLinks.forEach(link => {
+                let startX = 0, startY = 0, startT = 0;
+                const threshold = 8;
+                function onStart(e){ if(!isMobile()) return; const t=e.touches?e.touches[0]:e; startX=t.clientX; startY=t.clientY; startT=Date.now(); }
+                function onEnd(e){ if(!isMobile()) return; const t=e.changedTouches?e.changedTouches[0]:e; const dx=Math.abs(t.clientX-startX); const dy=Math.abs(t.clientY-startY); const dt=Date.now()-startT; if(dx<threshold&&dy<threshold&&dt<1500){ const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href); } } }
+                link.addEventListener('touchstart', onStart, {passive:true, capture:true});
+                link.addEventListener('touchend', onEnd, {passive:false, capture:true});
+                link.addEventListener('mousedown', onStart, true);
+                link.addEventListener('mouseup', onEnd, true);
+                link.addEventListener('click', function(e){ if(!isMobile()) return; const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href);} }, true);
+            });
+            
+            // Close menu when window size changes
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                }
                 promoteMenuForMobile();
             });
+            
+            // Add scroll listener to ensure menu position is correct
+            window.addEventListener('scroll', function() {
+                if (isMobile() && navMenu.classList.contains('nav-menu-active')) {
+                    // When menu is open, ensure position is correct
+                    navMenu.style.top = '0';
+                }
+            });
+            
+            // PC dropdown logic
+            if (!isMobile() && navItem && dropdownToggle && dropdownMenu) {
+                let hideTimer = null;
+
+                function showDropdown() {
+                    if (hideTimer) {
+                        clearTimeout(hideTimer);
+                        hideTimer = null;
+                    }
+                    navItem.classList.add('dropdown-open');
+                }
+
+                function hideDropdown() {
+                    hideTimer = setTimeout(function() {
+                        navItem.classList.remove('dropdown-open');
+                    }, 200);
+                }
+
+                navItem.addEventListener('mouseenter', showDropdown);
+                dropdownMenu.addEventListener('mouseenter', showDropdown);
+                navItem.addEventListener('mouseleave', function(e) {
+                    if (e.relatedTarget && dropdownMenu.contains(e.relatedTarget)) {
+                        return;
+                    }
+                    hideDropdown();
+                });
+                dropdownMenu.addEventListener('mouseleave', function(e) {
+                    if (e.relatedTarget && navItem.contains(e.relatedTarget)) {
+                        return;
+                    }
+                    hideDropdown();
+                });
+            }
+            
+            // Mobile dropdown toggle
+            if (isMobile() && dropdownToggle) {
+                dropdownToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    navItem.classList.toggle('dropdown-open');
+                });
+            }
         });
     </script>
     <script src="old.js"></script>

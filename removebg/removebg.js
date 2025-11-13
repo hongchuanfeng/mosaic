@@ -20,25 +20,25 @@ class BackgroundRemover {
     }
 
     bindEvents() {
-        // 文件上传
+        // File upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag and drop upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 滑块控制
+        // Slider controls
         document.getElementById('precisionSlider').addEventListener('input', (e) => this.updatePrecisionValue(e));
         document.getElementById('brushSize').addEventListener('input', (e) => this.updateBrushSizeValue(e));
         document.getElementById('tolerance').addEventListener('input', (e) => this.updateToleranceValue(e));
         document.getElementById('colorTolerance').addEventListener('input', (e) => this.updateColorToleranceValue(e));
         document.getElementById('qualitySlider').addEventListener('input', (e) => this.updateQualityValue(e));
         
-        // 按钮事件
+        // Button events
         document.getElementById('processBtn').addEventListener('click', () => this.processAllImages());
         document.getElementById('previewBtn').addEventListener('click', () => this.previewProcessing());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
@@ -51,7 +51,7 @@ class BackgroundRemover {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         
-        // 添加画布事件监听
+        // Add canvas event listeners
         this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
         this.canvas.addEventListener('mousemove', (e) => this.draw(e));
         this.canvas.addEventListener('mouseup', (e) => this.stopDrawing(e));
@@ -85,12 +85,12 @@ class BackgroundRemover {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 5) {
-            alert('最多只能上传5张图片');
+            alert('Maximum 5 images can be uploaded');
             return;
         }
 
@@ -134,8 +134,8 @@ class BackgroundRemover {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="backgroundRemover.processSingleImage('${imageData.id}')">处理</button>
-                    <button class="btn btn-outline" onclick="backgroundRemover.removeImage('${imageData.id}')">删除</button>
+                    <button class="btn btn-primary" onclick="backgroundRemover.processSingleImage('${imageData.id}')">Process</button>
+                    <button class="btn btn-outline" onclick="backgroundRemover.removeImage('${imageData.id}')">Remove</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -164,14 +164,14 @@ class BackgroundRemover {
     }
 
     setupPresetButtons() {
-        // 精度预设按钮
+        // Precision preset buttons
         document.querySelectorAll('.precision-preset-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.setPrecisionPreset(e));
         });
     }
 
     setupModeToggle() {
-        // 处理模式切换
+        // Processing mode toggle
         document.querySelectorAll('input[name="processingMode"]').forEach(radio => {
             radio.addEventListener('change', (e) => this.handleModeChange(e));
         });
@@ -193,7 +193,7 @@ class BackgroundRemover {
         slider.value = value;
         valueDisplay.textContent = value;
         
-        // 更新按钮状态
+        // Update button state
         document.querySelectorAll('.precision-preset-btn').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -229,11 +229,11 @@ class BackgroundRemover {
             if (processedImage) {
                 this.processedImages.push(processedImage);
                 this.displayResults();
-                alert('背景移除成功！');
+                alert('Background removed successfully!');
             }
         } catch (error) {
-            console.error('单张图片处理失败:', error);
-            alert('处理失败，请检查图片格式和设置');
+            console.error('Single image processing failed:', error);
+            alert('Processing failed, please check image format and settings');
         }
     }
 
@@ -251,7 +251,7 @@ class BackgroundRemover {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `正在处理: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `Processing: ${imageData.name}`);
             
             try {
                 const processedImage = await this.processImage(imageData);
@@ -261,28 +261,28 @@ class BackgroundRemover {
                 }
                 completed++;
             } catch (error) {
-                console.error('图片处理失败:', error);
+                console.error('Image processing failed:', error);
                 errorCount++;
                 completed++;
             }
         }
 
-        // 显示处理结果
-        let resultMessage = `处理完成！成功: ${successCount}张`;
+        // Display processing results
+        let resultMessage = `Processing completed! Success: ${successCount} image(s)`;
         if (errorCount > 0) {
-            resultMessage += `，失败: ${errorCount}张`;
+            resultMessage += `, Failed: ${errorCount} image(s)`;
         }
         
         this.updateProgress(totalImages, totalImages, resultMessage);
         this.isProcessing = false;
         this.displayResults();
         
-        // 显示结果提示
-        if (successCount > 0) {
-            alert(resultMessage);
-        } else {
-            alert('处理失败，请检查图片格式和设置');
-        }
+        // Display result notification
+        // if (successCount > 0) {
+        //     alert(resultMessage);
+        // } else {
+        //     alert('Processing failed, please check image format and settings');
+        // }
     }
 
     async processImage(imageData) {
@@ -292,24 +292,24 @@ class BackgroundRemover {
                 const ctx = canvas.getContext('2d');
                 
                 if (!ctx) {
-                    reject(new Error('无法创建Canvas上下文'));
+                    reject(new Error('Unable to create Canvas context'));
                     return;
                 }
                 
                 canvas.width = imageData.width;
                 canvas.height = imageData.height;
                 
-                // 绘制原图
+                // Draw original image
                 ctx.drawImage(imageData.img, 0, 0);
                 
-                // 获取处理设置
+                // Get processing settings
                 const settings = this.getProcessingSettings();
                 
-                // 应用背景移除算法
+                // Apply background removal algorithm
                 this.removeBackground(ctx, settings, canvas.width, canvas.height);
                 
-                // 获取输出格式
-                let mimeType = 'image/png'; // 默认PNG支持透明
+                // Get output format
+                let mimeType = 'image/png'; // Default PNG supports transparency
                 let fileExtension = 'png';
                 
                 switch (settings.outputFormat) {
@@ -323,16 +323,16 @@ class BackgroundRemover {
                         break;
                 }
                 
-                // 生成数据URL
+                // Generate data URL
                 const quality = settings.quality / 100;
                 const dataUrl = canvas.toDataURL(mimeType, quality);
                 
                 if (!dataUrl || dataUrl === 'data:,') {
-                    reject(new Error('无法生成处理后的图像'));
+                    reject(new Error('Unable to generate processed image'));
                     return;
                 }
                 
-                // 创建Blob
+                // Create Blob
                 const byteString = atob(dataUrl.split(',')[1]);
                 const ab = new ArrayBuffer(byteString.length);
                 const ia = new Uint8Array(ab);
@@ -341,7 +341,7 @@ class BackgroundRemover {
                 }
                 const blob = new Blob([ab], { type: mimeType });
                 
-                // 生成文件名
+                // Generate file name
                 const originalName = imageData.name.split('.')[0];
                 const fileName = `${originalName}_transparent.${fileExtension}`;
                 
@@ -356,7 +356,7 @@ class BackgroundRemover {
                     mimeType: mimeType
                 });
             } catch (error) {
-                console.error('图像处理错误:', error);
+                console.error('Image processing error:', error);
                 reject(error);
             }
         });
@@ -366,7 +366,7 @@ class BackgroundRemover {
         const imageData = ctx.getImageData(0, 0, width, height);
         const data = imageData.data;
         
-        console.log('开始背景移除处理:', {
+        console.log('Starting background removal processing:', {
             width,
             height,
             mode: settings.processingMode,
@@ -374,67 +374,67 @@ class BackgroundRemover {
             edgeMode: settings.edgeMode
         });
         
-        // 根据处理模式应用不同的算法
+        // Apply different algorithms based on processing mode
         switch (settings.processingMode) {
             case 'auto':
-                console.log('应用智能背景移除算法');
+                console.log('Applying intelligent background removal algorithm');
                 this.applyAutoBackgroundRemoval(data, settings, width, height);
                 break;
             case 'manual':
-                console.log('应用手动背景移除算法');
+                console.log('Applying manual background removal algorithm');
                 this.applyManualBackgroundRemoval(data, settings, width, height);
                 break;
             case 'color':
-                console.log('应用颜色背景移除算法');
+                console.log('Applying color background removal algorithm');
                 this.applyColorBackgroundRemoval(data, settings, width, height);
                 break;
         }
         
-        // 应用后处理效果
+        // Apply post-processing effects
         if (settings.enhanceEdges) {
-            console.log('应用边缘增强');
+            console.log('Applying edge enhancement');
             this.enhanceEdges(data, width, height);
         }
         
         if (settings.smoothTransitions) {
-            console.log('应用平滑过渡');
+            console.log('Applying smooth transitions');
             this.smoothTransitions(data, width, height);
         }
         
         if (settings.removeNoise) {
-            console.log('应用噪点去除');
+            console.log('Applying noise removal');
             this.removeNoise(data, width, height);
         }
         
         ctx.putImageData(imageData, 0, 0);
-        console.log('背景移除处理完成');
+        console.log('Background removal processing completed');
     }
 
     applyAutoBackgroundRemoval(data, settings, width, height) {
         const precision = settings.precision / 10;
         
-        // 智能背景检测算法
+        // Intelligent background detection algorithm
         for (let i = 0; i < data.length; i += 4) {
             const r = data[i];
             const g = data[i + 1];
             const b = data[i + 2];
             const alpha = data[i + 3];
             
-            // 计算像素位置
+            // Calculate pixel position
             const pixelIndex = i / 4;
             const x = pixelIndex % width;
             const y = Math.floor(pixelIndex / width);
             
-            // 边缘检测 - 边缘像素更可能是主体
+            // Edge detection - edge pixels are more likely to be the subject
             const isEdge = this.isEdgePixel(x, y, width, height);
             
-            // 颜色分析 - 检测背景色
+            // Color analysis - detect background color
             const isBackground = this.isBackgroundColor(r, g, b, data, width, height, x, y);
             
-            // 位置分析 - 角落和边缘更可能是背景
+            // Position analysis - corners and edges are more likely to be background
             const isCorner = this.isCornerPixel(x, y, width, height);
             
-            // 综合判断
+            // Comprehensive judgment
             let shouldRemove = false;
             
             if (isCorner && !isEdge) {
@@ -446,15 +446,15 @@ class BackgroundRemover {
             }
             
             if (shouldRemove) {
-                data[i + 3] = 0; // 设置为透明
+                data[i + 3] = 0; // Set to transparent
             }
         }
     }
 
     applyManualBackgroundRemoval(data, settings, width, height) {
-        // 手动选择区域处理
-        // 这里可以实现基于用户选择的区域进行背景移除
-        // 暂时使用自动算法作为基础
+        // Manual selection area processing
+        // Here we can implement background removal based on user-selected areas
+        // Temporarily use auto algorithm as base
         this.applyAutoBackgroundRemoval(data, settings, width, height);
     }
 
@@ -467,29 +467,29 @@ class BackgroundRemover {
             const g = data[i + 1];
             const b = data[i + 2];
             
-            // 计算颜色差异
+            // Calculate color difference
             const colorDiff = Math.sqrt(
                 Math.pow(r - backgroundColor.r, 2) +
                 Math.pow(g - backgroundColor.g, 2) +
                 Math.pow(b - backgroundColor.b, 2)
             );
             
-            // 如果颜色差异在容差范围内，移除背景
+            // If color difference is within tolerance range, remove background
             if (colorDiff <= tolerance) {
-                data[i + 3] = 0; // 设置为透明
+                data[i + 3] = 0; // Set to transparent
             }
         }
     }
 
     isEdgePixel(x, y, width, height) {
-        // 检测是否为边缘像素
+        // Detect if pixel is an edge pixel
         const edgeThreshold = 5;
         return x < edgeThreshold || x >= width - edgeThreshold || 
                y < edgeThreshold || y >= height - edgeThreshold;
     }
 
     isCornerPixel(x, y, width, height) {
-        // 检测是否为角落像素
+        // Detect if pixel is a corner pixel
         const cornerSize = Math.min(width, height) * 0.1;
         return (x < cornerSize && y < cornerSize) ||
                (x >= width - cornerSize && y < cornerSize) ||
@@ -498,7 +498,7 @@ class BackgroundRemover {
     }
 
     isBackgroundColor(r, g, b, data, width, height, x, y) {
-        // 分析周围像素来判断是否为背景色
+        // Analyze surrounding pixels to determine if it's a background color
         const sampleSize = 3;
         let similarCount = 0;
         let totalCount = 0;
@@ -514,14 +514,14 @@ class BackgroundRemover {
                     const ng = data[index + 1];
                     const nb = data[index + 2];
                     
-                    // 计算颜色相似度
+                    // Calculate color similarity
                     const colorDiff = Math.sqrt(
                         Math.pow(r - nr, 2) +
                         Math.pow(g - ng, 2) +
                         Math.pow(b - nb, 2)
                     );
                     
-                    if (colorDiff < 30) { // 相似颜色阈值
+                    if (colorDiff < 30) { // Similar color threshold
                         similarCount++;
                     }
                     totalCount++;
@@ -529,21 +529,21 @@ class BackgroundRemover {
             }
         }
         
-        return similarCount / totalCount > 0.6; // 如果60%以上像素相似，认为是背景
+        return similarCount / totalCount > 0.6; // If more than 60% of pixels are similar, consider it background
     }
 
     enhanceEdges(data, width, height) {
-        // 边缘增强算法
+        // Edge enhancement algorithm
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 拉普拉斯算子边缘检测
+                // Laplacian operator edge detection
                 const laplacian = this.applyLaplacian(tempData, width, height, x, y);
                 
-                // 增强边缘
+                // Enhance edges
                 if (laplacian > 50) {
                     data[index + 3] = Math.min(255, data[index + 3] + 20);
                 }
@@ -552,14 +552,14 @@ class BackgroundRemover {
     }
 
     smoothTransitions(data, width, height) {
-        // 平滑过渡算法
+        // Smooth transition algorithm
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 计算周围像素的alpha平均值
+                // Calculate average alpha of surrounding pixels
                 let alphaSum = 0;
                 let count = 0;
                 
@@ -578,21 +578,21 @@ class BackgroundRemover {
                 
                 const avgAlpha = alphaSum / count;
                 
-                // 平滑alpha值
+                // Smooth alpha value
                 data[index + 3] = Math.round(data[index + 3] * 0.7 + avgAlpha * 0.3);
             }
         }
     }
 
     removeNoise(data, width, height) {
-        // 噪点去除算法
+        // Noise removal algorithm
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 计算周围像素的alpha值
+                // Calculate alpha values of surrounding pixels
                 const alphaValues = [];
                 for (let dy = -1; dy <= 1; dy++) {
                     for (let dx = -1; dx <= 1; dx++) {
@@ -606,11 +606,11 @@ class BackgroundRemover {
                     }
                 }
                 
-                // 中值滤波
+                // Median filter
                 alphaValues.sort((a, b) => a - b);
                 const medianAlpha = alphaValues[Math.floor(alphaValues.length / 2)];
                 
-                // 如果当前像素与中值差异很大，使用中值
+                // If current pixel differs greatly from median, use median
                 if (Math.abs(data[index + 3] - medianAlpha) > 50) {
                     data[index + 3] = medianAlpha;
                 }
@@ -707,7 +707,7 @@ class BackgroundRemover {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="backgroundRemover.downloadSingleImage('${imageData.name}')">下载</button>
+                    <button class="btn btn-success" onclick="backgroundRemover.downloadSingleImage('${imageData.name}')">Download</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -718,7 +718,7 @@ class BackgroundRemover {
 
     async previewProcessing() {
         if (this.images.length === 0) {
-            alert('请先选择图片');
+            alert('Please select an image first');
             return;
         }
 
@@ -726,12 +726,12 @@ class BackgroundRemover {
         const processedImage = await this.processImage(firstImage);
         
         if (processedImage) {
-            // 创建预览窗口
+            // Create preview window
             const previewWindow = window.open('', '_blank', 'width=1200,height=800');
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>背景移除预览</title>
+                        <title>Background Removal Preview</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f5f5f5; }
                             .preview-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
@@ -751,21 +751,21 @@ class BackgroundRemover {
                         </style>
                     </head>
                     <body>
-                        <h2>背景移除预览</h2>
+                        <h2>Background Removal Preview</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>处理前</h3>
-                                <img src="${firstImage.dataUrl}" alt="处理前" />
-                                <div class="preview-info">尺寸: ${firstImage.width}×${firstImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(firstImage.size)}</div>
+                                <h3>Before Processing</h3>
+                                <img src="${firstImage.dataUrl}" alt="Before Processing" />
+                                <div class="preview-info">Dimensions: ${firstImage.width}×${firstImage.height}</div>
+                                <div class="preview-info">Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>处理后</h3>
+                                <h3>After Processing</h3>
                                 <div class="transparent-bg">
-                                    <img src="${processedImage.dataUrl}" alt="处理后" />
+                                    <img src="${processedImage.dataUrl}" alt="After Processing" />
                                 </div>
-                                <div class="preview-info">尺寸: ${processedImage.width}×${processedImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(processedImage.size)}</div>
+                                <div class="preview-info">Dimensions: ${processedImage.width}×${processedImage.height}</div>
+                                <div class="preview-info">Size: ${this.formatFileSize(processedImage.size)}</div>
                             </div>
                         </div>
                     </body>
@@ -794,13 +794,13 @@ class BackgroundRemover {
 
     async downloadAsZip() {
         if (this.processedImages.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images available for download');
             return;
         }
 
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // Here we provide an alternative: download files one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -820,33 +820,33 @@ class BackgroundRemover {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // 手动选择相关方法
+    // Manual selection related methods
     startDrawing(e) {
         this.isDrawing = true;
-        // 实现手动选择功能
+        // Implement manual selection functionality
     }
 
     draw(e) {
         if (!this.isDrawing) return;
-        // 实现绘制功能
+        // Implement drawing functionality
     }
 
     stopDrawing(e) {
         this.isDrawing = false;
-        // 实现停止绘制功能
+        // Implement stop drawing functionality
     }
 
     handleCanvasClick(e) {
-        // 处理画布点击事件
+        // Handle canvas click events
     }
 
     activateColorPicker() {
-        // 激活取色器功能
-        alert('取色器功能：点击图片上的颜色来设置背景色');
+        // Activate color picker functionality
+        alert('Color Picker: Click on a color in the image to set the background color');
     }
 }
 
-// 初始化应用
+// Initialize application
 let backgroundRemover;
 document.addEventListener('DOMContentLoaded', () => {
     backgroundRemover = new BackgroundRemover();

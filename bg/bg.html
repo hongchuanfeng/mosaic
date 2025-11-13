@@ -4,68 +4,321 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>黑白照片上色工具 - 智能图像着色</title>
-    <meta name="keywords" content="黑白照片上色,照片上色,图像着色,黑白转彩色,照片修复,在线上色工具" />
-    <meta name="description" content="免费在线黑白照片上色工具，智能识别图像内容并自动上色，支持手动调色，让黑白照片重现彩色" />
+    <link id="favicon" rel="icon" type="image/png" href="../favicon.ico">
+    <title>在线免费图片马赛克 - 黑白照片上色工具</title>
+    <meta name="keywords" content="黑白照片上色,照片上色,图片上色,黑白转彩色,照片修复,在线上色器" />
+    <meta name="description" content="免费在线黑白照片上色工具。AI自动上色，支持手动调整，让黑白照片重获新生。" />
     <link rel="canonical" href="https://mosaic.openai2025.com/bg/bg.html">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0YFLKRH7D"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4SRJM5F5CT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        gtag('config', 'G-V0YFLKRH7D');
-    </script>
+  gtag('config', 'G-4SRJM5F5CT');
+</script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css.css">
     <link rel="stylesheet" href="bg.css">
     <style>
-        /* 与 index.html 保持一致的导航栏与头部样式 */
-        .navbar { 
-            background: rgba(255, 255, 255, 0.1) !important; 
-            backdrop-filter: blur(10px) !important; 
-            -webkit-backdrop-filter: blur(10px) !important; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important; 
+        body { min-height: 120vh; }
+        body { background-color: transparent; }
+        .navbar { position: relative; z-index: auto; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; }
+        .nav-link { padding: 0; display: inline-flex; align-items: center; }
+        .nav-toggle { display: none; background: transparent; border: none; padding: 8px; cursor: pointer; }
+        .hamburger { display: block; width: 22px; height: 2px; background: rgba(255, 255, 255, 0.9); margin: 5px 0; transition: transform .25s ease, opacity .25s ease; }
+        .nav-overlay { display: none; }
+
+        @media (min-width: 769px) {
+            .nav-link { padding: 5px 12px; }
+            .nav-menu { gap: 8px; }
+            .nav-item { display: inline-block; }
         }
-        .header-div {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+
+        @media (min-width: 1025px) {
+            html, body { min-width: 1600px; }
+            .header-div, .main-div, .navbar, .nav-container { max-width: none; }
         }
-        /* 移动端抽屉菜单与 index 一致 */
+
+        .lang-switch {
+            position: relative;
+            z-index: 2;
+            text-decoration: none;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.95);
+            margin-left: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            font-weight: 500;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        .lang-switch .ls-left {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-switch .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .lang-switch .divider {
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .lang-switch .label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .lang-switch .ls-right {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+        }
+        .lang-switch .arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.3s ease;
+        }
+        .lang-switch:hover .arrow {
+            transform: translateY(2px);
+        }
         @media (max-width: 768px) {
-            /* 防止父级裁剪或创建层叠上下文导致菜单被截断 */
+            .lang-switch {
+                position: fixed;
+                right: 12px;
+                height: 38px;
+                padding: 0 14px;
+                z-index: 10002;
+                font-size: 13px;
+            }
+            .lang-switch .badge {
+                font-size: 11px;
+                padding: 3px 8px;
+            }
+            .lang-switch .label {
+                font-size: 12px;
+            }
+        }
+
+        .nav-item { 
+            position: relative; 
+            display: inline-block;
+        }
+        .dropdown-toggle { 
+            cursor: pointer; 
+            user-select: none;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            min-width: 600px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            border-radius: 8px;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            z-index: 1000;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            pointer-events: none;
+            overflow: visible;
+            max-height: none;
+            height: auto;
+        }
+        .nav-item:hover .dropdown-menu,
+        .nav-item.dropdown-open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .dropdown-menu .nav-link {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: background-color 0.2s ease;
+            margin: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+        .dropdown-menu .nav-link:hover {
+            background: #f5f5f5;
+            color: #007bff;
+        }
+        .dropdown-toggle::after {
+            content: ' ▼';
+            font-size: 10px;
+            margin-left: 4px;
+            opacity: 0.7;
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .dropdown-menu {
+                min-width: 480px;
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .dropdown-menu {
+                min-width: 600px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .dropdown-toggle::before,
+        .nav-link[href="../about.html"]::before,
+        .nav-link[href="../contact.html"]::before {
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .dropdown-toggle::before {
+            content: "🤖";
+        }
+        .nav-link[href="../about.html"]::before {
+            content: "ℹ️";
+        }
+        .nav-link[href="../contact.html"]::before {
+            content: "📧";
+        }
+        
+        @media (min-width: 769px) {
+            .nav-item .dropdown-toggle {
+                color: rgba(255, 255, 255, 0.9);
+                background-color: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 8px 16px;
+                display: inline-block;
+                font-weight: 500;
+            }
+            .nav-item:hover .dropdown-toggle {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: #fff;
+            }
+        }
+
+        @media (max-width: 768px) {
             .header-div, .navbar, .nav-container { overflow: visible !important; }
             .header-div, .navbar, .nav-container { transform: none !important; -webkit-transform: none !important; }
             .header-div, .navbar, .nav-container { contain: unset !important; }
             .nav-toggle { display: inline-block; }
-            /* 强化汉堡按钮的可见性（三杠更清晰） */
-            .nav-toggle { 
-                position: relative; z-index: 10002; 
-                display: inline-flex; align-items: center; justify-content: center; 
-                width: 40px; height: 40px; padding: 0; margin-left: 8px; 
-                background: rgba(255,255,255,.55); border-radius: 8px; 
-                box-shadow: 0 1px 3px rgba(0,0,0,.2);
-            }
-            .hamburger { width: 22px; height: 3px; background: #333; margin: 3px 0; border-radius: 2px; }
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(1){ transform: translateY(7px) rotate(45deg);} 
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(2){ opacity:1; } 
-            .nav-toggle.nav-toggle-active .hamburger:nth-child(3){ transform: translateY(-7px) rotate(-45deg);} 
-            .nav-menu { position: fixed; top:0; bottom:0; left:0; width:78%; max-width:360px; background:#fff; box-shadow:2px 0 10px rgba(0,0,0,.12); display:block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y:auto; -webkit-overflow-scrolling:touch; transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; }
-            .nav-menu.nav-menu-active { transform: translateX(0); }
-            .nav-menu .nav-link { display:flex; align-items:center; padding:0; border-bottom:1px solid #f2f2f2; margin:10px 0; text-align: left; }
-            .nav-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:10000; display:block; }
-            .nav-overlay.nav-overlay-active { opacity:1; pointer-events:auto; }
-        }
-        
-        /* PC端导航菜单左对齐 */
-        @media (min-width: 769px) {
             .nav-menu {
-                justify-content: flex-start !important;
+                position: fixed; top: 0; bottom: 0; left: 0; width: 85%; max-width: 420px;
+                background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,.12);
+                display: block; padding: calc(env(safe-area-inset-top,0) + 12px) 12px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+                transform: translateX(-100%); transition: transform .25s ease; z-index: 10001; will-change: transform;
             }
-            .nav-menu .nav-link {
-                text-align: left !important;
-                justify-content: flex-start !important;
+            .nav-menu .nav-link { display: flex; align-items: center; padding: 0; border-bottom: 1px solid #f2f2f2; }
+            .nav-menu.nav-menu-active { transform: translateX(0); }
+
+            .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 10000; display: block; }
+            .nav-overlay.nav-overlay-active { opacity: 1; pointer-events: auto; }
+
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(2) { opacity: 0; }
+            .nav-toggle.nav-toggle-active .hamburger:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+            .nav-menu .nav-link { margin: 10px 0; }
+            
+            .nav-item {
+                width: 100%;
+                border-bottom: 1px solid #f2f2f2;
+            }
+            .dropdown-toggle {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding: 16px 20px;
+                color: #333;
+                background: white;
+                border: none;
+                text-align: left;
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 0;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                transform: none;
+                box-shadow: none;
+                background: #f8f9fa;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                transition: opacity 0.3s ease, max-height 0.3s ease;
+                border-radius: 0;
+                display: block !important;
+                grid-template-columns: 1fr !important;
+                min-width: auto !important;
+            }
+            .nav-item.dropdown-open .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 2000px;
+            }
+            .dropdown-menu .nav-link {
+                padding: 12px 20px 12px 40px;
+                font-size: 14px;
+                border-bottom: 1px solid #e9ecef;
+                color: #333;
+                text-align: left;
+            }
+            .dropdown-menu .nav-link:hover {
+                background: #e9ecef;
+            }
+            
+            .dropdown-toggle::before,
+            .nav-link[href="../about.html"]::before,
+            .nav-link[href="../contact.html"]::before {
+                display: inline-block;
+                margin-right: 8px;
+                font-size: 18px;
             }
         }
     </style>
@@ -80,61 +333,76 @@
                     <span class="hamburger"></span>
                 </button>
                 <div class="nav-menu" id="navMenu">
-                    <a href="../index.html" class="nav-link">马赛克</a>
-                    <a href="../crop/crop.html" class="nav-link">图片裁剪</a>
-                    <a href="../convert/convert.html" class="nav-link">格式转换</a>
-                    <a href="../icon/icon.html" class="nav-link">icon生成</a>
-                    <a href="../compress/compress.html" class="nav-link">图片压缩</a>
-                    <a href="../blank/blank.html" class="nav-link">彩图转黑白</a>
-                    <a href="../watermark/watermark.html" class="nav-link">图片加水印</a>
-                    <a href="../removewm/removewm.html" class="nav-link">图片去水印</a>
-                    <a href="../nine/nine.html" class="nav-link">九宫格切图</a>
-                    <a href="../text/text.html" class="nav-link">文字转图片</a>
-                    <a href="../join/join.html" class="nav-link">图片拼接</a>
-                    <a href="../textToimage/textToimage.html" class="nav-link">图片加文字</a>
-                    <a href="../corner/corner.html" class="nav-link">圆角处理</a>
-                    <a href="../expand/expand.html" class="nav-link">图片放大</a>
-                    <a href="../old/old.html" class="nav-link">老照片修复</a>
-                    <a href="bg.html" class="nav-link">黑白上色</a>
-                    <a href="../removebg/removebg.html" class="nav-link">背景透明</a>
-                    <a href="../changebg/changebg.html" class="nav-link">背景更换</a>
+                    <div class="nav-item">
+                        <span class="nav-link dropdown-toggle">图片AI工具</span>
+                        <div class="dropdown-menu">
+                            <a href="../index.html" class="nav-link">图片马赛克</a>
+                            <a href="../crop/crop.html" class="nav-link">裁剪图片</a>
+                            <a href="../convert/convert.html" class="nav-link">格式转换</a>
+                            <a href="../icon/icon.html" class="nav-link">图标生成器</a>
+                            <a href="../compress/compress.html" class="nav-link">压缩图片</a>
+                            <a href="../blank/blank.html" class="nav-link">灰度处理</a>
+                            <a href="../watermark/watermark.html" class="nav-link">添加水印</a>
+                            <a href="../removewm/removewm.html" class="nav-link">去除水印</a>
+                            <a href="../nine/nine.html" class="nav-link">图片网格</a>
+                            <a href="../text/text.html" class="nav-link">文字转图片</a>
+                            <a href="../join/join.html" class="nav-link">合并图片</a>
+                            <a href="../textToimage/textToimage.html" class="nav-link">添加文字</a>
+                            <a href="../corner/corner.html" class="nav-link">圆角处理</a>
+                            <a href="../expand/expand.html" class="nav-link">放大图片</a>
+                            <a href="../old/old.html" class="nav-link">照片修复</a>
+                            <a href="bg.html" class="nav-link">图片上色</a>
+                            <a href="../removebg/removebg.html" class="nav-link">去除背景</a>
+                            <a href="../changebg/changebg.html" class="nav-link">更换背景</a>
+                        </div>
+                    </div>
+                    <a href="../about.html" class="nav-link">关于</a>
+                    <a href="../contact.html" class="nav-link">联系我们</a>
                 </div>
+                <a class="lang-switch" href="https://mosaic.openai2025.com/bg/bg.html" rel="nofollow" aria-label="切换到中文版本">
+                    <span class="ls-left">
+                        <span class="badge">CN</span>
+                        <span class="divider"></span>
+                        <span class="label">中文</span>
+                    </span>
+                    <span class="ls-right"><i class="arrow"></i></span>
+                </a>
             </div>
         </nav>
-        <h1 class="header-title">黑白照片上色工具</h1>
+        <h1 class="header-title">黑白照片上色</h1>
     </header>
 
-    <!-- 移动端菜单遮罩层 -->
+    <!-- Mobile menu overlay -->
     <div class="nav-overlay" id="navOverlay"></div>
 
     <main class="main-container">
-        <!-- 文件上传区域 -->
+        <!-- File Upload Area -->
         <section class="upload-section">
             <div class="upload-area">
                 <label for="fileInput" class="file-label">
                     <div class="upload-icon">🎨</div>
-                    <div class="upload-text">点击选择黑白照片或拖拽到此处</div>
-                    <div class="upload-hint">支持 JPG, PNG, GIF, BMP, WebP 格式</div>
+                    <div class="upload-text">点击选择黑白照片或拖放到此处</div>
+                    <div class="upload-hint">支持的格式：JPG, PNG, GIF, BMP, WebP</div>
                     <div class="upload-hint">支持批量上传，最多5张照片</div>
                 </label>
                 <input type="file" id="fileInput" accept="image/*" multiple />
             </div>
         </section>
 
-        <!-- 上色设置区域 -->
+        <!-- Colorization Settings Area -->
         <section class="settings-section" id="settingsSection" style="display: none;">
             <div class="settings-container">
                 <h3>上色设置</h3>
                 
                 <div class="settings-grid">
-                    <!-- 上色模式选择 -->
+                    <!-- Colorization Mode Selection -->
                     <div class="setting-group">
                         <label class="setting-label">上色模式</label>
                         <div class="colorization-modes">
                             <label class="radio-label">
                                 <input type="radio" name="colorizationMode" value="auto" checked />
                                 <span class="radio-mark"></span>
-                                智能上色 (推荐)
+                                自动上色（推荐）
                             </label>
                             <label class="radio-label">
                                 <input type="radio" name="colorizationMode" value="manual" />
@@ -149,7 +417,7 @@
                         </div>
                     </div>
 
-                    <!-- 上色强度设置 -->
+                    <!-- Colorization Strength Settings -->
                     <div class="setting-group">
                         <label class="setting-label">上色强度</label>
                         <div class="intensity-control">
@@ -157,68 +425,68 @@
                             <span id="intensityValue">7</span>
                         </div>
                         <div class="intensity-presets">
-                            <button type="button" class="intensity-preset-btn" data-value="3">轻度上色</button>
-                            <button type="button" class="intensity-preset-btn" data-value="7">标准上色</button>
-                            <button type="button" class="intensity-preset-btn" data-value="10">深度上色</button>
+                            <button type="button" class="intensity-preset-btn" data-value="3">轻度</button>
+                            <button type="button" class="intensity-preset-btn" data-value="7">标准</button>
+                            <button type="button" class="intensity-preset-btn" data-value="10">深度</button>
                         </div>
                     </div>
 
-                    <!-- 色彩风格选择 -->
+                    <!-- Color Style Selection -->
                     <div class="setting-group">
-                        <label class="setting-label">色彩风格</label>
+                        <label class="setting-label">颜色风格</label>
                         <div class="color-styles">
                             <label class="radio-label">
                                 <input type="radio" name="colorStyle" value="natural" checked />
                                 <span class="radio-mark"></span>
-                                自然色彩
+                                自然
                             </label>
                             <label class="radio-label">
                                 <input type="radio" name="colorStyle" value="vintage" />
                                 <span class="radio-mark"></span>
-                                复古色彩
+                                复古
                             </label>
                             <label class="radio-label">
                                 <input type="radio" name="colorStyle" value="vivid" />
                                 <span class="radio-mark"></span>
-                                鲜艳色彩
+                                鲜艳
                             </label>
                             <label class="radio-label">
                                 <input type="radio" name="colorStyle" value="warm" />
                                 <span class="radio-mark"></span>
-                                暖色调
+                                温暖
                             </label>
                             <label class="radio-label">
                                 <input type="radio" name="colorStyle" value="cool" />
                                 <span class="radio-mark"></span>
-                                冷色调
+                                冷调
                             </label>
                         </div>
                     </div>
 
-                    <!-- 手动调色工具 -->
+                    <!-- Manual Color Adjustment Tools -->
                     <div class="setting-group" id="manualColorGroup" style="display: none;">
-                        <label class="setting-label">手动调色</label>
+                        <label class="setting-label">手动调整</label>
                         <div class="manual-color-tools">
                             <div class="color-picker-group">
-                                <label>皮肤色调:</label>
+                                <label>肤色：</label>
                                 <input type="color" id="skinColor" value="#fdbcb4" />
                                 <input type="range" id="skinIntensity" min="0" max="100" value="50" />
                                 <span id="skinIntensityValue">50%</span>
                             </div>
                             <div class="color-picker-group">
-                                <label>天空色调:</label>
+                                <label>天空色调：</label>
                                 <input type="color" id="skyColor" value="#87ceeb" />
                                 <input type="range" id="skyIntensity" min="0" max="100" value="50" />
                                 <span id="skyIntensityValue">50%</span>
                             </div>
                             <div class="color-picker-group">
-                                <label>植物色调:</label>
+                                <label>植物色调：</label>
                                 <input type="color" id="plantColor" value="#90ee90" />
                                 <input type="range" id="plantIntensity" min="0" max="100" value="50" />
                                 <span id="plantIntensityValue">50%</span>
                             </div>
                             <div class="color-picker-group">
-                                <label>建筑色调:</label>
+                                <label>建筑色调：</label>
                                 <input type="color" id="buildingColor" value="#d2b48c" />
                                 <input type="range" id="buildingIntensity" min="0" max="100" value="50" />
                                 <span id="buildingIntensityValue">50%</span>
@@ -226,7 +494,7 @@
                         </div>
                     </div>
 
-                    <!-- 高级设置 -->
+                    <!-- Advanced Settings -->
                     <div class="setting-group">
                         <label class="setting-label">高级设置</label>
                         <div class="advanced-options">
@@ -263,11 +531,11 @@
                         </div>
                     </div>
 
-                    <!-- 输出设置 -->
+                    <!-- Output Settings -->
                     <div class="setting-group">
                         <label class="setting-label">输出设置</label>
                         <select id="outputFormat" class="format-select">
-                            <option value="original">保持原格式</option>
+                            <option value="original">保持原始格式</option>
                             <option value="jpeg">JPEG (.jpg)</option>
                             <option value="png">PNG (.png)</option>
                             <option value="webp">WebP (.webp)</option>
@@ -283,23 +551,23 @@
 
                 <div class="action-buttons">
                     <button id="colorizeBtn" class="btn btn-primary">开始上色</button>
-                    <button id="previewBtn" class="btn btn-secondary">预览效果</button>
-                    <button id="clearBtn" class="btn btn-outline">清空列表</button>
+                    <button id="previewBtn" class="btn btn-secondary">预览</button>
+                    <button id="clearBtn" class="btn btn-outline">清除列表</button>
                 </div>
             </div>
         </section>
 
-        <!-- 图片列表区域 -->
+        <!-- Image List Area -->
         <section class="images-section" id="imagesSection" style="display: none;">
             <div class="images-container">
                 <h3>照片列表</h3>
                 <div class="images-grid" id="imagesGrid">
-                    <!-- 图片项将动态添加到这里 -->
+                    <!-- Image items will be dynamically added here -->
                 </div>
             </div>
         </section>
 
-        <!-- 进度区域 -->
+        <!-- Progress Area -->
         <section class="progress-section" id="progressSection" style="display: none;">
             <div class="progress-container">
                 <h3>上色进度</h3>
@@ -310,126 +578,294 @@
             </div>
         </section>
 
-        <!-- 结果区域 -->
+        <!-- Results Area -->
         <section class="results-section" id="resultsSection" style="display: none;">
             <div class="results-container">
                 <h3>上色结果</h3>
                 <div class="results-actions">
                     <button id="downloadAllBtn" class="btn btn-success">下载全部</button>
-                    <button id="downloadZipBtn" class="btn btn-info">打包下载</button>
+                    <button id="downloadZipBtn" class="btn btn-info">下载ZIP</button>
                 </div>
                 <div class="results-grid" id="resultsGrid">
-                    <!-- 处理结果将显示在这里 -->
+                    <!-- Processing results will be displayed here -->
                 </div>
             </div>
         </section>
 
-        <!-- 使用说明 -->
-        <section class="instructions-section">
-            <div class="instructions-container">
-                <h3>使用说明</h3>
-                <div class="instructions-content">
-                    <div class="instruction-item">
-                        <h4>🤖 智能上色</h4>
-                        <p>自动识别图像内容并应用合适的颜色，适合大多数黑白照片上色需求</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h4>✋ 手动上色</h4>
-                        <p>手动选择不同区域的色调，精确控制每个部分的颜色效果</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h4>🎨 风格上色</h4>
-                        <p>应用不同的色彩风格，如复古、鲜艳、暖色调等，创造独特效果</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h4>⚙️ 高级功能</h4>
-                        <p>皮肤检测、物体识别、色彩和谐等专业功能，确保上色效果自然</p>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <script>
-        // 导航菜单切换功能
+    <!-- Feature description and usage guide section -->
+    <section class="info-section">
+        <div class="info-container">
+            <!-- Feature description -->
+            <div class="info-card">
+                <h2>📋 功能说明</h2>
+                <p>我们的黑白照片上色工具提供强大的AI功能，让您的旧黑白照片重获新生：</p>
+                <ul>
+                    <li><strong>多种上色模式：</strong> 支持自动上色（推荐）、手动上色和风格上色</li>
+                    <li><strong>智能识别：</strong> 自动识别图像内容并应用合适的颜色</li>
+                    <li><strong>颜色风格选项：</strong> 可选择自然、复古、鲜艳、温暖或冷调颜色风格</li>
+                    <li><strong>手动调整：</strong> 精细调整肤色、天空色调、植物色调和建筑色调</li>
+                    <li><strong>高级功能：</strong> 保持对比度、增强细节、平滑过渡、色彩和谐、皮肤检测和物体识别</li>
+                </ul>
+            </div>
+
+            <!-- Usage guide -->
+            <div class="info-card">
+                <h2>💡 使用指南</h2>
+                <ol>
+                    <li>点击选择黑白照片或拖放到此处上传（最多5张照片）</li>
+                    <li>选择上色模式：自动上色（推荐）、手动上色或风格上色</li>
+                    <li>使用滑块或预设按钮调整上色强度（轻度、标准或深度）</li>
+                    <li>选择颜色风格：自然、复古、鲜艳、温暖或冷调</li>
+                    <li>如果使用手动模式，根据需要调整肤色、天空色调、植物色调和建筑色调</li>
+                    <li>启用高级设置：保持对比度、增强细节、平滑过渡、色彩和谐、皮肤检测、物体识别</li>
+                    <li>选择输出格式：保持原始格式、JPEG、PNG或WebP</li>
+                    <li>调整输出质量（60%至100%）</li>
+                    <li>点击"预览"查看上色效果</li>
+                    <li>点击"开始上色"开始处理</li>
+                    <li>下载单个上色照片或下载全部为ZIP文件</li>
+                </ol>
+            </div>
+
+            <!-- Use cases -->
+            <div class="info-card">
+                <h2>🎨 使用案例</h2>
+                <div class="use-cases">
+                    <div class="use-case-item">
+                        <strong>家庭照片：</strong> 为旧的家庭黑白照片上色，以彩色保存珍贵的回忆
+                    </div>
+                    <div class="use-case-item">
+                        <strong>历史文档：</strong> 为历史黑白照片上色，用于档案和展示目的
+                    </div>
+                    <div class="use-case-item">
+                        <strong>复古收藏：</strong> 使用自然或艺术颜色风格转换复古照片收藏
+                    </div>
+                    <div class="use-case-item">
+                        <strong>创意项目：</strong> 使用风格上色为创意项目创建独特的艺术效果</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video tutorial section -->
+    <section class="examples-section">
+        <div class="examples-container">
+            <h2>📹 视频教程</h2>
+            <div class="examples-grid">
+                <div class="example-card example-video-card">
+                    <h3>如何为黑白照片上色</h3>
+                    <div class="example-video-wrapper">
+                        <video src="/static/image/bg.mp4" controls class="example-video" poster="">
+                            您的浏览器不支持视频标签。
+                        </video>
+                    </div>
+                    <p class="example-description">
+                        <strong>视频指南：</strong> 观看本教程视频，了解如何有效使用我们的黑白照片上色工具。查看上传照片、选择上色模式、调整颜色风格和下载上色照片的分步说明。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership plans section -->
+    <section class="pricing-section">
+        <div class="pricing-container">
+            <h2>💎 会员套餐</h2>
+            <div class="pricing-grid">
+                <!-- Monthly plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>月度套餐</h3>
+                        <div class="price">$6.6<span>/月</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 无限照片上色</li>
+                        <li>✓ 所有上色模式</li>
+                        <li>✓ 批量处理（最多10张照片）</li>
+                        <li>✓ 优先支持</li>
+                        <li>✓ 无广告体验</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+
+                <!-- Quarterly plan -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">超值选择</div>
+                    <div class="pricing-header">
+                        <h3>季度套餐</h3>
+                        <div class="price">$16.66<span>/3个月</span></div>
+                        <div class="price-save">节省17%</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 包含月度套餐所有功能</li>
+                        <li>✓ 无限批量处理</li>
+                        <li>✓ 高级AI上色</li>
+                        <li>✓ API访问</li>
+                        <li>✓ 自定义颜色预设</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+
+                <!-- Annual plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>年度套餐</h3>
+                        <div class="price">$56.66<span>/年</span></div>
+                        <div class="price-save">节省33%</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 包含季度套餐所有功能</li>
+                        <li>✓ 无限存储</li>
+                        <li>✓ 白标选项</li>
+                        <li>✓ 专属支持</li>
+                        <li>✓ 新功能抢先体验</li>
+                    </ul>
+                    <button class="pricing-btn">立即订阅</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter subscription section -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <h2>📧 订阅我们的 newsletter</h2>
+            <p>获取使用指南、使用案例和独家会员优惠</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="输入您的邮箱地址" required class="newsletter-input">
+                <button type="submit" class="newsletter-btn">订阅</button>
+            </form>
+            <p class="newsletter-note">订阅后，您将收到使用指南、使用案例和会员信息。</p>
+        </div>
+    </section>
+
+    <!-- Footer section -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>分类</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">图片马赛克</a></li>
+                        <li><a href="../crop/crop.html">裁剪图片</a></li>
+                        <li><a href="../convert/convert.html">格式转换</a></li>
+                        <li><a href="../icon/icon.html">图标生成器</a></li>
+                        <li><a href="bg.html">图片上色</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <p>传道AI提供前沿的图像处理工具，帮助您轻松创建、编辑和增强图像。</p>
+                    <a href="../about.html" class="footer-link">了解更多</a>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <p>邮箱：<a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                    <p>我们随时为您解答任何问题或疑虑。</p>
+                    <a href="../contact.html" class="footer-link">联系我们</a>
+                </div>
+                <div class="footer-column">
+                    <h3>法律信息</h3>
+                    <ul class="footer-links">
+                        <li><a href="../privacy.html">隐私政策</a></li>
+                        <li><a href="../terms.html">服务条款</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>版权所有 © 传道AI。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        // Mobile menu toggle logic
         document.addEventListener('DOMContentLoaded', function() {
             const navToggle = document.getElementById('navToggle');
             const navMenu = document.getElementById('navMenu');
             const navOverlay = document.getElementById('navOverlay');
+            const navItem = document.querySelector('.nav-item'); // For dropdown
+            const dropdownToggle = document.querySelector('.dropdown-toggle'); // For dropdown
+            const dropdownMenu = document.querySelector('.dropdown-menu'); // For dropdown
             const navOriginalContainer = navMenu ? navMenu.parentElement : null;
             
-            // 检查是否为移动端
             function isMobile() {
                 return window.innerWidth <= 768;
             }
             
+            // Move menu to body directly on mobile to avoid parent stacking context/clipping affecting z-index
+            function promoteMenuForMobile(){
+                if (!navMenu) return;
+                if (isMobile()) {
+                    if (navMenu.parentElement !== document.body) {
+                        document.body.appendChild(navMenu);
+                    }
+                    // Ensure mobile menu has correct styles
+                    navMenu.style.display = 'flex';
+                    navMenu.style.position = 'fixed';
+                    navMenu.style.top = '0';
+                    navMenu.style.left = '0';
+                    navMenu.style.width = '380px';
+                    navMenu.style.height = '100vh';
+                    navMenu.style.background = '#ffffff';
+                    navMenu.style.flexDirection = 'column';
+                    navMenu.style.justifyContent = 'flex-start';
+                    navMenu.style.alignItems = 'stretch';
+                    navMenu.style.padding = '0';
+                    navMenu.style.gap = '0';
+                    navMenu.style.zIndex = '10001';
+                    navMenu.style.boxShadow = '2px 0 10px rgba(0, 0, 0, 0.1)';
+                    navMenu.style.overflowY = 'scroll';
+                    navMenu.style.overflowX = 'hidden';
+                    navMenu.style.webkitOverflowScrolling = 'touch';
+                    navMenu.style.touchAction = 'pan-y';
+                    navMenu.style.transition = 'transform .25s ease';
+                    
+                    // Keep menu's current display state, don't force hide
+                    if (!navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(-100%)';
+                    } else {
+                        navMenu.style.transform = 'translateX(0)';
+                    }
+                } else {
+                    if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
+                        navOriginalContainer.appendChild(navMenu);
+                    }
+                    // Reset PC styles
+                    navMenu.style.display = '';
+                    navMenu.style.position = '';
+                    navMenu.style.top = '';
+                    navMenu.style.left = '';
+                    navMenu.style.width = '';
+                    navMenu.style.height = '';
+                    navMenu.style.background = '';
+                    navMenu.style.flexDirection = '';
+                    navMenu.style.justifyContent = '';
+                    navMenu.style.alignItems = '';
+                    navMenu.style.padding = '';
+                    navMenu.style.gap = '';
+                    navMenu.style.zIndex = '';
+                    navMenu.style.boxShadow = '';
+                    navMenu.style.overflowY = '';
+                    navMenu.style.overflowX = '';
+                    navMenu.style.webkitOverflowScrolling = '';
+                    navMenu.style.touchAction = '';
+                    navMenu.style.transition = '';
+                    navMenu.style.transform = '';
+                }
+            }
+            
+            // Call on initialization
+            promoteMenuForMobile();
+            
             function toggleMenu() {
                 if (isMobile()) {
-                    console.log('Toggle menu clicked');
                     navMenu.classList.toggle('nav-menu-active');
                     navToggle.classList.toggle('nav-toggle-active');
                     navOverlay.classList.toggle('nav-overlay-active');
-                    
-                    // 确保菜单显示时移除隐藏的transform
-                    if (navMenu.classList.contains('nav-menu-active')) {
-                        navMenu.style.transform = 'translateX(0)';
-                        // 禁用页面滚动
-                        document.body.classList.add('menu-open');
-                        document.documentElement.classList.add('menu-open');
-                        
-                        // 强制设置菜单滚动属性
-                        navMenu.style.overflowY = 'scroll';
-                        navMenu.style.overflowX = 'hidden';
-                        navMenu.style.height = '100vh';
-                        navMenu.style.touchAction = 'pan-y';
-                        navMenu.style.webkitOverflowScrolling = 'touch';
-                        
-                        // 诊断：统计子项高度总和
-                        const links = navMenu.querySelectorAll('.nav-link');
-                        let totalItemsHeight = 0;
-                        links.forEach(el => { totalItemsHeight += el.offsetHeight; });
-                        console.log('Menu opened with scroll enabled');
-                        console.log('Menu height:', navMenu.clientHeight, 'Content height:', navMenu.scrollHeight, 'Items sum:', totalItemsHeight, 'Count:', links.length);
-                        console.log('Menu computed overflow-y:', getComputedStyle(navMenu).overflowY);
-
-                        // 强制添加spacer确保可滚动
-                        let spacer = document.getElementById('__nav_spacer__');
-                        if (spacer && spacer.parentElement === navMenu) {
-                            navMenu.removeChild(spacer);
-                        }
-                        spacer = document.createElement('div');
-                        spacer.id = '__nav_spacer__';
-                        spacer.style.height = '300px';
-                        spacer.style.width = '100%';
-                        spacer.style.display = 'block';
-                        spacer.style.pointerEvents = 'none';
-                        spacer.style.backgroundColor = 'transparent';
-                        spacer.style.flexShrink = '0';
-                        navMenu.appendChild(spacer);
-                        
-                        // 强制重新计算布局
-                        navMenu.offsetHeight;
-                        
-                        // 再次输出高度以验证
-                        setTimeout(function(){
-                            console.log('After spacer -> Menu height:', navMenu.clientHeight, 'Content height:', navMenu.scrollHeight);
-                            console.log('Spacer height:', spacer.offsetHeight);
-                            console.log('Can scroll:', navMenu.scrollHeight > navMenu.clientHeight);
-                            console.log('Scroll top:', navMenu.scrollTop, 'Max scroll:', navMenu.scrollHeight - navMenu.clientHeight);
-                        }, 50);
-                    } else {
-                        navMenu.style.transform = 'translateX(-100%)';
-                        // 恢复页面滚动
-                        document.body.classList.remove('menu-open');
-                        document.documentElement.classList.remove('menu-open');
-                        // 清理占位
-                        const spacer = document.getElementById('__nav_spacer__');
-                        if (spacer && spacer.parentElement === navMenu) {
-                            navMenu.removeChild(spacer);
-                        }
-                    }
-                    
-                    console.log('Menu classes:', navMenu.className);
+                    document.body.classList.toggle('menu-open');
+                    document.documentElement.classList.toggle('menu-open');
                 }
             }
             
@@ -438,36 +874,19 @@
                     navMenu.classList.remove('nav-menu-active');
                     navToggle.classList.remove('nav-toggle-active');
                     navOverlay.classList.remove('nav-overlay-active');
-                    navMenu.style.transform = 'translateX(-100%)';
-                    // 恢复页面滚动
                     document.body.classList.remove('menu-open');
                     document.documentElement.classList.remove('menu-open');
                 }
             }
 
-            // 将菜单在移动端提到 body 直下，避免任何父级层叠上下文/裁剪影响层级
-            function promoteMenuForMobile(){
-                if (!navMenu) return;
-                if (isMobile()) {
-                    if (navMenu.parentElement !== document.body) {
-                        document.body.appendChild(navMenu);
-                    }
-                } else if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
-                    navOriginalContainer.appendChild(navMenu);
-                }
-            }
-            promoteMenuForMobile();
-            
-            // 添加事件监听器
             if (navToggle) {
                 navToggle.addEventListener('click', toggleMenu);
             }
-            
             if (navOverlay) {
                 navOverlay.addEventListener('click', closeMenu);
             }
             
-            // 移动端可靠导航
+            // Mobile reliable navigation
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 let startX = 0, startY = 0, startT = 0;
@@ -481,7 +900,7 @@
                 link.addEventListener('click', function(e){ if(!isMobile()) return; const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href);} }, true);
             });
             
-            // 窗口大小改变时关闭菜单
+            // Close menu when window size changes
             window.addEventListener('resize', function() {
                 if (!isMobile()) {
                     closeMenu();
@@ -489,15 +908,56 @@
                 promoteMenuForMobile();
             });
             
-            // 添加滚动监听器确保菜单位置正确
+            // Add scroll listener to ensure menu position is correct
             window.addEventListener('scroll', function() {
                 if (isMobile() && navMenu.classList.contains('nav-menu-active')) {
-                    // 菜单打开时，确保位置正确
+                    // When menu is open, ensure position is correct
                     navMenu.style.top = '0';
                 }
             });
             
-            console.log('Menu initialized with scroll listener');
+            // PC dropdown logic
+            if (!isMobile() && navItem && dropdownToggle && dropdownMenu) {
+                let hideTimer = null;
+
+                function showDropdown() {
+                    if (hideTimer) {
+                        clearTimeout(hideTimer);
+                        hideTimer = null;
+                    }
+                    navItem.classList.add('dropdown-open');
+                }
+
+                function hideDropdown() {
+                    hideTimer = setTimeout(function() {
+                        navItem.classList.remove('dropdown-open');
+                    }, 200);
+                }
+
+                navItem.addEventListener('mouseenter', showDropdown);
+                dropdownMenu.addEventListener('mouseenter', showDropdown);
+                navItem.addEventListener('mouseleave', function(e) {
+                    if (e.relatedTarget && dropdownMenu.contains(e.relatedTarget)) {
+                        return;
+                    }
+                    hideDropdown();
+                });
+                dropdownMenu.addEventListener('mouseleave', function(e) {
+                    if (e.relatedTarget && navItem.contains(e.relatedTarget)) {
+                        return;
+                    }
+                    hideDropdown();
+                });
+            }
+            
+            // Mobile dropdown toggle
+            if (isMobile() && dropdownToggle) {
+                dropdownToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    navItem.classList.toggle('dropdown-open');
+                });
+            }
         });
     </script>
     <script src="bg.js"></script>

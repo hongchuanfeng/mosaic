@@ -17,21 +17,21 @@ class NineGridCutter {
     }
 
     bindEvents() {
-        // 文件上传
+        // File upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag and drop upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 滑块控制
+        // Slider control
         document.getElementById('borderWidth').addEventListener('input', (e) => this.updateBorderWidthValue(e));
         
-        // 按钮事件
+        // Button events
         document.getElementById('cutImagesBtn').addEventListener('click', () => this.cutAllImages());
         document.getElementById('previewBtn').addEventListener('click', () => this.previewCutting());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
@@ -67,12 +67,12 @@ class NineGridCutter {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 10) {
-            alert('最多只能上传10张图片');
+            alert('Maximum 10 images can be uploaded');
             return;
         }
 
@@ -116,8 +116,8 @@ class NineGridCutter {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="nineGridCutter.cutSingleImage('${imageData.id}')">切图</button>
-                    <button class="btn btn-secondary" onclick="nineGridCutter.removeImage('${imageData.id}')">删除</button>
+                    <button class="btn btn-primary" onclick="nineGridCutter.cutSingleImage('${imageData.id}')">Split</button>
+                    <button class="btn btn-secondary" onclick="nineGridCutter.removeImage('${imageData.id}')">Remove</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -172,13 +172,13 @@ class NineGridCutter {
     }
 
     selectPresetGrid(e) {
-        // 更新选中状态
+        // Update selected state
         document.querySelectorAll('.grid-option').forEach(opt => {
             opt.classList.remove('active');
         });
         e.currentTarget.classList.add('active');
         
-        // 更新网格设置
+        // Update grid settings
         const rows = parseInt(e.currentTarget.dataset.rows);
         const cols = parseInt(e.currentTarget.dataset.cols);
         this.currentGrid = { rows, cols };
@@ -198,7 +198,7 @@ class NineGridCutter {
         const preview = document.getElementById('customGridPreview');
         preview.innerHTML = '';
         
-        // 创建网格预览
+        // Create grid preview
         const cellWidth = 100 / cols;
         const cellHeight = 100 / rows;
         
@@ -216,12 +216,12 @@ class NineGridCutter {
     }
 
     setupOptionToggles() {
-        // 边框设置切换
+        // Border settings toggle
         document.getElementById('addBorders').addEventListener('change', (e) => {
             document.getElementById('borderSettings').style.display = e.target.checked ? 'flex' : 'none';
         });
         
-        // 编号设置切换
+        // Numbering settings toggle
         document.getElementById('addNumbers').addEventListener('change', (e) => {
             document.getElementById('numberSettings').style.display = e.target.checked ? 'flex' : 'none';
         });
@@ -254,7 +254,7 @@ class NineGridCutter {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `正在切图: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `Splitting: ${imageData.name}`);
             
             try {
                 const cutResult = await this.cutImage(imageData);
@@ -263,12 +263,12 @@ class NineGridCutter {
                 }
                 completed++;
             } catch (error) {
-                console.error('切图失败:', error);
+                console.error('Split failed:', error);
                 completed++;
             }
         }
 
-        this.updateProgress(totalImages, totalImages, '切图完成');
+        this.updateProgress(totalImages, totalImages, 'Split completed');
         this.isProcessing = false;
         this.displayResults();
     }
@@ -282,42 +282,42 @@ class NineGridCutter {
             const originalWidth = imageData.width;
             const originalHeight = imageData.height;
             
-            // 计算每个切片的尺寸
+            // Calculate size of each slice
             const sliceWidth = Math.floor(originalWidth / cols);
             const sliceHeight = Math.floor(originalHeight / rows);
             
             const cutImages = [];
             const settings = this.getCutSettings();
             
-            // 生成每个切片
+            // Generate each slice
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < cols; col++) {
                     const sliceCanvas = document.createElement('canvas');
                     const sliceCtx = sliceCanvas.getContext('2d');
                     
-                    // 设置画布尺寸
+                    // Set canvas size
                     sliceCanvas.width = sliceWidth;
                     sliceCanvas.height = sliceHeight;
                     
-                    // 计算源图像中的位置
+                    // Calculate position in source image
                     const sourceX = col * sliceWidth;
                     const sourceY = row * sliceHeight;
                     
-                    // 绘制切片
+                    // Draw slice
                     sliceCtx.drawImage(
                         imageData.img,
                         sourceX, sourceY, sliceWidth, sliceHeight,
                         0, 0, sliceWidth, sliceHeight
                     );
                     
-                    // 应用效果
+                    // Apply effects
                     this.applyEffects(sliceCtx, sliceWidth, sliceHeight, settings, row, col);
                     
-                    // 生成数据URL
+                    // Generate data URL
                     const mimeType = this.getMimeType(imageData.file, settings.outputFormat);
                     const dataUrl = sliceCanvas.toDataURL(mimeType, 0.9);
                     
-                    // 创建Blob
+                    // Create Blob
                     const byteString = atob(dataUrl.split(',')[1]);
                     const ab = new ArrayBuffer(byteString.length);
                     const ia = new Uint8Array(ab);
@@ -326,7 +326,7 @@ class NineGridCutter {
                     }
                     const blob = new Blob([ab], { type: mimeType });
                     
-                    // 生成文件名
+                    // Generate filename
                     const originalName = imageData.name.split('.')[0];
                     const fileExtension = this.getFileExtension(imageData.file.name, settings.outputFormat);
                     const fileName = `${originalName}_${row + 1}_${col + 1}.${fileExtension}`;
@@ -346,7 +346,7 @@ class NineGridCutter {
                 }
             }
             
-            // 生成预览图
+            // Generate preview image
             this.generatePreviewImageAsync(imageData, cutImages, settings).then(previewImage => {
                 resolve({
                     id: Date.now() + Math.random(),
@@ -361,19 +361,19 @@ class NineGridCutter {
     }
 
     applyEffects(ctx, width, height, settings, row, col) {
-        // 添加边框
+        // Add border
         if (settings.addBorders) {
             ctx.strokeStyle = settings.borderColor;
             ctx.lineWidth = settings.borderWidth;
             ctx.strokeRect(0, 0, width, height);
         }
         
-        // 添加编号
+        // Add numbering
         if (settings.addNumbers) {
             this.addNumber(ctx, width, height, settings, row, col);
         }
         
-        // 添加阴影
+        // Add shadow
         if (settings.addShadows) {
             this.addShadow(ctx, width, height);
         }
@@ -384,13 +384,13 @@ class NineGridCutter {
         const position = settings.numberPosition;
         const style = settings.numberStyle;
         
-        // 设置字体
+        // Set font
         ctx.font = 'bold 24px Arial';
         ctx.fillStyle = '#ffffff';
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = 2;
         
-        // 计算位置
+        // Calculate position
         let x, y;
         const padding = 10;
         
@@ -419,7 +419,7 @@ class NineGridCutter {
         }
         
         if (style === 'circle') {
-            // 绘制圆形背景
+            // Draw circular background
             ctx.beginPath();
             ctx.arc(x + 10, y - 10, 15, 0, 2 * Math.PI);
             ctx.fillStyle = '#007bff';
@@ -428,31 +428,31 @@ class NineGridCutter {
             ctx.lineWidth = 2;
             ctx.stroke();
             
-            // 绘制数字
+            // Draw number
             ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
             ctx.fillText(number.toString(), x + 10, y + 5);
         } else if (style === 'square') {
-            // 绘制方形背景
+            // Draw square background
             ctx.fillStyle = '#007bff';
             ctx.fillRect(x, y - 20, 20, 20);
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = 2;
             ctx.strokeRect(x, y - 20, 20, 20);
             
-            // 绘制数字
+            // Draw number
             ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
             ctx.fillText(number.toString(), x + 10, y - 5);
         } else {
-            // 纯文字
+            // Text only
             ctx.strokeText(number.toString(), x, y);
             ctx.fillText(number.toString(), x, y);
         }
     }
 
     addShadow(ctx, width, height) {
-        // 添加阴影效果
+        // Add shadow effect
         ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
         ctx.shadowBlur = 5;
         ctx.shadowOffsetX = 2;
@@ -473,15 +473,15 @@ class NineGridCutter {
             canvas.width = previewWidth;
             canvas.height = previewHeight;
             
-            // 绘制背景
+            // Draw background
             ctx.fillStyle = '#f8f9fa';
             ctx.fillRect(0, 0, previewWidth, previewHeight);
             
-            // 计算每个预览切片的尺寸
+            // Calculate size of each preview slice
             const sliceWidth = previewWidth / cols;
             const sliceHeight = previewHeight / rows;
             
-            // 等待所有图片加载完成
+            // Wait for all images to load
             let loadedCount = 0;
             const totalImages = cutImages.length;
             
@@ -501,7 +501,7 @@ class NineGridCutter {
                     
                     loadedCount++;
                     if (loadedCount === totalImages) {
-                        // 所有图片加载完成后添加网格线
+                        // Add grid lines after all images are loaded
                         this.addGridLines(ctx, previewWidth, previewHeight, rows, cols, sliceWidth, sliceHeight);
                         resolve(canvas.toDataURL('image/png'));
                     }
@@ -516,7 +516,7 @@ class NineGridCutter {
                 img.src = cutImage.dataUrl;
             });
             
-            // 如果没有图片，直接返回
+            // If no images, return directly
             if (totalImages === 0) {
                 this.addGridLines(ctx, previewWidth, previewHeight, rows, cols, sliceWidth, sliceHeight);
                 resolve(canvas.toDataURL('image/png'));
@@ -525,7 +525,7 @@ class NineGridCutter {
     }
 
     addGridLines(ctx, previewWidth, previewHeight, rows, cols, sliceWidth, sliceHeight) {
-        // 添加网格线
+        // Add grid lines
         ctx.strokeStyle = '#dee2e6';
         ctx.lineWidth = 1;
         
@@ -630,9 +630,9 @@ class NineGridCutter {
             if (result.previewImage) {
                 previewHtml = `
                     <div class="result-preview-container">
-                        <img src="${result.previewImage}" alt="预览图" class="result-preview" />
+                        <img src="${result.previewImage}" alt="Preview" class="result-preview" />
                         <div class="preview-overlay">
-                            <button class="btn btn-sm btn-primary" onclick="nineGridCutter.showDetailedPreview('${result.id}')">查看详情</button>
+                            <button class="btn btn-sm btn-primary" onclick="nineGridCutter.showDetailedPreview('${result.id}')">View Details</button>
                         </div>
                     </div>
                 `;
@@ -640,8 +640,8 @@ class NineGridCutter {
                 previewHtml = `
                     <div class="result-preview-container">
                         <div class="result-preview" style="background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #666; flex-direction: column;">
-                            <div>预览图生成中...</div>
-                            <button class="btn btn-sm btn-primary" onclick="nineGridCutter.regeneratePreview('${result.id}')">重新生成</button>
+                            <div>Generating preview...</div>
+                            <button class="btn btn-sm btn-primary" onclick="nineGridCutter.regeneratePreview('${result.id}')">Regenerate</button>
                         </div>
                     </div>
                 `;
@@ -649,12 +649,12 @@ class NineGridCutter {
             
             resultItem.innerHTML = `
                 ${previewHtml}
-                <div class="result-info">${result.grid.rows}×${result.grid.cols} 网格 | ${result.cutImages.length} 张图片</div>
+                <div class="result-info">${result.grid.rows}×${result.grid.cols} Grid | ${result.cutImages.length} Images</div>
                 <div class="result-name">${result.originalImage.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="nineGridCutter.downloadSingleResult('${result.id}')">下载全部</button>
-                    <button class="btn btn-info" onclick="nineGridCutter.downloadPreview('${result.id}')">下载预览</button>
-                    <button class="btn btn-secondary" onclick="nineGridCutter.showDetailedPreview('${result.id}')">详细预览</button>
+                    <button class="btn btn-success" onclick="nineGridCutter.downloadSingleResult('${result.id}')">Download All</button>
+                    <button class="btn btn-info" onclick="nineGridCutter.downloadPreview('${result.id}')">Download Preview</button>
+                    <button class="btn btn-secondary" onclick="nineGridCutter.showDetailedPreview('${result.id}')">Detailed Preview</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -665,7 +665,7 @@ class NineGridCutter {
 
     async previewCutting() {
         if (this.images.length === 0) {
-            alert('请先选择图片');
+            alert('Please select images first');
             return;
         }
 
@@ -681,12 +681,12 @@ class NineGridCutter {
         const result = this.cutResults.find(r => r.id == resultId);
         if (!result) return;
 
-        // 创建预览窗口
+        // Create preview window
         const previewWindow = window.open('', '_blank', 'width=1000,height=700,scrollbars=yes');
         previewWindow.document.write(`
             <html>
                 <head>
-                    <title>切图详细预览 - ${result.originalImage.name}</title>
+                    <title>Split Detailed Preview - ${result.originalImage.name}</title>
                     <style>
                         body { 
                             font-family: Arial, sans-serif; 
@@ -765,33 +765,33 @@ class NineGridCutter {
                     </style>
                 </head>
                 <body>
-                    <h2 style="text-align: center; color: #333; margin-bottom: 30px;">切图详细预览</h2>
+                    <h2 style="text-align: center; color: #333; margin-bottom: 30px;">Split Detailed Preview</h2>
                     
                     <div class="info-panel">
-                        <h3 style="margin-top: 0;">图片信息</h3>
+                        <h3 style="margin-top: 0;">Image Information</h3>
                         <div class="info-grid">
                             <div class="info-item">
-                                <div class="info-label">原图名称</div>
+                                <div class="info-label">Original Name</div>
                                 <div class="info-value">${result.originalImage.name}</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">原图尺寸</div>
+                                <div class="info-label">Original Size</div>
                                 <div class="info-value">${result.originalImage.width} × ${result.originalImage.height}</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">文件大小</div>
+                                <div class="info-label">File Size</div>
                                 <div class="info-value">${this.formatFileSize(result.originalImage.size)}</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">网格类型</div>
+                                <div class="info-label">Grid Type</div>
                                 <div class="info-value">${result.grid.rows} × ${result.grid.cols}</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">切片数量</div>
-                                <div class="info-value">${result.cutImages.length} 张</div>
+                                <div class="info-label">Slice Count</div>
+                                <div class="info-value">${result.cutImages.length} Images</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">切片尺寸</div>
+                                <div class="info-label">Slice Size</div>
                                 <div class="info-value">${result.cutImages[0]?.width || 0} × ${result.cutImages[0]?.height || 0}</div>
                             </div>
                         </div>
@@ -799,11 +799,11 @@ class NineGridCutter {
                     
                     <div class="preview-container">
                         <div class="preview-item">
-                            <h3>原图</h3>
-                            <img src="${result.originalImage.dataUrl}" alt="原图" />
+                            <h3>Original Image</h3>
+                            <img src="${result.originalImage.dataUrl}" alt="Original Image" />
                         </div>
                         <div class="preview-item">
-                            <h3>切图结果</h3>
+                            <h3>Split Results</h3>
                             <div class="grid-preview">
                                 ${result.cutImages.map(img => `<img src="${img.dataUrl}" alt="${img.name}" title="${img.name}" />`).join('')}
                             </div>
@@ -818,14 +818,14 @@ class NineGridCutter {
         const result = this.cutResults.find(r => r.id == resultId);
         if (!result) return;
 
-        // 重新生成预览图
+        // Regenerate preview image
         const settings = this.getCutSettings();
         const previewImage = await this.generatePreviewImageAsync(result.originalImage, result.cutImages, settings);
         
-        // 更新结果
+        // Update result
         result.previewImage = previewImage;
         
-        // 重新显示结果
+        // Redisplay results
         this.displayResults();
     }
 
@@ -862,13 +862,13 @@ class NineGridCutter {
 
     async downloadAsZip() {
         if (this.cutResults.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images to download');
             return;
         }
 
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // Here is an alternative: download one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -897,7 +897,7 @@ class NineGridCutter {
     }
 }
 
-// 初始化应用
+// Initialize application
 let nineGridCutter;
 document.addEventListener('DOMContentLoaded', () => {
     nineGridCutter = new NineGridCutter();

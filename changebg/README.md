@@ -1,221 +1,221 @@
-# 图片背景色更换工具
+# Image Background Changer
 
-一个专业的在线图片背景色更换工具，能够智能识别图片背景并替换为指定的颜色、渐变或图案，让图片背景焕然一新。
+A professional online image background changer tool that can intelligently identify image backgrounds and replace them with specified colors, gradients, or patterns, giving your images a whole new look.
 
-## 功能特点
+## Features
 
-### 🎨 多种背景类型
-- **纯色背景**：将背景替换为单一颜色
-- **渐变背景**：创建美丽的渐变背景效果
-- **图案背景**：添加各种装饰图案背景
+### 🎨 Multiple Background Types
+- **Solid Color**: Replace the background with a single color
+- **Gradient Background**: Create beautiful gradient background effects
+- **Pattern Background**: Add various decorative pattern backgrounds
 
-### 🤖 智能背景检测
-- **自动检测**：智能识别背景区域
-- **手动选择**：精确控制要替换的区域
-- **颜色选择**：选择特定颜色进行替换
+### 🤖 Intelligent Background Detection
+- **Auto Detect**: Intelligently identify background areas
+- **Manual Selection**: Precisely control the area to be replaced
+- **Color Selection**: Choose specific colors for replacement
 
-### 🌈 丰富的背景效果
-- **线性渐变**：支持任意角度的线性渐变
-- **径向渐变**：从中心向外的径向渐变
-- **锥形渐变**：旋转的锥形渐变效果
-- **图案装饰**：圆点、线条、网格、波浪、星形等图案
+### 🌈 Rich Background Effects
+- **Linear Gradient**: Support for linear gradients at any angle
+- **Radial Gradient**: Radial gradient from center outward
+- **Conic Gradient**: Rotating conic gradient effects
+- **Pattern Decorations**: Dots, lines, grids, waves, stars, and other patterns
 
-### ⚙️ 高级功能
-- **边缘平滑**：平滑处理边缘过渡
-- **对比度增强**：增强图片整体对比度
-- **阴影保留**：可选择保留或移除阴影
-- **智能检测**：自动分析图片特征
+### ⚙️ Advanced Features
+- **Edge Smoothing**: Smooth edge transitions
+- **Contrast Enhancement**: Enhance overall image contrast
+- **Shadow Preservation**: Option to keep or remove shadows
+- **Smart Detection**: Automatically analyze image features
 
-## 使用方法
+## Usage Instructions
 
-### 1. 上传图片
-- 点击上传区域选择图片
-- 或直接拖拽图片到上传区域
-- 支持JPG、PNG、GIF、BMP、WebP格式
-- 最多可同时处理5张图片
+### 1. Upload Images
+- Click the upload area to select images
+- Or directly drag and drop images to the upload area
+- Supports JPG, PNG, GIF, BMP, WebP formats
+- Can process up to 5 images simultaneously
 
-### 2. 选择背景类型
-- **纯色背景**：选择单一颜色作为新背景
-- **渐变背景**：设置起始和结束颜色，选择渐变方向
-- **图案背景**：选择图案类型、颜色、大小和密度
+### 2. Select Background Type
+- **Solid Color**: Choose a single color as the new background
+- **Gradient Background**: Set start and end colors, choose gradient direction
+- **Pattern Background**: Select pattern type, color, size, and density
 
-### 3. 设置背景检测
-- **自动检测**：智能识别背景区域
-- **手动选择**：手动选择要替换的区域
-- **颜色选择**：选择特定颜色进行替换
+### 3. Set Background Detection
+- **Auto Detect**: Intelligently identify background areas
+- **Manual Selection**: Manually select the area to be replaced
+- **Color Selection**: Choose specific colors for replacement
 
-### 4. 调整参数
-- **颜色强度**：控制背景颜色的强度
-- **渐变角度**：调整渐变的方向
-- **图案参数**：调整图案的大小和密度
-- **高级选项**：启用专业功能
+### 4. Adjust Parameters
+- **Color Intensity**: Control the intensity of the background color
+- **Gradient Angle**: Adjust the direction of the gradient
+- **Pattern Parameters**: Adjust pattern size and density
+- **Advanced Options**: Enable professional features
 
-### 5. 开始处理
-- 点击"开始处理"批量处理所有图片
-- 或点击单个图片的"处理"按钮单独处理
-- 实时显示处理进度
+### 5. Start Processing
+- Click "Process Now" to batch process all images
+- Or click individual image "Process" button for separate processing
+- Real-time display of processing progress
 
-### 6. 预览和下载
-- 预览处理效果对比
-- 单独下载或批量下载处理结果
-- 支持多种输出格式
+### 6. Preview and Download
+- Preview processing effect comparison
+- Download individually or batch download processing results
+- Support for multiple output formats
 
-## 背景类型详解
+## Background Type Details
 
-### 纯色背景
-- **特点**：将背景替换为单一颜色
-- **适用**：证件照、产品图、简单背景图片
-- **优势**：处理速度快，效果简洁
+### Solid Background
+- **Features**: Replace background with a single color
+- **Applications**: ID photos, product images, simple background images
+- **Advantages**: Fast processing speed, clean results
 
-### 渐变背景
-- **线性渐变**：沿直线方向的颜色过渡
-- **径向渐变**：从中心向外的圆形渐变
-- **锥形渐变**：旋转的锥形渐变效果
-- **角度控制**：可调节渐变的角度和方向
+### Gradient Background
+- **Linear Gradient**: Color transition along a straight line
+- **Radial Gradient**: Circular gradient from center outward
+- **Conic Gradient**: Rotating conic gradient effect
+- **Angle Control**: Adjustable gradient angle and direction
 
-### 图案背景
-- **圆点图案**：规则的圆点装饰
-- **线条图案**：平行线条装饰
-- **网格图案**：网格状装饰
-- **波浪图案**：波浪形装饰
-- **星形图案**：星形装饰
+### Pattern Background
+- **Dot Pattern**: Regular dot decorations
+- **Line Pattern**: Parallel line decorations
+- **Grid Pattern**: Grid-like decorations
+- **Wave Pattern**: Wave-shaped decorations
+- **Star Pattern**: Star-shaped decorations
 
-## 背景检测模式
+## Background Detection Modes
 
-### 自动检测
-- **智能分析**：自动识别背景区域
-- **边缘检测**：识别主体边缘
-- **颜色分析**：分析背景色特征
-- **位置分析**：角落和边缘像素分析
+### Auto Detect
+- **Smart Analysis**: Automatically identify background areas
+- **Edge Detection**: Identify subject edges
+- **Color Analysis**: Analyze background color characteristics
+- **Position Analysis**: Corner and edge pixel analysis
 
-### 手动选择
-- **矩形选择**：矩形区域选择
-- **圆形选择**：圆形区域选择
-- **画笔选择**：自由画笔选择
-- **容差控制**：可调节选择容差
+### Manual Selection
+- **Rectangle Selection**: Rectangular area selection
+- **Circle Selection**: Circular area selection
+- **Brush Selection**: Free brush selection
+- **Tolerance Control**: Adjustable selection tolerance
 
-### 颜色选择
-- **颜色选择器**：选择要替换的颜色
-- **容差范围**：设置颜色容差
-- **精确替换**：精确替换指定颜色
+### Color Selection
+- **Color Picker**: Choose the color to replace
+- **Tolerance Range**: Set color tolerance
+- **Precise Replacement**: Accurately replace specified colors
 
-## 高级功能
+## Advanced Functions
 
-### 边缘平滑
-对背景和主体的边缘进行平滑处理，减少锯齿效果。
+### Edge Smoothing
+Smooth the edges between background and subject, reducing jagged effects.
 
-### 对比度增强
-增强图片的整体对比度，使主体更加突出。
+### Contrast Enhancement
+Enhance the overall contrast of the image to make the subject more prominent.
 
-### 阴影保留
-选择是否保留主体周围的阴影，增加真实感。
+### Shadow Preservation
+Choose whether to preserve shadows around the subject for added realism.
 
-### 智能检测
-智能分析图片特征，自动选择最佳处理参数。
+### Smart Detection
+Intelligently analyze image features and automatically select optimal processing parameters.
 
-### 预览模式
-实时预览处理效果，方便调整参数。
+### Preview Mode
+Real-time preview of processing effects for easy parameter adjustment.
 
-## 技术特点
+## Technical Features
 
-- **Canvas API**：使用HTML5 Canvas进行高质量图像处理
-- **智能算法**：多种背景检测和替换算法
-- **实时预览**：即时查看处理效果
-- **批量处理**：高效处理多张图片
-- **响应式设计**：支持各种设备访问
+- **Canvas API**: High-quality image processing using HTML5 Canvas
+- **Smart Algorithms**: Multiple background detection and replacement algorithms
+- **Real-time Preview**: Instant viewing of processing effects
+- **Batch Processing**: Efficient processing of multiple images
+- **Responsive Design**: Support for various device access
 
-## 使用场景
+## Use Cases
 
-- **证件照处理**：为证件照更换背景色
-- **产品图片**：为产品图片添加新背景
-- **设计素材**：为设计项目准备背景素材
-- **社交媒体**：制作个性化头像和图片
-- **印刷设计**：为印刷品准备背景效果
+- **ID Photo Processing**: Change background colors for ID photos
+- **Product Images**: Add new backgrounds for product images
+- **Design Materials**: Prepare background materials for design projects
+- **Social Media**: Create personalized avatars and images
+- **Print Design**: Prepare background effects for printed materials
 
-## 处理效果
+## Processing Effects
 
-### 纯色背景效果
-- 简洁统一的背景色
-- 突出主体内容
-- 适合正式场合
+### Solid Background Effects
+- Clean and uniform background color
+- Highlight subject content
+- Suitable for formal occasions
 
-### 渐变背景效果
-- 美丽的颜色过渡
-- 增加视觉层次
-- 适合创意设计
+### Gradient Background Effects
+- Beautiful color transitions
+- Increased visual hierarchy
+- Suitable for creative design
 
-### 图案背景效果
-- 丰富的装饰效果
-- 增加设计感
-- 适合个性化需求
+### Pattern Background Effects
+- Rich decorative effects
+- Enhanced design sense
+- Suitable for personalized needs
 
-## 输出格式
+## Output Formats
 
-### 保持原格式
-保持原图片的格式不变。
+### Keep Original Format
+Maintain the original image format unchanged.
 
-### JPEG格式
-- 文件体积小
-- 兼容性好
-- 适合网络传输
+### JPEG Format
+- Small file size
+- Good compatibility
+- Suitable for web transmission
 
-### PNG格式
-- 支持透明
-- 无损压缩
-- 适合高质量需求
+### PNG Format
+- Support for transparency
+- Lossless compression
+- Suitable for high-quality needs
 
-### WebP格式
-- 文件体积小
-- 现代浏览器支持
-- 高质量压缩
+### WebP Format
+- Small file size
+- Modern browser support
+- High-quality compression
 
-## 注意事项
+## Notes
 
-1. **图片质量**：原图质量越高，处理效果越好
-2. **背景复杂度**：简单背景比复杂背景更容易处理
-3. **主体对比度**：主体与背景对比度越高，效果越好
-4. **处理时间**：大尺寸图片处理可能需要较长时间
+1. **Image Quality**: Higher quality original images yield better processing results
+2. **Background Complexity**: Simple backgrounds are easier to process than complex ones
+3. **Subject Contrast**: Higher contrast between subject and background yields better results
+4. **Processing Time**: Large size images may require longer processing time
 
-## 算法原理
+## Algorithm Principles
 
-### 背景检测算法
-- **边缘检测**：识别主体边缘
-- **颜色分析**：分析背景色特征
-- **位置分析**：角落和边缘像素分析
-- **综合判断**：多因素综合决策
+### Background Detection Algorithm
+- **Edge Detection**: Identify subject edges
+- **Color Analysis**: Analyze background color characteristics
+- **Position Analysis**: Corner and edge pixel analysis
+- **Comprehensive Judgment**: Multi-factor comprehensive decision-making
 
-### 背景生成算法
-- **纯色生成**：单一颜色填充
-- **渐变生成**：线性、径向、锥形渐变
-- **图案生成**：各种装饰图案绘制
+### Background Generation Algorithm
+- **Solid Color Generation**: Single color filling
+- **Gradient Generation**: Linear, radial, conic gradients
+- **Pattern Generation**: Various decorative pattern drawing
 
-### 图像合成算法
-- **像素替换**：精确替换背景像素
-- **边缘融合**：平滑边缘过渡
-- **颜色调整**：整体颜色平衡
+### Image Composition Algorithm
+- **Pixel Replacement**: Accurately replace background pixels
+- **Edge Fusion**: Smooth edge transitions
+- **Color Adjustment**: Overall color balance
 
-## 更新日志
+## Update Log
 
 ### v1.0.0
-- 基础背景更换功能
-- 多种背景类型支持
-- 智能背景检测算法
-- 手动选择工具
-- 颜色选择功能
-- 渐变背景生成
-- 图案背景生成
-- 高级功能设置
-- 批量处理功能
-- 实时预览功能
-- 响应式界面设计
+- Basic background replacement functionality
+- Multiple background type support
+- Intelligent background detection algorithm
+- Manual selection tools
+- Color selection functionality
+- Gradient background generation
+- Pattern background generation
+- Advanced feature settings
+- Batch processing functionality
+- Real-time preview functionality
+- Responsive interface design
 
-## 浏览器支持
+## Browser Support
 
 - Chrome 60+
 - Firefox 55+
 - Safari 12+
 - Edge 79+
 
-## 许可证
+## License
 
 MIT License

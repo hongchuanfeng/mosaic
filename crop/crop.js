@@ -378,9 +378,9 @@ class ImageCropper {
         );
         
         // 更新信息显示
-        document.getElementById('cropSize').textContent = `尺寸: ${Math.round(cropWidth)} x ${Math.round(cropHeight)}`;
+        document.getElementById('cropSize').textContent = `Size: ${Math.round(cropWidth)} x ${Math.round(cropHeight)}`;
         const ratio = cropWidth / cropHeight;
-        document.getElementById('cropRatio').textContent = `比例: ${ratio.toFixed(2)}:1`;
+        document.getElementById('cropRatio').textContent = `Ratio: ${ratio.toFixed(2)}:1`;
     }
 
     downloadCroppedImage() {

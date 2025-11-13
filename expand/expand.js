@@ -13,29 +13,29 @@ class ImageExpander {
     }
 
     bindEvents() {
-        // 文件上传
+        // File upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag and drop upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 滑块控制
+        // Slider controls
         document.getElementById('scaleSlider').addEventListener('input', (e) => this.updateScaleValue(e));
         document.getElementById('qualitySlider').addEventListener('input', (e) => this.updateQualityValue(e));
         
-        // 按钮事件
+        // Button events
         document.getElementById('expandBtn').addEventListener('click', () => this.expandAllImages());
         document.getElementById('previewBtn').addEventListener('click', () => this.previewExpansion());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
         document.getElementById('downloadAllBtn').addEventListener('click', () => this.downloadAllImages());
         document.getElementById('downloadZipBtn').addEventListener('click', () => this.downloadAsZip());
         
-        // 尺寸控制
+        // Size controls
         document.getElementById('resetSizeBtn').addEventListener('click', () => this.resetSize());
         document.getElementById('calculateSizeBtn').addEventListener('click', () => this.calculateSize());
         document.getElementById('targetWidth').addEventListener('input', (e) => this.handleSizeChange(e));
@@ -69,12 +69,12 @@ class ImageExpander {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 5) {
-            alert('最多只能上传5张图片');
+            alert('You can upload up to 5 images');
             return;
         }
 
@@ -116,11 +116,11 @@ class ImageExpander {
             imageItem.innerHTML = `
                 <img src="${imageData.dataUrl}" alt="${imageData.name}" class="image-preview" />
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
-                <div class="image-name">${imageData.name}</div>
-                <div class="image-actions">
-                    <button class="btn btn-primary" onclick="imageExpander.expandSingleImage('${imageData.id}')">放大</button>
-                    <button class="btn btn-outline" onclick="imageExpander.removeImage('${imageData.id}')">删除</button>
-                </div>
+                    <div class="image-name">${imageData.name}</div>
+                    <div class="image-actions">
+                        <button class="btn btn-primary" onclick="imageExpander.expandSingleImage('${imageData.id}')">Expand</button>
+                        <button class="btn btn-outline" onclick="imageExpander.removeImage('${imageData.id}')">Remove</button>
+                    </div>
             `;
             imagesGrid.appendChild(imageItem);
         });
@@ -148,12 +148,12 @@ class ImageExpander {
     }
 
     setupPresetButtons() {
-        // 放大倍数预设按钮
+        // Magnification preset buttons
         document.querySelectorAll('.scale-preset-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.setScalePreset(e));
         });
         
-        // 质量预设按钮
+        // Quality preset buttons
         document.querySelectorAll('.quality-preset-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.setQualityPreset(e));
         });
@@ -167,13 +167,13 @@ class ImageExpander {
         slider.value = value;
         valueDisplay.textContent = value + 'x';
         
-        // 更新按钮状态
+        // Update button state
         document.querySelectorAll('.scale-preset-btn').forEach(btn => {
             btn.classList.remove('active');
         });
         e.target.classList.add('active');
         
-        // 计算新尺寸
+        // Calculate new size
         this.calculateSize();
     }
 
@@ -185,7 +185,7 @@ class ImageExpander {
         slider.value = value;
         valueDisplay.textContent = value + '%';
         
-        // 更新按钮状态
+        // Update button state
         document.querySelectorAll('.quality-preset-btn').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -287,10 +287,10 @@ class ImageExpander {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            // 获取设置
+            // Get settings
             const settings = this.getExpansionSettings();
             
-            // 计算目标尺寸
+            // Calculate target dimensions
             let targetWidth, targetHeight;
             
             if (settings.targetWidth && settings.targetHeight) {
@@ -305,22 +305,22 @@ class ImageExpander {
             canvas.width = targetWidth;
             canvas.height = targetHeight;
             
-            // 设置图像平滑
+            // Set image smoothing
             ctx.imageSmoothingEnabled = true;
             ctx.imageSmoothingQuality = 'high';
             
-            // 根据算法选择不同的插值方法
+            // Select interpolation method based on algorithm
             this.setInterpolationMethod(ctx, settings.algorithm);
             
-            // 绘制放大后的图片
+            // Draw the expanded image
             ctx.drawImage(imageData.img, 0, 0, targetWidth, targetHeight);
             
-            // 应用后处理效果
+            // Apply post-processing effects
             if (settings.enhanceDetails || settings.smoothEdges || settings.noiseReduction) {
                 this.applyPostProcessing(ctx, settings, targetWidth, targetHeight);
             }
             
-            // 获取输出格式
+            // Get output format
             let mimeType = imageData.file.type;
             let fileExtension = this.getFileExtension(imageData.file.name);
             
@@ -341,11 +341,11 @@ class ImageExpander {
                 }
             }
             
-            // 生成数据URL
+            // Generate data URL
             const quality = settings.quality / 100;
             const dataUrl = canvas.toDataURL(mimeType, quality);
             
-            // 创建Blob
+            // Create Blob
             const byteString = atob(dataUrl.split(',')[1]);
             const ab = new ArrayBuffer(byteString.length);
             const ia = new Uint8Array(ab);
@@ -354,7 +354,7 @@ class ImageExpander {
             }
             const blob = new Blob([ab], { type: mimeType });
             
-            // 生成文件名
+            // Generate file name
             const originalName = imageData.name.split('.')[0];
             const fileName = `${originalName}_expanded_${targetWidth}x${targetHeight}.${fileExtension}`;
             
@@ -374,7 +374,7 @@ class ImageExpander {
     }
 
     setInterpolationMethod(ctx, algorithm) {
-        // 设置不同的插值方法
+        // Set different interpolation methods
         switch (algorithm) {
             case 'nearest':
                 ctx.imageSmoothingEnabled = false;
@@ -395,33 +395,38 @@ class ImageExpander {
     }
 
     applyPostProcessing(ctx, settings, width, height) {
+        // Get image data
         const imageData = ctx.getImageData(0, 0, width, height);
         const data = imageData.data;
         
+        // Apply detail enhancement
         if (settings.enhanceDetails) {
             this.enhanceDetails(data, width, height);
         }
         
+        // Apply edge smoothing
         if (settings.smoothEdges) {
             this.smoothEdges(data, width, height);
         }
         
+        // Apply noise reduction
         if (settings.noiseReduction) {
             this.reduceNoise(data, width, height);
         }
         
+        // Draw processed image
         ctx.putImageData(imageData, 0, 0);
     }
 
     enhanceDetails(data, width, height) {
-        // 细节增强算法
+        // Detail enhancement algorithm
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 拉普拉斯算子增强
+                // Laplacian operator enhancement
                 const laplacian = this.applyLaplacian(tempData, width, height, x, y);
                 
                 data[index] = Math.max(0, Math.min(255, data[index] + laplacian.r * 0.3));
@@ -432,14 +437,14 @@ class ImageExpander {
     }
 
     smoothEdges(data, width, height) {
-        // 边缘平滑算法
+        // Edge smoothing algorithm
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 轻微的高斯模糊
+                // Light Gaussian blur
                 const blurred = this.applyGaussianBlur(tempData, width, height, x, y);
                 
                 data[index] = Math.round(data[index] * 0.8 + blurred.r * 0.2);
@@ -450,14 +455,14 @@ class ImageExpander {
     }
 
     reduceNoise(data, width, height) {
-        // 降噪算法
+        // Noise reduction algorithm
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 中值滤波
+                // Median filtering
                 const median = this.calculateMedian(tempData, width, height, x, y);
                 
                 data[index] = Math.round(data[index] * 0.7 + median.r * 0.3);
@@ -468,6 +473,7 @@ class ImageExpander {
     }
 
     applyLaplacian(data, width, height, x, y) {
+        // Laplacian operator
         const kernel = [
             [0, -1, 0],
             [-1, 4, -1],
@@ -547,7 +553,7 @@ class ImageExpander {
             }
         }
         
-        // 计算中值
+        // Calculate median
         values.sort((a, b) => (a.r + a.g + a.b) - (b.r + b.g + b.b));
         const median = values[Math.floor(values.length / 2)];
         
@@ -618,7 +624,7 @@ class ImageExpander {
 
     async previewExpansion() {
         if (this.images.length === 0) {
-            alert('请先选择图片');
+            alert('Please select an image first');
             return;
         }
 
@@ -642,19 +648,19 @@ class ImageExpander {
                         </style>
                     </head>
                     <body>
-                        <h2>图片放大预览</h2>
+                        <h2>Image Expansion Preview</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>原图</h3>
-                                <img src="${firstImage.dataUrl}" alt="原图" />
-                                <div class="preview-info">尺寸: ${firstImage.width}×${firstImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(firstImage.size)}</div>
+                                <h3>Original</h3>
+                                <img src="${firstImage.dataUrl}" alt="Original" />
+                                <div class="preview-info">Size: ${firstImage.width}×${firstImage.height}</div>
+                                <div class="preview-info">File Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>放大后</h3>
-                                <img src="${expandedImage.dataUrl}" alt="放大后" />
-                                <div class="preview-info">尺寸: ${expandedImage.width}×${expandedImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(expandedImage.size)}</div>
+                                <h3>Expanded</h3>
+                                <img src="${expandedImage.dataUrl}" alt="Expanded" />
+                                <div class="preview-info">Size: ${expandedImage.width}×${expandedImage.height}</div>
+                                <div class="preview-info">File Size: ${this.formatFileSize(expandedImage.size)}</div>
                             </div>
                         </div>
                     </body>
@@ -683,13 +689,13 @@ class ImageExpander {
 
     async downloadAsZip() {
         if (this.expandedImages.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images to download');
             return;
         }
 
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // Alternative solution: download one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -712,7 +718,7 @@ class ImageExpander {
     }
 }
 
-// 初始化应用
+// Initialize the application
 let imageExpander;
 document.addEventListener('DOMContentLoaded', () => {
     imageExpander = new ImageExpander();

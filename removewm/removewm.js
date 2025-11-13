@@ -21,30 +21,30 @@ class WatermarkRemover {
     }
 
     bindEvents() {
-        // 文件上传
+        // File upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag and drop upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 滑块控制
+        // Slider controls
         document.getElementById('aiIntensitySlider').addEventListener('input', (e) => this.updateAiIntensityValue(e));
         document.getElementById('sensitivitySlider').addEventListener('input', (e) => this.updateSensitivityValue(e));
         document.getElementById('qualitySlider').addEventListener('input', (e) => this.updateQualityValue(e));
         
-        // 按钮事件
+        // Button events
         document.getElementById('removeWatermarkBtn').addEventListener('click', () => this.removeWatermarkFromAll());
         document.getElementById('previewBtn').addEventListener('click', () => this.previewRemoval());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
         document.getElementById('downloadAllBtn').addEventListener('click', () => this.downloadAllImages());
         document.getElementById('downloadZipBtn').addEventListener('click', () => this.downloadAsZip());
         
-        // 编辑器工具
+        // Editor tools
         document.getElementById('selectTool').addEventListener('click', () => this.setTool('select'));
         document.getElementById('zoomTool').addEventListener('click', () => this.setTool('zoom'));
         document.getElementById('panTool').addEventListener('click', () => this.setTool('pan'));
@@ -80,12 +80,12 @@ class WatermarkRemover {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 5) {
-            alert('最多只能上传5张图片');
+            alert('Maximum 5 images allowed');
             return;
         }
 
@@ -129,9 +129,9 @@ class WatermarkRemover {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="watermarkRemover.removeWatermarkFromSingle('${imageData.id}')">去水印</button>
-                    <button class="btn btn-secondary" onclick="watermarkRemover.editImage('${imageData.id}')">编辑</button>
-                    <button class="btn btn-outline" onclick="watermarkRemover.removeImage('${imageData.id}')">删除</button>
+                    <button class="btn btn-primary" onclick="watermarkRemover.removeWatermarkFromSingle('${imageData.id}')">Remove Watermark</button>
+                    <button class="btn btn-secondary" onclick="watermarkRemover.editImage('${imageData.id}')">Edit</button>
+                    <button class="btn btn-outline" onclick="watermarkRemover.removeImage('${imageData.id}')">Remove</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -171,12 +171,12 @@ class WatermarkRemover {
         const manualGroup = document.getElementById('manualSettingsGroup');
         const autoGroup = document.getElementById('autoSettingsGroup');
         
-        // 隐藏所有组
+        // Hide all groups
         aiGroup.style.display = 'none';
         manualGroup.style.display = 'none';
         autoGroup.style.display = 'none';
         
-        // 显示选中的组
+        // Show selected group
         switch (e.target.value) {
             case 'ai':
                 aiGroup.style.display = 'flex';
@@ -191,7 +191,7 @@ class WatermarkRemover {
     }
 
     setupPresetButtons() {
-        // AI预设按钮
+        // AI preset buttons
         document.querySelectorAll('.ai-preset-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.setAiPreset(e));
         });
@@ -205,7 +205,7 @@ class WatermarkRemover {
         slider.value = value;
         valueDisplay.textContent = value;
         
-        // 更新按钮状态
+        // Update button state
         document.querySelectorAll('.ai-preset-btn').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -228,7 +228,7 @@ class WatermarkRemover {
         this.canvas = document.getElementById('editorCanvas');
         this.ctx = this.canvas.getContext('2d');
         
-        // 画布事件
+        // Canvas events
         this.canvas.addEventListener('mousedown', (e) => this.handleCanvasMouseDown(e));
         this.canvas.addEventListener('mousemove', (e) => this.handleCanvasMouseMove(e));
         this.canvas.addEventListener('mouseup', (e) => this.handleCanvasMouseUp(e));
@@ -248,7 +248,7 @@ class WatermarkRemover {
         const canvas = this.canvas;
         const ctx = this.ctx;
         
-        // 计算画布尺寸
+        // Calculate canvas size
         const maxWidth = 800;
         const maxHeight = 600;
         const aspectRatio = imageData.width / imageData.height;
@@ -269,18 +269,18 @@ class WatermarkRemover {
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
         
-        // 绘制图片
+        // Draw image
         ctx.drawImage(imageData.img, 0, 0, canvasWidth, canvasHeight);
     }
 
     setTool(tool) {
-        // 更新工具按钮状态
+        // Update tool button state
         document.querySelectorAll('.tool-btn').forEach(btn => {
             btn.classList.remove('active');
         });
         document.getElementById(tool + 'Tool').classList.add('active');
         
-        // 更新画布光标
+        // Update canvas cursor
         switch (tool) {
             case 'select':
                 this.canvas.style.cursor = 'crosshair';
@@ -318,12 +318,12 @@ class WatermarkRemover {
         if (!this.isSelecting) return;
         
         this.isSelecting = false;
-        // 选择完成，可以在这里处理选择区域
+        // Selection complete, can process selected area here
     }
 
     handleCanvasWheel(e) {
         e.preventDefault();
-        // 缩放功能
+        // Zoom functionality
         const scale = e.deltaY > 0 ? 0.9 : 1.1;
         this.zoomCanvas(scale);
     }
@@ -332,7 +332,7 @@ class WatermarkRemover {
         const canvas = this.canvas;
         const ctx = this.ctx;
         
-        // 简单的缩放实现
+        // Simple zoom implementation
         ctx.scale(scale, scale);
         this.loadImageToCanvas(this.currentImage);
     }
@@ -362,7 +362,7 @@ class WatermarkRemover {
     }
 
     confirmSelection() {
-        // 确认选择区域，开始去水印处理
+        // Confirm selection area, start watermark removal processing
         if (this.selectionStart && this.selectionEnd) {
             this.processSelectedArea();
         }
@@ -375,38 +375,38 @@ class WatermarkRemover {
     }
 
     processSelectedArea() {
-        // 处理选择区域的水印移除
+        // Process watermark removal for selected area
         if (!this.currentImage) return;
         
         const canvas = this.canvas;
         const ctx = this.ctx;
         
-        // 获取选择区域
+        // Get selection area
         const x = Math.min(this.selectionStart.x, this.selectionEnd.x);
         const y = Math.min(this.selectionStart.y, this.selectionEnd.y);
         const width = Math.abs(this.selectionEnd.x - this.selectionStart.x);
         const height = Math.abs(this.selectionEnd.y - this.selectionStart.y);
         
-        // 应用修复算法
+        // Apply repair algorithm
         this.applyInpainting(ctx, x, y, width, height);
         
-        // 隐藏选择框
+        // Hide selection box
         this.cancelSelection();
     }
 
     applyInpainting(ctx, x, y, width, height) {
-        // 简单的修复算法：使用周围像素的平均值
+        // Simple repair algorithm: use average of surrounding pixels
         const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
         const data = imageData.data;
         
-        // 获取选择区域周围的像素
+        // Get pixels around selection area
         const padding = 10;
         const sampleX = Math.max(0, x - padding);
         const sampleY = Math.max(0, y - padding);
         const sampleWidth = Math.min(ctx.canvas.width - sampleX, width + 2 * padding);
         const sampleHeight = Math.min(ctx.canvas.height - sampleY, height + 2 * padding);
         
-        // 计算周围像素的平均颜色
+        // Calculate average color of surrounding pixels
         let r = 0, g = 0, b = 0, count = 0;
         
         for (let py = sampleY; py < sampleY + sampleHeight; py++) {
@@ -426,14 +426,14 @@ class WatermarkRemover {
             g = Math.round(g / count);
             b = Math.round(b / count);
             
-            // 填充选择区域
+            // Fill selection area
             for (let py = y; py < y + height; py++) {
                 for (let px = x; px < x + width; px++) {
                     const index = (py * ctx.canvas.width + px) * 4;
                     data[index] = r;
                     data[index + 1] = g;
                     data[index + 2] = b;
-                    // data[index + 3] 保持原透明度
+                    // data[index + 3] keep original transparency
                 }
             }
         }
@@ -464,7 +464,7 @@ class WatermarkRemover {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `正在处理: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `Processing: ${imageData.name}`);
             
             try {
                 const processedImage = await this.removeWatermark(imageData);
@@ -473,12 +473,12 @@ class WatermarkRemover {
                 }
                 completed++;
             } catch (error) {
-                console.error('去水印失败:', error);
+                console.error('Failed to remove watermark:', error);
                 completed++;
             }
         }
 
-        this.updateProgress(totalImages, totalImages, '处理完成');
+        this.updateProgress(totalImages, totalImages, 'Processing complete');
         this.isProcessing = false;
         this.displayResults();
     }
@@ -491,16 +491,16 @@ class WatermarkRemover {
             canvas.width = imageData.width;
             canvas.height = imageData.height;
             
-            // 绘制原图
+            // Draw original image
             ctx.drawImage(imageData.img, 0, 0);
             
-            // 获取去水印设置
+            // Get watermark removal settings
             const settings = this.getRemovalSettings();
             
-            // 应用去水印算法
+            // Apply watermark removal algorithm
             this.applyWatermarkRemoval(ctx, settings, canvas.width, canvas.height);
             
-            // 获取输出格式
+            // Get output format
             let mimeType = imageData.file.type;
             let fileExtension = this.getFileExtension(imageData.file.name);
             
@@ -521,11 +521,11 @@ class WatermarkRemover {
                 }
             }
             
-            // 生成数据URL
+            // Generate data URL
             const quality = settings.quality / 100;
             const dataUrl = canvas.toDataURL(mimeType, quality);
             
-            // 创建Blob
+            // Create Blob
             const byteString = atob(dataUrl.split(',')[1]);
             const ab = new ArrayBuffer(byteString.length);
             const ia = new Uint8Array(ab);
@@ -534,7 +534,7 @@ class WatermarkRemover {
             }
             const blob = new Blob([ab], { type: mimeType });
             
-            // 生成文件名
+            // Generate file name
             const originalName = imageData.name.split('.')[0];
             const fileName = `${originalName}_no_watermark.${fileExtension}`;
             
@@ -589,23 +589,23 @@ class WatermarkRemover {
         const imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
         const data = imageData.data;
         
-        // 预处理：降噪和边缘增强
+        // Pre-processing: noise reduction and edge enhancement
         this.preprocessImage(data, canvasWidth, canvasHeight);
         
-        // 根据不同的去水印方法应用不同的算法
+        // Apply different algorithms based on different removal methods
         switch (settings.removalMethod) {
             case 'ai':
                 this.applyAIWatermarkRemoval(data, settings, canvasWidth, canvasHeight);
                 break;
             case 'manual':
-                // 手动选择区域的处理在编辑器中完成
+                // Manual selection area processing is done in the editor
                 break;
             case 'auto':
                 this.applyAutoWatermarkRemoval(data, settings, canvasWidth, canvasHeight);
                 break;
         }
         
-        // 应用后处理效果
+        // Apply post-processing effects
         if (settings.enhanceDetails) {
             this.enhanceDetails(data, canvasWidth, canvasHeight);
         }
@@ -618,20 +618,20 @@ class WatermarkRemover {
             this.colorMatch(data, canvasWidth, canvasHeight);
         }
         
-        // 最终处理：边缘保持和噪声抑制
+        // Final processing: edge preservation and noise suppression
         this.postprocessImage(data, canvasWidth, canvasHeight);
         
         ctx.putImageData(imageData, 0, 0);
     }
 
     applyAIWatermarkRemoval(data, settings, width, height) {
-        // AI智能去水印算法
+        // AI smart watermark removal algorithm
         const intensity = settings.aiIntensity / 10;
         
-        // 高级水印检测
+        // Advanced watermark detection
         const watermarkRegions = this.detectWatermarkRegionsAdvanced(data, width, height, settings);
         
-        // 多遍处理以获得更好效果
+        // Multiple passes for better results
         for (let pass = 0; pass < 3; pass++) {
             watermarkRegions.forEach(region => {
                 this.repairRegionAdvanced(data, width, height, region, intensity, pass);
@@ -640,13 +640,13 @@ class WatermarkRemover {
     }
 
     applyAutoWatermarkRemoval(data, settings, width, height) {
-        // 自动检测水印算法
+        // Auto detect watermark algorithm
         const sensitivity = settings.sensitivity / 10;
         
-        // 智能水印检测
+        // Smart watermark detection
         const watermarkRegions = this.detectWatermarkRegionsAdvanced(data, width, height, settings);
         
-        // 修复水印区域
+        // Repair watermark area
         watermarkRegions.forEach(region => {
             this.repairRegionAdvanced(data, width, height, region, sensitivity, 0);
         });
@@ -655,8 +655,8 @@ class WatermarkRemover {
     detectWatermarkRegions(data, width, height, settings) {
         const regions = [];
         
-        // 简化的水印检测算法
-        // 检测角落区域
+        // Simplified watermark detection algorithm
+        // Detect corner areas
         if (settings.detectCorners) {
             regions.push({ x: 0, y: 0, width: width * 0.3, height: height * 0.3 });
             regions.push({ x: width * 0.7, y: 0, width: width * 0.3, height: height * 0.3 });
@@ -664,7 +664,7 @@ class WatermarkRemover {
             regions.push({ x: width * 0.7, y: height * 0.7, width: width * 0.3, height: height * 0.3 });
         }
         
-        // 检测中心区域
+        // Detect center area
         if (settings.detectCenter) {
             regions.push({ 
                 x: width * 0.25, 
@@ -674,7 +674,7 @@ class WatermarkRemover {
             });
         }
         
-        // 检测边缘区域
+        // Detect edge areas
         if (settings.detectEdges) {
             regions.push({ x: 0, y: 0, width: width, height: height * 0.1 });
             regions.push({ x: 0, y: height * 0.9, width: width, height: height * 0.1 });
@@ -686,7 +686,7 @@ class WatermarkRemover {
     }
 
     repairRegion(data, width, height, region, intensity) {
-        // 修复指定区域
+        // Repair specified area
         const padding = Math.max(10, Math.min(region.width, region.height) * 0.1);
         
         for (let y = region.y; y < region.y + region.height; y++) {
@@ -694,10 +694,10 @@ class WatermarkRemover {
                 if (x >= 0 && x < width && y >= 0 && y < height) {
                     const index = (y * width + x) * 4;
                     
-                    // 获取周围像素的平均值
+                    // Get average of surrounding pixels
                     const avgColor = this.getAverageColor(data, width, height, x, y, padding);
                     
-                    // 应用修复
+                    // Apply repair
                     data[index] = Math.round(data[index] * (1 - intensity) + avgColor.r * intensity);
                     data[index + 1] = Math.round(data[index + 1] * (1 - intensity) + avgColor.g * intensity);
                     data[index + 2] = Math.round(data[index + 2] * (1 - intensity) + avgColor.b * intensity);
@@ -727,21 +727,21 @@ class WatermarkRemover {
     }
 
     enhanceDetails(data, width, height) {
-        // 自适应细节增强算法
+        // Adaptive detail enhancement algorithm
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 计算局部对比度
+                // Calculate local contrast
                 const localContrast = this.calculateLocalContrast(tempData, width, height, x, y);
                 
-                // 根据对比度调整增强强度
+                // Adjust enhancement strength based on contrast
                 const enhanceStrength = Math.min(0.3, localContrast * 0.5);
                 
                 if (enhanceStrength > 0.05) {
-                    // 拉普拉斯算子增强
+                    // Laplacian operator enhancement
                     const laplacian = this.applyLaplacian(tempData, width, height, x, y);
                     
                     data[index] = Math.max(0, Math.min(255, data[index] + laplacian.r * enhanceStrength));
@@ -797,21 +797,21 @@ class WatermarkRemover {
     }
 
     smoothEdges(data, width, height) {
-        // 边缘保持平滑算法
+        // Edge-preserving smoothing algorithm
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 计算边缘强度
+                // Calculate edge strength
                 const edgeStrength = this.calculateEdgeStrength(tempData, width, height, x, y);
                 
-                // 根据边缘强度调整平滑程度
+                // Adjust smoothing level based on edge strength
                 const smoothFactor = Math.max(0.1, 1.0 - edgeStrength * 2);
                 
                 if (smoothFactor > 0.3) {
-                    // 边缘强度低，进行平滑
+                    // Low edge strength, apply smoothing
                     const blurred = this.applyGaussianBlur(tempData, width, height, x, y, smoothFactor);
                     
                     data[index] = Math.round(data[index] * (1 - smoothFactor) + blurred.r * smoothFactor);
@@ -856,22 +856,22 @@ class WatermarkRemover {
     }
 
     colorMatch(data, width, height) {
-        // 高级颜色匹配算法
-        // 计算整体颜色统计
+        // Advanced color matching algorithm
+        // Calculate overall color statistics
         const colorStats = this.calculateColorStatistics(data, width, height);
         
-        // 应用颜色校正
+        // Apply color correction
         for (let i = 0; i < data.length; i += 4) {
             const r = data[i];
             const g = data[i + 1];
             const b = data[i + 2];
             
-            // 白平衡校正
+            // White balance correction
             const correctedR = Math.min(255, Math.max(0, r * colorStats.whiteBalance.r));
             const correctedG = Math.min(255, Math.max(0, g * colorStats.whiteBalance.g));
             const correctedB = Math.min(255, Math.max(0, b * colorStats.whiteBalance.b));
             
-            // 对比度增强
+            // Contrast enhancement
             const contrast = 1.1;
             const brightness = 0;
             
@@ -887,7 +887,7 @@ class WatermarkRemover {
         let rMin = 255, gMin = 255, bMin = 255;
         let count = 0;
         
-        // 采样计算（每10个像素采样一次以提高性能）
+        // Sampling calculation (sample every 10 pixels for better performance)
         for (let i = 0; i < data.length; i += 40) {
             const r = data[i];
             const g = data[i + 1];
@@ -912,7 +912,7 @@ class WatermarkRemover {
         const gAvg = gSum / count;
         const bAvg = bSum / count;
         
-        // 计算白平衡系数
+        // Calculate white balance coefficient
         const maxAvg = Math.max(rAvg, gAvg, bAvg);
         
         return {
@@ -956,7 +956,7 @@ class WatermarkRemover {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="watermarkRemover.downloadSingleImage('${imageData.name}')">下载</button>
+                    <button class="btn btn-success" onclick="watermarkRemover.downloadSingleImage('${imageData.name}')">Download</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -967,7 +967,7 @@ class WatermarkRemover {
 
     async previewRemoval() {
         if (this.images.length === 0) {
-            alert('请先选择图片');
+            alert('Please select images first');
             return;
         }
 
@@ -975,12 +975,12 @@ class WatermarkRemover {
         const processedImage = await this.removeWatermark(firstImage);
         
         if (processedImage) {
-            // 创建预览窗口
+            // Create preview window
             const previewWindow = window.open('', '_blank', 'width=1000,height=600');
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>去水印预览</title>
+                        <title>Watermark Removal Preview</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
                             .preview-container { display: flex; gap: 20px; justify-content: center; }
@@ -990,15 +990,15 @@ class WatermarkRemover {
                         </style>
                     </head>
                     <body>
-                        <h2>去水印预览</h2>
+                        <h2>Watermark Removal Preview</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>原图</h3>
-                                <img src="${firstImage.dataUrl}" alt="原图" />
+                                <h3>Original</h3>
+                                <img src="${firstImage.dataUrl}" alt="Original" />
                             </div>
                             <div class="preview-item">
-                                <h3>去水印后</h3>
-                                <img src="${processedImage.dataUrl}" alt="去水印后" />
+                                <h3>After Removal</h3>
+                                <img src="${processedImage.dataUrl}" alt="After Removal" />
                             </div>
                         </div>
                     </body>
@@ -1027,13 +1027,13 @@ class WatermarkRemover {
 
     async downloadAsZip() {
         if (this.processedImages.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images available for download');
             return;
         }
 
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // Here is an alternative: download files one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -1058,16 +1058,16 @@ class WatermarkRemover {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // 新增的预处理方法
+    // New pre-processing methods
     preprocessImage(data, width, height) {
-        // 轻微降噪处理
+        // Light noise reduction
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 轻微的高斯模糊降噪
+                // Light Gaussian blur for noise reduction
                 const blurred = this.applyGaussianBlur(tempData, width, height, x, y, 0.3);
                 
                 data[index] = Math.round(data[index] * 0.9 + blurred.r * 0.1);
@@ -1077,20 +1077,20 @@ class WatermarkRemover {
         }
     }
 
-    // 新增的后处理方法
+    // New post-processing methods
     postprocessImage(data, width, height) {
-        // 边缘保持平滑
+        // Edge-preserving smoothing
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 边缘检测
+                // Edge detection
                 const edgeStrength = this.calculateEdgeStrength(tempData, width, height, x, y);
                 
                 if (edgeStrength < 0.3) {
-                    // 非边缘区域进行轻微平滑
+                    // Apply light smoothing to non-edge areas
                     const smoothed = this.applyGaussianBlur(tempData, width, height, x, y, 0.2);
                     
                     data[index] = Math.round(data[index] * 0.8 + smoothed.r * 0.2);
@@ -1101,27 +1101,27 @@ class WatermarkRemover {
         }
     }
 
-    // 高级水印检测算法
+    // Advanced watermark detection algorithm
     detectWatermarkRegionsAdvanced(data, width, height, settings) {
         const regions = [];
         
-        // 使用边缘检测和纹理分析
+        // Use edge detection and texture analysis
         const edgeMap = this.createEdgeMap(data, width, height);
         const textureMap = this.createTextureMap(data, width, height);
         
-        // 检测角落区域
+        // Detect corner areas
         if (settings.detectCorners) {
             const cornerRegions = this.detectCornerWatermarks(edgeMap, textureMap, width, height);
             regions.push(...cornerRegions);
         }
         
-        // 检测中心区域
+        // Detect center area
         if (settings.detectCenter) {
             const centerRegions = this.detectCenterWatermarks(edgeMap, textureMap, width, height);
             regions.push(...centerRegions);
         }
         
-        // 检测边缘区域
+        // Detect edge areas
         if (settings.detectEdges) {
             const edgeRegions = this.detectEdgeWatermarks(edgeMap, textureMap, width, height);
             regions.push(...edgeRegions);
@@ -1130,7 +1130,7 @@ class WatermarkRemover {
         return regions;
     }
 
-    // 创建边缘图
+    // Create edge map
     createEdgeMap(data, width, height) {
         const edgeMap = new Array(width * height).fill(0);
         
@@ -1138,7 +1138,7 @@ class WatermarkRemover {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // Sobel算子边缘检测
+                // Sobel operator edge detection
                 const gx = this.calculateGradientX(data, width, height, x, y);
                 const gy = this.calculateGradientY(data, width, height, x, y);
                 const magnitude = Math.sqrt(gx * gx + gy * gy);
@@ -1150,7 +1150,7 @@ class WatermarkRemover {
         return edgeMap;
     }
 
-    // 创建纹理图
+    // Create texture map
     createTextureMap(data, width, height) {
         const textureMap = new Array(width * height).fill(0);
         
@@ -1158,7 +1158,7 @@ class WatermarkRemover {
             for (let x = 2; x < width - 2; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 计算局部方差作为纹理强度
+                // Calculate local variance as texture strength
                 const variance = this.calculateLocalVariance(data, width, height, x, y, 3);
                 textureMap[y * width + x] = variance;
             }
@@ -1167,7 +1167,7 @@ class WatermarkRemover {
         return textureMap;
     }
 
-    // 高级修复算法
+    // Advanced repair algorithm
     repairRegionAdvanced(data, width, height, region, intensity, pass) {
         const padding = Math.max(15, Math.min(region.width, region.height) * 0.15);
         
@@ -1176,14 +1176,14 @@ class WatermarkRemover {
                 if (x >= 0 && x < width && y >= 0 && y < height) {
                     const index = (y * width + x) * 4;
                     
-                    // 多尺度修复
+                    // Multi-scale repair
                     const scale = 3 + pass * 2;
                     const avgColor = this.getAverageColorAdvanced(data, width, height, x, y, padding, scale);
                     
-                    // 自适应强度
+                    // Adaptive intensity
                     const adaptiveIntensity = intensity * (1 + pass * 0.2);
                     
-                    // 应用修复
+                    // Apply repair
                     data[index] = Math.round(data[index] * (1 - adaptiveIntensity) + avgColor.r * adaptiveIntensity);
                     data[index + 1] = Math.round(data[index + 1] * (1 - adaptiveIntensity) + avgColor.g * adaptiveIntensity);
                     data[index + 2] = Math.round(data[index + 2] * (1 - adaptiveIntensity) + avgColor.b * adaptiveIntensity);
@@ -1192,12 +1192,12 @@ class WatermarkRemover {
         }
     }
 
-    // 高级平均颜色计算
+    // Advanced average color calculation
     getAverageColorAdvanced(data, width, height, centerX, centerY, radius, scale) {
         let r = 0, g = 0, b = 0, count = 0;
         const weights = [];
         
-        // 计算权重
+        // Calculate weights
         for (let y = Math.max(0, centerY - radius); y < Math.min(height, centerY + radius); y++) {
             for (let x = Math.max(0, centerX - radius); x < Math.min(width, centerX + radius); x++) {
                 const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
@@ -1206,7 +1206,7 @@ class WatermarkRemover {
             }
         }
         
-        // 加权平均
+        // Weighted average
         weights.forEach(({ x, y, weight }) => {
             const index = (y * width + x) * 4;
             r += data[index] * weight;
@@ -1222,7 +1222,7 @@ class WatermarkRemover {
         };
     }
 
-    // 辅助方法
+    // Helper methods
     calculateEdgeStrength(data, width, height, x, y) {
         const gx = this.calculateGradientX(data, width, height, x, y);
         const gy = this.calculateGradientY(data, width, height, x, y);
@@ -1292,7 +1292,7 @@ class WatermarkRemover {
         const regions = [];
         const cornerSize = Math.min(width, height) * 0.25;
         
-        // 四个角落
+        // Four corners
         const corners = [
             { x: 0, y: 0 },
             { x: width - cornerSize, y: 0 },
@@ -1344,7 +1344,7 @@ class WatermarkRemover {
         const regions = [];
         const edgeThickness = Math.min(width, height) * 0.05;
         
-        // 上下边缘
+        // Top and bottom edges
         for (let x = 0; x < width; x += width * 0.1) {
             const edgeStrength = this.calculateRegionEdgeStrength(edgeMap, width, height, x, 0, width * 0.1, edgeThickness);
             if (edgeStrength > 0.4) {
@@ -1358,7 +1358,7 @@ class WatermarkRemover {
             }
         }
         
-        // 左右边缘
+        // Left and right edges
         for (let y = 0; y < height; y += height * 0.1) {
             const edgeStrength = this.calculateRegionEdgeStrength(edgeMap, width, height, 0, y, edgeThickness, height * 0.1);
             if (edgeStrength > 0.4) {
@@ -1402,7 +1402,7 @@ class WatermarkRemover {
     }
 }
 
-// 初始化应用
+// Initialize application
 let watermarkRemover;
 document.addEventListener('DOMContentLoaded', () => {
     watermarkRemover = new WatermarkRemover();

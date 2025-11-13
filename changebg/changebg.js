@@ -19,18 +19,18 @@ class BackgroundChanger {
     }
 
     bindEvents() {
-        // 文件上传
+        // File Upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag-and-Drop Upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 滑块控制
+        // Slider Control
         document.getElementById('colorIntensity').addEventListener('input', (e) => this.updateColorIntensityValue(e));
         document.getElementById('gradientAngle').addEventListener('input', (e) => this.updateGradientAngleValue(e));
         document.getElementById('patternSize').addEventListener('input', (e) => this.updatePatternSizeValue(e));
@@ -40,7 +40,7 @@ class BackgroundChanger {
         document.getElementById('colorTolerance').addEventListener('input', (e) => this.updateColorToleranceValue(e));
         document.getElementById('qualitySlider').addEventListener('input', (e) => this.updateQualityValue(e));
         
-        // 按钮事件
+        // Button Events
         document.getElementById('processBtn').addEventListener('click', () => this.processAllImages());
         document.getElementById('previewBtn').addEventListener('click', () => this.previewProcessing());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
@@ -54,7 +54,7 @@ class BackgroundChanger {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         
-        // 添加画布事件监听
+        // Add Canvas Event Listeners
         this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
         this.canvas.addEventListener('mousemove', (e) => this.draw(e));
         this.canvas.addEventListener('mouseup', (e) => this.stopDrawing(e));
@@ -88,12 +88,12 @@ class BackgroundChanger {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 5) {
-            alert('最多只能上传5张图片');
+            alert('You can upload up to 5 images');
             return;
         }
 
@@ -137,8 +137,8 @@ class BackgroundChanger {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="backgroundChanger.processSingleImage('${imageData.id}')">处理</button>
-                    <button class="btn btn-outline" onclick="backgroundChanger.removeImage('${imageData.id}')">删除</button>
+                    <button class="btn btn-primary" onclick="backgroundChanger.processSingleImage('${imageData.id}')">Process</button>
+                    <button class="btn btn-outline" onclick="backgroundChanger.removeImage('${imageData.id}')">Delete</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -167,12 +167,12 @@ class BackgroundChanger {
     }
 
     setupModeToggle() {
-        // 背景类型切换
+        // Background Type Switching
         document.querySelectorAll('input[name="backgroundType"]').forEach(radio => {
             radio.addEventListener('change', (e) => this.handleBackgroundTypeChange(e));
         });
         
-        // 检测模式切换
+        // Detection Mode Switching
         document.querySelectorAll('input[name="detectionMode"]').forEach(radio => {
             radio.addEventListener('change', (e) => this.handleDetectionModeChange(e));
         });
@@ -237,11 +237,11 @@ class BackgroundChanger {
             if (processedImage) {
                 this.processedImages.push(processedImage);
                 this.displayResults();
-                alert('背景更换成功！');
+                alert('Background changed successfully!');
             }
         } catch (error) {
-            console.error('单张图片处理失败:', error);
-            alert('处理失败，请检查图片格式和设置');
+            console.error('Single image processing failed:', error);
+            alert('Processing failed, please check image format and settings');
         }
     }
 
@@ -259,7 +259,7 @@ class BackgroundChanger {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `正在处理: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `Processing: ${imageData.name}`);
             
             try {
                 const processedImage = await this.processImage(imageData);
@@ -269,28 +269,28 @@ class BackgroundChanger {
                 }
                 completed++;
             } catch (error) {
-                console.error('图片处理失败:', error);
+                console.error('Image processing failed:', error);
                 errorCount++;
                 completed++;
             }
         }
 
-        // 显示处理结果
-        let resultMessage = `处理完成！成功: ${successCount}张`;
+        // Display Processing Results
+        let resultMessage = `Processing complete! Success: ${successCount} images`;
         if (errorCount > 0) {
-            resultMessage += `，失败: ${errorCount}张`;
+            resultMessage += `, Failed: ${errorCount} images`;
         }
         
         this.updateProgress(totalImages, totalImages, resultMessage);
         this.isProcessing = false;
         this.displayResults();
         
-        // 显示结果提示
-        if (successCount > 0) {
-            alert(resultMessage);
-        } else {
-            alert('处理失败，请检查图片格式和设置');
-        }
+        // Show Result Notification
+        // if (successCount > 0) {
+        //     alert(resultMessage);
+        // } else {
+        //     alert('Processing failed, please check image format and settings');
+        // }
     }
 
     async processImage(imageData) {
@@ -300,23 +300,23 @@ class BackgroundChanger {
                 const ctx = canvas.getContext('2d');
                 
                 if (!ctx) {
-                    reject(new Error('无法创建Canvas上下文'));
+                    reject(new Error('Cannot create Canvas context'));
                     return;
                 }
                 
                 canvas.width = imageData.width;
                 canvas.height = imageData.height;
                 
-                // 绘制原图
+                // Draw Original Image
                 ctx.drawImage(imageData.img, 0, 0);
                 
-                // 获取处理设置
+                // Get Processing Settings
                 const settings = this.getProcessingSettings();
                 
-                // 应用背景更换算法
+                // Apply Background Replacement Algorithm
                 this.changeBackground(ctx, settings, canvas.width, canvas.height);
                 
-                // 获取输出格式
+                // Get Output Format
                 let mimeType = imageData.file.type;
                 let fileExtension = this.getFileExtension(imageData.file.name);
                 
@@ -337,16 +337,16 @@ class BackgroundChanger {
                     }
                 }
                 
-                // 生成数据URL
+                // Generate Data URL
                 const quality = settings.quality / 100;
                 const dataUrl = canvas.toDataURL(mimeType, quality);
                 
                 if (!dataUrl || dataUrl === 'data:,') {
-                    reject(new Error('无法生成处理后的图像'));
+                    reject(new Error('Cannot generate processed image'));
                     return;
                 }
                 
-                // 创建Blob
+                // Create Blob
                 const byteString = atob(dataUrl.split(',')[1]);
                 const ab = new ArrayBuffer(byteString.length);
                 const ia = new Uint8Array(ab);
@@ -355,7 +355,7 @@ class BackgroundChanger {
                 }
                 const blob = new Blob([ab], { type: mimeType });
                 
-                // 生成文件名
+                // Generate File Name
                 const originalName = imageData.name.split('.')[0];
                 const fileName = `${originalName}_newbg.${fileExtension}`;
                 
@@ -370,7 +370,7 @@ class BackgroundChanger {
                     mimeType: mimeType
                 });
             } catch (error) {
-                console.error('图像处理错误:', error);
+                console.error('Image processing error:', error);
                 reject(error);
             }
         });
@@ -380,35 +380,35 @@ class BackgroundChanger {
         const imageData = ctx.getImageData(0, 0, width, height);
         const data = imageData.data;
         
-        console.log('开始背景更换处理:', {
+        console.log('Starting background replacement processing:', {
             width,
             height,
             backgroundType: settings.backgroundType,
             detectionMode: settings.detectionMode
         });
         
-        // 检测背景区域
+        // Detect Background Area
         const backgroundMask = this.detectBackground(data, settings, width, height);
         
-        // 创建新背景
+        // Create New Background
         const newBackground = this.createNewBackground(settings, width, height);
         
-        // 应用新背景
+        // Apply New Background
         this.applyNewBackground(data, backgroundMask, newBackground, width, height);
         
-        // 应用后处理效果
+        // Apply Post-processing Effects
         if (settings.smoothEdges) {
-            console.log('应用边缘平滑');
+            console.log('Applying edge smoothing');
             this.smoothEdges(data, width, height);
         }
         
         if (settings.enhanceContrast) {
-            console.log('应用对比度增强');
+            console.log('Applying contrast enhancement');
             this.enhanceContrast(data, width, height);
         }
         
         ctx.putImageData(imageData, 0, 0);
-        console.log('背景更换处理完成');
+        console.log('Background replacement processing completed');
     }
 
     detectBackground(data, settings, width, height) {
@@ -434,16 +434,16 @@ class BackgroundChanger {
             const x = pixelIndex % width;
             const y = Math.floor(pixelIndex / width);
             
-            // 边缘检测 - 边缘像素更可能是主体
+            // Edge Detection - Edge pixels are more likely to be subject
             const isEdge = this.isEdgePixel(x, y, width, height);
             
-            // 颜色分析 - 检测背景色
+            // Color Analysis - Detect background color
             const isBackground = this.isBackgroundColor(data, width, height, x, y);
             
-            // 位置分析 - 角落和边缘更可能是背景
+            // Position Analysis - Corners and edges are more likely to be background
             const isCorner = this.isCornerPixel(x, y, width, height);
             
-            // 综合判断
+            // Comprehensive Judgment
             if (isCorner && !isEdge) {
                 mask[pixelIndex] = true;
             } else if (isBackground && !isEdge) {
@@ -455,9 +455,9 @@ class BackgroundChanger {
     }
 
     manualDetectBackground(data, settings, width, height) {
-        // 手动选择区域处理
-        // 这里可以实现基于用户选择的区域进行背景检测
-        // 暂时使用自动算法作为基础
+        // Manual Selection Area Processing
+        // Background detection based on user-selected area can be implemented here
+        // Temporarily using automatic algorithm as foundation
         return this.autoDetectBackground(data, width, height);
     }
 
@@ -472,14 +472,14 @@ class BackgroundChanger {
             const g = data[i + 1];
             const b = data[i + 2];
             
-            // 计算颜色差异
+            // Calculate Color Difference
             const colorDiff = Math.sqrt(
                 Math.pow(r - replaceColor.r, 2) +
                 Math.pow(g - replaceColor.g, 2) +
                 Math.pow(b - replaceColor.b, 2)
             );
             
-            // 如果颜色差异在容差范围内，标记为背景
+            // If color difference is within tolerance range, mark as background
             if (colorDiff <= tolerance) {
                 mask[pixelIndex] = true;
             }
@@ -552,7 +552,7 @@ class BackgroundChanger {
         const patternSize = settings.patternSize;
         const patternDensity = settings.patternDensity / 100;
         
-        // 创建图案
+        // Create Pattern
         const patternCanvas = document.createElement('canvas');
         const patternCtx = patternCanvas.getContext('2d');
         patternCanvas.width = patternSize;
@@ -690,7 +690,7 @@ class BackgroundChanger {
             const pixelIndex = i / 4;
             
             if (backgroundMask[pixelIndex]) {
-                // 替换背景像素
+                // Replace Background Pixels
                 data[i] = newBackground.data[i];
                 data[i + 1] = newBackground.data[i + 1];
                 data[i + 2] = newBackground.data[i + 2];
@@ -875,7 +875,7 @@ class BackgroundChanger {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="backgroundChanger.downloadSingleImage('${imageData.name}')">下载</button>
+                    <button class="btn btn-success" onclick="backgroundChanger.downloadSingleImage('${imageData.name}')">Download</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -886,7 +886,7 @@ class BackgroundChanger {
 
     async previewProcessing() {
         if (this.images.length === 0) {
-            alert('请先选择图片');
+            alert('Please select images first');
             return;
         }
 
@@ -894,12 +894,12 @@ class BackgroundChanger {
         const processedImage = await this.processImage(firstImage);
         
         if (processedImage) {
-            // 创建预览窗口
+            // Create Preview Window
             const previewWindow = window.open('', '_blank', 'width=1200,height=800');
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>背景更换预览</title>
+                        <title>Background Change Preview</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f5f5f5; }
                             .preview-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
@@ -910,19 +910,19 @@ class BackgroundChanger {
                         </style>
                     </head>
                     <body>
-                        <h2>背景更换预览</h2>
+                        <h2>Background Change Preview</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>更换前</h3>
-                                <img src="${firstImage.dataUrl}" alt="更换前" />
-                                <div class="preview-info">尺寸: ${firstImage.width}×${firstImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(firstImage.size)}</div>
+                                <h3>Before</h3>
+                                <img src="${firstImage.dataUrl}" alt="Before" />
+                                <div class="preview-info">Size: ${firstImage.width}×${firstImage.height}</div>
+                                <div class="preview-info">File Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>更换后</h3>
-                                <img src="${processedImage.dataUrl}" alt="更换后" />
-                                <div class="preview-info">尺寸: ${processedImage.width}×${processedImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(processedImage.size)}</div>
+                                <h3>After</h3>
+                                <img src="${processedImage.dataUrl}" alt="After" />
+                                <div class="preview-info">Size: ${processedImage.width}×${processedImage.height}</div>
+                                <div class="preview-info">File Size: ${this.formatFileSize(processedImage.size)}</div>
                             </div>
                         </div>
                     </body>
@@ -951,13 +951,13 @@ class BackgroundChanger {
 
     async downloadAsZip() {
         if (this.processedImages.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images available for download');
             return;
         }
 
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // An alternative solution is provided here: download one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -977,38 +977,38 @@ class BackgroundChanger {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // 手动选择相关方法
+    // Manual Selection Methods
     startDrawing(e) {
         this.isDrawing = true;
-        // 实现手动选择功能
+        // Implement Manual Selection Functionality
     }
 
     draw(e) {
         if (!this.isDrawing) return;
-        // 实现绘制功能
+        // Implement Drawing Functionality
     }
 
     stopDrawing(e) {
         this.isDrawing = false;
-        // 实现停止绘制功能
+        // Implement Stop Drawing Functionality
     }
 
     handleCanvasClick(e) {
-        // 处理画布点击事件
+        // Handle Canvas Click Events
     }
 
     activateColorPicker() {
-        // 激活取色器功能
-        alert('取色器功能：点击图片上的颜色来设置背景色');
+        // Activate Color Picker Functionality
+        alert('Color Picker: Click on colors in the image to set the background color');
     }
 
     activateReplaceColorPicker() {
-        // 激活替换颜色取色器功能
-        alert('替换颜色取色器：点击图片上的颜色来设置要替换的颜色');
+        // Activate Replace Color Picker Functionality
+        alert('Replace Color Picker: Click on colors in the image to set the color to replace')
     }
 }
 
-// 初始化应用
+// Initialize Application
 let backgroundChanger;
 document.addEventListener('DOMContentLoaded', () => {
     backgroundChanger = new BackgroundChanger();

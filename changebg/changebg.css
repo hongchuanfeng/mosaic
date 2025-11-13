@@ -1,4 +1,4 @@
-/* 基础样式重置 */
+/* Base Style Reset */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -7,24 +7,25 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5;
+    background-color: transparent;
     color: #333;
     line-height: 1.6;
 }
 
-/* 头部样式 */
+/* Header Style */
 .header-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     margin: 0 auto 20px auto;
-    padding: 20px;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0px;
+    background: transparent;
+    color: #333;
     max-width: 1200px;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
 }
 
 .header-title {
@@ -55,14 +56,14 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* 主容器 */
+/* Main Container */
 .main-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px;
 }
 
-/* 上传区域 */
+/* Upload Area */
 .upload-section {
     background: white;
     border-radius: 10px;
@@ -114,7 +115,7 @@ body {
     display: none;
 }
 
-/* 设置区域 */
+/* Settings Area */
 .settings-section {
     background: white;
     border-radius: 10px;
@@ -152,49 +153,49 @@ body {
     font-size: 0.9rem;
 }
 
-/* 背景类型 */
+/* Background Types */
 .background-types {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* 纯色背景工具 */
+/* Solid Background Tools */
 .solid-background-tools {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* 渐变背景工具 */
+/* Gradient Background Tools */
 .gradient-background-tools {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* 图案背景工具 */
+/* Pattern Background Tools */
 .pattern-background-tools {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* 检测选项 */
+/* Detection Options */
 .detection-options {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* 手动工具 */
+/* Manual Tools */
 .manual-tools {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* 颜色选择工具 */
+/* Color Selection Tools */
 .color-selection-tools {
     display: flex;
     flex-direction: column;
@@ -267,7 +268,7 @@ body {
     text-align: right;
 }
 
-/* 颜色选择器组 */
+/* Color Picker Group */
 .color-picker-group {
     display: flex;
     align-items: center;
@@ -326,14 +327,14 @@ body {
     text-align: right;
 }
 
-/* 高级选项 */
+/* Advanced Options */
 .advanced-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 8px;
 }
 
-/* 格式选择 */
+/* Format Selection */
 .format-select {
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -350,7 +351,7 @@ body {
     box-shadow: 0 0 0 2px rgba(255, 154, 158, 0.25);
 }
 
-/* 质量控制 */
+/* Quality Control */
 .quality-control {
     display: flex;
     align-items: center;
@@ -391,7 +392,7 @@ body {
     min-width: 50px;
 }
 
-/* 复选框和单选框样式 */
+/* Checkbox and Radio Button Styles */
 .checkbox-label, .radio-label {
     display: flex;
     align-items: center;
@@ -458,7 +459,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/* 按钮样式 */
+/* Button Styles */
 .action-buttons {
     display: flex;
     gap: 15px;
@@ -526,7 +527,7 @@ body {
     background-color: #138496;
 }
 
-/* 图片列表区域 */
+/* Image List Area */
 .images-section {
     background: white;
     border-radius: 10px;
@@ -596,7 +597,7 @@ body {
     font-size: 12px;
 }
 
-/* 进度区域 */
+/* Progress Area */
 .progress-section {
     background: white;
     border-radius: 10px;
@@ -637,7 +638,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* 结果区域 */
+/* Results Area */
 .results-section {
     background: white;
     border-radius: 10px;
@@ -716,7 +717,7 @@ body {
     font-size: 12px;
 }
 
-/* 使用说明区域 */
+/* Instructions Area */
 .instructions-section {
     background: white;
     border-radius: 10px;
@@ -760,7 +761,7 @@ body {
     line-height: 1.5;
 }
 
-/* 拖拽状态 */
+/* Drag-and-Drop State */
 .upload-area.dragover {
     border-color: #ff9a9e;
     background-color: #fff5f5;
@@ -771,7 +772,7 @@ body {
     background-color: #fff5f5;
 }
 
-/* 加载状态 */
+/* Loading State */
 .loading {
     position: relative;
 }
@@ -795,8 +796,11 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* 响应式设计 */
+/* Responsive Design */
 @media screen and (max-width: 768px) {
+    .header-div {
+        padding: 0px;
+    }
     .main-container {
         padding: 0 5px;
     }
@@ -849,7 +853,7 @@ body {
 
 @media screen and (max-width: 480px) {
     .header-div {
-        padding: 15px;
+        padding: 0px;
     }
     
     .header-title {

@@ -1,163 +1,163 @@
-# 老照片修复工具
+# Old Photo Restoration Tool
 
-一个专业的在线老照片修复工具，能够智能修复破损、褪色、模糊的老照片，恢复照片原有色彩和细节。
+A professional online old photo restoration tool that can intelligently repair damaged, faded, and blurred old photos, restoring their original colors and details.
 
-## 功能特点
+## Features
 
-### 🤖 智能修复
-- **自动检测**：智能识别照片中的各种问题
-- **一键修复**：自动应用最佳修复算法
-- **多类型支持**：支持色彩修复、破损修复、噪点修复
+### 🤖 Intelligent Restoration
+- **Auto Detection**: Intelligently identify various issues in photos
+- **One-Click Repair**: Automatically apply the best restoration algorithms
+- **Multi-Type Support**: Support for color restoration, damage repair, and noise reduction
 
-### 🎨 色彩修复
-- **饱和度调整**：恢复褪色照片的鲜艳色彩
-- **对比度增强**：提升照片的层次感
-- **亮度校正**：调整过暗或过亮的照片
-- **自动色彩平衡**：智能校正偏色问题
+### 🎨 Color Restoration
+- **Saturation Adjustment**: Restore vivid colors to faded photos
+- **Contrast Enhancement**: Improve photo layering and depth
+- **Brightness Correction**: Adjust underexposed or overexposed photos
+- **Auto Color Balance**: Intelligently correct color cast issues
 
-### 🔧 破损修复
-- **划痕修复**：自动检测并修复照片划痕
-- **污渍去除**：清除照片上的污渍和斑点
-- **缺失补全**：修复撕裂或缺失的部分
-- **纹理重建**：恢复照片的原始纹理
+### 🔧 Damage Repair
+- **Scratch Repair**: Automatically detect and repair photo scratches
+- **Stain Removal**: Eliminate stains and spots from photos
+- **Missing Part Completion**: Repair torn or missing portions
+- **Texture Reconstruction**: Restore the original texture of photos
 
-### ✨ 细节增强
-- **锐化处理**：提升照片清晰度
-- **细节增强**：突出照片细节
-- **边缘增强**：改善边缘清晰度
-- **降噪处理**：减少照片噪点
+### ✨ Detail Enhancement
+- **Sharpening**: Improve photo clarity
+- **Detail Enhancement**: Highlight photo details
+- **Edge Enhancement**: Improve edge sharpness
+- **Noise Reduction**: Reduce photo noise
 
-## 使用方法
+## Usage Instructions
 
-### 1. 上传照片
-- 点击上传区域选择老照片
-- 或直接拖拽照片到上传区域
-- 支持JPG、PNG、GIF、BMP、WebP格式
-- 最多可同时处理5张照片
+### 1. Upload Photos
+- Click the upload area to select old photos
+- Or directly drag and drop photos to the upload area
+- Supports JPG, PNG, GIF, BMP, WebP formats
+- Batch processing up to 5 photos
 
-### 2. 选择修复类型
-- **智能修复**：自动检测并修复所有问题
-- **色彩修复**：专门针对褪色、偏色问题
-- **破损修复**：修复物理损伤和缺失
-- **噪点修复**：减少照片噪点和颗粒
+### 2. Select Restoration Type
+- **Intelligent Restoration**: Automatically detect and repair all issues
+- **Color Restoration**: Specifically for fading and color cast issues
+- **Damage Repair**: Fix physical damage and missing parts
+- **Noise Reduction**: Reduce photo noise and grain
 
-### 3. 调整参数
-- **修复强度**：控制修复效果的强度
-- **色彩参数**：调整饱和度、对比度、亮度
-- **细节参数**：设置锐化和细节增强强度
-- **高级选项**：启用各种专业修复功能
+### 3. Adjust Parameters
+- **Restoration Intensity**: Control the intensity of restoration effects
+- **Color Parameters**: Adjust saturation, contrast, and brightness
+- **Detail Parameters**: Set sharpening and detail enhancement intensity
+- **Advanced Options**: Enable various professional restoration features
 
-### 4. 开始修复
-- 点击"开始修复"批量处理所有照片
-- 或点击单个照片的"修复"按钮单独处理
-- 实时显示修复进度
+### 4. Start Restoration
+- Click "Start Restoration" to batch process all photos
+- Or click individual photo's "Repair" button for separate processing
+- Real-time display of restoration progress
 
-### 5. 预览和下载
-- 预览修复效果对比
-- 单独下载或批量下载修复结果
-- 支持多种输出格式
+### 5. Preview and Download
+- Preview restoration effect comparison
+- Download individual or batch download restoration results
+- Support for multiple output formats
 
-## 修复类型详解
+## Detailed Explanation of Restoration Types
 
-### 智能修复 (推荐)
-- **特点**：自动检测照片问题并应用最佳修复算法
-- **适用**：大多数老照片修复需求
-- **优势**：一键修复，效果最佳
+### Intelligent Restoration (Recommended)
+- **Features**: Automatically detects photo issues and applies the best restoration algorithms
+- **Suitable for**: Most old photo restoration needs
+- **Advantages**: One-click repair with optimal results
 
-### 色彩修复
-- **特点**：专门针对褪色、偏色问题
-- **适用**：色彩暗淡、偏色的老照片
-- **优势**：恢复照片原有鲜艳色彩
+### Color Restoration
+- **Features**: Specifically targets fading and color cast issues
+- **Suitable for**: Photos with dull colors or color casts
+- **Advantages**: Restores original vivid colors to photos
 
-### 破损修复
-- **特点**：修复撕裂、缺失、划痕等物理损伤
-- **适用**：有物理损伤的老照片
-- **优势**：重建照片完整性
+### Damage Repair
+- **Features**: Repairs physical damage such as tears, missing parts, and scratches
+- **Suitable for**: Photos with physical damage
+- **Advantages**: Reconstructs photo integrity
 
-### 噪点修复
-- **特点**：减少照片噪点和颗粒
-- **适用**：颗粒感重的老照片
-- **优势**：提升照片清晰度
+### Noise Reduction
+- **Features**: Reduces photo noise and grain
+- **Suitable for**: Photos with heavy grain
+- **Advantages**: Improves photo clarity
 
-## 高级功能
+## Advanced Features
 
-### 自动色彩平衡
-自动分析照片色彩分布，校正偏色问题，恢复自然色彩。
+### Auto Color Balance
+Automatically analyzes photo color distribution, corrects color cast issues, and restores natural colors.
 
-### 降噪处理
-使用中值滤波算法减少照片噪点，特别适合处理低质量原图。
+### Noise Reduction
+Uses median filtering algorithm to reduce photo noise, especially suitable for processing low-quality original images.
 
-### 边缘增强
-应用拉普拉斯算子检测和增强照片边缘，提升整体清晰度。
+### Edge Enhancement
+Applies Laplacian operator to detect and enhance photo edges, improving overall clarity.
 
-### 纹理修复
-智能分析照片纹理模式，修复缺失的纹理细节。
+### Texture Repair
+Intelligently analyzes photo texture patterns and repairs missing texture details.
 
-### 划痕修复
-自动检测线性划痕并使用周围像素进行智能填充。
+### Scratch Repair
+Automatically detects linear scratches and intelligently fills them using surrounding pixels.
 
-### 污渍修复
-识别并修复照片上的污渍和斑点，恢复照片清洁度。
+### Stain Removal
+Identifies and repairs stains and spots on photos, restoring photo cleanliness.
 
-## 技术特点
+## Technical Features
 
-- **Canvas API**：使用HTML5 Canvas进行高质量图像处理
-- **多种算法**：集成多种专业图像修复算法
-- **实时预览**：即时查看修复效果
-- **批量处理**：高效处理多张照片
-- **响应式设计**：支持各种设备访问
+- **Canvas API**: Uses HTML5 Canvas for high-quality image processing
+- **Multiple Algorithms**: Integrates various professional image restoration algorithms
+- **Real-time Preview**: Instantly view restoration effects
+- **Batch Processing**: Efficiently process multiple photos
+- **Responsive Design**: Supports access from various devices
 
-## 使用场景
+## Usage Scenarios
 
-- **家庭照片**：修复珍贵的家庭老照片
-- **历史照片**：修复历史文献和档案照片
-- **艺术收藏**：修复艺术品和收藏品照片
-- **商业用途**：修复商业档案和产品照片
-- **个人收藏**：修复个人收藏的老照片
+- **Family Photos**: Restore precious old family photos
+- **Historical Photos**: Repair historical documents and archive photos
+- **Art Collections**: Restore photos of artworks and collectibles
+- **Commercial Use**: Repair commercial archives and product photos
+- **Personal Collections**: Restore personally collected old photos
 
-## 修复效果
+## Restoration Effects
 
-### 色彩修复效果
-- 恢复褪色照片的鲜艳色彩
-- 校正偏色和色温问题
-- 提升照片整体色彩饱和度
+### Color Restoration Effects
+- Restore vivid colors to faded photos
+- Correct color cast and white balance issues
+- Improve overall photo color saturation
 
-### 破损修复效果
-- 修复撕裂和缺失部分
-- 清除划痕和污渍
-- 重建照片完整性
+### Damage Repair Effects
+- Fix torn and missing parts
+- Remove scratches and stains
+- Reconstruct photo integrity
 
-### 细节增强效果
-- 提升照片清晰度
-- 增强细节表现
-- 减少噪点和颗粒
+### Detail Enhancement Effects
+- Improve photo clarity
+- Enhance detail representation
+- Reduce noise and grain
 
-## 注意事项
+## Notes
 
-1. **原图质量**：原图质量越高，修复效果越好
-2. **修复强度**：过高的修复强度可能影响照片自然度
-3. **处理时间**：大尺寸照片处理可能需要较长时间
-4. **浏览器兼容**：建议使用现代浏览器以获得最佳体验
+1. **Original Image Quality**: The higher the original image quality, the better the restoration effect
+2. **Restoration Intensity**: Excessively high restoration intensity may affect photo naturalness
+3. **Processing Time**: Larger-sized photos may require longer processing times
+4. **Browser Compatibility**: It is recommended to use modern browsers for the best experience
 
-## 更新日志
+## Update Log
 
 ### v1.0.0
-- 基础老照片修复功能
-- 多种修复类型支持
-- 智能色彩修复算法
-- 破损检测和修复
-- 噪点减少处理
-- 批量处理功能
-- 实时预览功能
-- 响应式界面设计
+- Basic old photo restoration functionality
+- Support for multiple restoration types
+- Intelligent color restoration algorithm
+- Damage detection and repair
+- Noise reduction processing
+- Batch processing capability
+- Real-time preview feature
+- Responsive interface design
 
-## 浏览器支持
+## Browser Support
 
 - Chrome 60+
 - Firefox 55+
 - Safari 12+
 - Edge 79+
 
-## 许可证
+## License
 
 MIT License

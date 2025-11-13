@@ -133,16 +133,40 @@ class IconGenerator {
     }
 
     updateBorderRadiusValue(e) {
-        document.getElementById('borderRadiusValue').textContent = e.target.value + 'px';
+        const slider = e.target;
+        const value = parseInt(slider.value);
+        const valueDisplay = document.getElementById('borderRadiusValue');
+        
+        // Clear circle marker if user manually adjusts slider
+        if (slider.getAttribute('data-is-circle') === 'true') {
+            slider.removeAttribute('data-is-circle');
+            // Clear active state from circle button
+            document.querySelectorAll('.radius-preset-btn').forEach(btn => {
+                if (btn.dataset.value === 'circle') {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+        
+        valueDisplay.textContent = value + 'px';
     }
 
     setBorderRadiusPreset(e) {
-        const value = parseInt(e.target.dataset.value);
+        const value = e.target.dataset.value;
         const slider = document.getElementById('borderRadiusSlider');
         const valueDisplay = document.getElementById('borderRadiusValue');
         
-        slider.value = value;
-        valueDisplay.textContent = value + 'px';
+        if (value === 'circle') {
+            // For circle, set a special value that will be handled in generateIcon
+            slider.value = 999; // Use a large value as marker
+            slider.setAttribute('data-is-circle', 'true');
+            valueDisplay.textContent = 'Circle';
+        } else {
+            const numValue = parseInt(value);
+            slider.value = numValue;
+            slider.removeAttribute('data-is-circle');
+            valueDisplay.textContent = numValue + 'px';
+        }
         
         // 更新按钮状态
         document.querySelectorAll('.radius-preset-btn').forEach(btn => {
@@ -199,7 +223,9 @@ class IconGenerator {
         const cropToSquare = document.getElementById('cropToSquare').checked;
         const addPadding = document.getElementById('addPadding').checked;
         const addBorderRadius = document.getElementById('addBorderRadius').checked;
-        const borderRadius = parseInt(document.getElementById('borderRadiusSlider').value);
+        const borderRadiusSlider = document.getElementById('borderRadiusSlider');
+        const isCircle = borderRadiusSlider.getAttribute('data-is-circle') === 'true';
+        const borderRadius = isCircle ? 'circle' : parseInt(borderRadiusSlider.value);
         const optimizeForWeb = document.getElementById('optimizeForWeb').checked;
         const backgroundType = document.querySelector('input[name="background"]:checked').value;
         const customColor = document.getElementById('customColor').value;
@@ -245,13 +271,26 @@ class IconGenerator {
             canvas.width = outputWidth;
             canvas.height = outputHeight;
             
+            // 计算实际的圆角半径
+            let actualRadius = 0;
+            if (options.addBorderRadius) {
+                if (options.borderRadius === 'circle') {
+                    // For circle, use half of the minimum dimension
+                    actualRadius = Math.min(outputWidth, outputHeight) / 2;
+                } else {
+                    // Clamp radius to maximum possible (half of minimum dimension)
+                    const maxRadius = Math.min(outputWidth, outputHeight) / 2;
+                    actualRadius = Math.min(options.borderRadius, maxRadius);
+                }
+            }
+            
             // 设置背景
             if (options.backgroundType === 'white') {
                 ctx.fillStyle = '#ffffff';
-                this.fillRoundedRect(ctx, 0, 0, outputWidth, outputHeight, options.addBorderRadius ? options.borderRadius : 0);
+                this.fillRoundedRect(ctx, 0, 0, outputWidth, outputHeight, actualRadius);
             } else if (options.backgroundType === 'custom') {
                 ctx.fillStyle = options.customColor;
-                this.fillRoundedRect(ctx, 0, 0, outputWidth, outputHeight, options.addBorderRadius ? options.borderRadius : 0);
+                this.fillRoundedRect(ctx, 0, 0, outputWidth, outputHeight, actualRadius);
             }
             
             // 计算图片绘制区域
@@ -273,7 +312,7 @@ class IconGenerator {
                 }
                 
                 if (options.addBorderRadius) {
-                    this.drawRoundedImage(ctx, this.sourceImage, sourceX, sourceY, minDimension, minDimension, drawX, drawY, drawWidth, drawHeight, options.borderRadius);
+                    this.drawRoundedImage(ctx, this.sourceImage, sourceX, sourceY, minDimension, minDimension, drawX, drawY, drawWidth, drawHeight, actualRadius);
                 } else {
                     ctx.drawImage(
                         this.sourceImage,
@@ -292,7 +331,7 @@ class IconGenerator {
                 }
                 
                 if (options.addBorderRadius) {
-                    this.drawRoundedImage(ctx, this.sourceImage, 0, 0, this.sourceImage.width, this.sourceImage.height, drawX, drawY, drawWidth, drawHeight, options.borderRadius);
+                    this.drawRoundedImage(ctx, this.sourceImage, 0, 0, this.sourceImage.width, this.sourceImage.height, drawX, drawY, drawWidth, drawHeight, actualRadius);
                 } else {
                     ctx.drawImage(this.sourceImage, drawX, drawY, drawWidth, drawHeight);
                 }
@@ -374,6 +413,20 @@ class IconGenerator {
             return;
         }
         
+        // If radius is half of minimum dimension, draw a circle/ellipse
+        const minDim = Math.min(width, height);
+        if (radius >= minDim / 2) {
+            ctx.beginPath();
+            const centerX = x + width / 2;
+            const centerY = y + height / 2;
+            const radiusX = width / 2;
+            const radiusY = height / 2;
+            ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.fill();
+            return;
+        }
+        
         ctx.beginPath();
         ctx.moveTo(x + radius, y);
         ctx.lineTo(x + width - radius, y);
@@ -396,18 +449,32 @@ class IconGenerator {
         }
         
         ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(dx + radius, dy);
-        ctx.lineTo(dx + dWidth - radius, dy);
-        ctx.quadraticCurveTo(dx + dWidth, dy, dx + dWidth, dy + radius);
-        ctx.lineTo(dx + dWidth, dy + dHeight - radius);
-        ctx.quadraticCurveTo(dx + dWidth, dy + dHeight, dx + dWidth - radius, dy + dHeight);
-        ctx.lineTo(dx + radius, dy + dHeight);
-        ctx.quadraticCurveTo(dx, dy + dHeight, dx, dy + dHeight - radius);
-        ctx.lineTo(dx, dy + radius);
-        ctx.quadraticCurveTo(dx, dy, dx + radius, dy);
-        ctx.closePath();
-        ctx.clip();
+        
+        // If radius is half of minimum dimension, draw a circle/ellipse
+        const minDim = Math.min(dWidth, dHeight);
+        if (radius >= minDim / 2) {
+            ctx.beginPath();
+            const centerX = dx + dWidth / 2;
+            const centerY = dy + dHeight / 2;
+            const radiusX = dWidth / 2;
+            const radiusY = dHeight / 2;
+            ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.clip();
+        } else {
+            ctx.beginPath();
+            ctx.moveTo(dx + radius, dy);
+            ctx.lineTo(dx + dWidth - radius, dy);
+            ctx.quadraticCurveTo(dx + dWidth, dy, dx + dWidth, dy + radius);
+            ctx.lineTo(dx + dWidth, dy + dHeight - radius);
+            ctx.quadraticCurveTo(dx + dWidth, dy + dHeight, dx + dWidth - radius, dy + dHeight);
+            ctx.lineTo(dx + radius, dy + dHeight);
+            ctx.quadraticCurveTo(dx, dy + dHeight, dx, dy + dHeight - radius);
+            ctx.lineTo(dx, dy + radius);
+            ctx.quadraticCurveTo(dx, dy, dx + radius, dy);
+            ctx.closePath();
+            ctx.clip();
+        }
         
         ctx.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
         ctx.restore();

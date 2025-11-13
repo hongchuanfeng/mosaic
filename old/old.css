@@ -1,4 +1,4 @@
-/* 基础样式重置 */
+/* Basic Style Reset */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -7,24 +7,25 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5;
+    background-color: transparent;
     color: #333;
     line-height: 1.6;
 }
 
-/* 头部样式 */
+/* Header Style */
 .header-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     margin: 0 auto 20px auto;
-    padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0px;
+    background: transparent;
+    color: #333;
     max-width: 1200px;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
 }
 
 .header-title {
@@ -55,14 +56,14 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* 主容器 */
+/* Main Container */
 .main-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px;
 }
 
-/* 上传区域 */
+/* Upload Area */
 .upload-section {
     background: white;
     border-radius: 10px;
@@ -114,7 +115,7 @@ body {
     display: none;
 }
 
-/* 设置区域 */
+/* Settings Area */
 .settings-section {
     background: white;
     border-radius: 10px;
@@ -152,14 +153,14 @@ body {
     font-size: 0.9rem;
 }
 
-/* 修复类型 */
+/* Restoration Type */
 .repair-types {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* 强度控制 */
+/* Intensity Control */
 .intensity-control {
     display: flex;
     align-items: center;
@@ -228,7 +229,7 @@ body {
     border-color: #8B4513;
 }
 
-/* 色彩控制 */
+/* Color Control */
 .color-controls {
     display: flex;
     flex-direction: column;
@@ -282,7 +283,7 @@ body {
     text-align: right;
 }
 
-/* 细节控制 */
+/* Detail Control */
 .detail-controls {
     display: flex;
     flex-direction: column;
@@ -336,14 +337,14 @@ body {
     text-align: right;
 }
 
-/* 高级选项 */
+/* Advanced Options */
 .advanced-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 8px;
 }
 
-/* 格式选择 */
+/* Format Selection */
 .format-select {
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -360,7 +361,7 @@ body {
     box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.25);
 }
 
-/* 质量控制 */
+/* Quality Control */
 .quality-control {
     display: flex;
     align-items: center;
@@ -401,7 +402,7 @@ body {
     min-width: 50px;
 }
 
-/* 复选框和单选框样式 */
+/* Checkbox and Radio Button Styles */
 .checkbox-label, .radio-label {
     display: flex;
     align-items: center;
@@ -468,7 +469,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/* 按钮样式 */
+/* Button Styles */
 .action-buttons {
     display: flex;
     gap: 15px;
@@ -536,7 +537,7 @@ body {
     background-color: #138496;
 }
 
-/* 图片列表区域 */
+/* Image List Area */
 .images-section {
     background: white;
     border-radius: 10px;
@@ -606,7 +607,7 @@ body {
     font-size: 12px;
 }
 
-/* 进度区域 */
+/* Progress Area */
 .progress-section {
     background: white;
     border-radius: 10px;
@@ -647,7 +648,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* 结果区域 */
+/* Results Area */
 .results-section {
     background: white;
     border-radius: 10px;
@@ -726,7 +727,7 @@ body {
     font-size: 12px;
 }
 
-/* 使用说明区域 */
+/* Usage Instructions Area */
 .instructions-section {
     background: white;
     border-radius: 10px;
@@ -770,7 +771,7 @@ body {
     line-height: 1.5;
 }
 
-/* 拖拽状态 */
+/* Drag State */
 .upload-area.dragover {
     border-color: #8B4513;
     background-color: #fdf5e6;
@@ -781,7 +782,7 @@ body {
     background-color: #fdf5e6;
 }
 
-/* 加载状态 */
+/* Loading State */
 .loading {
     position: relative;
 }
@@ -805,8 +806,11 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* 响应式设计 */
+/* Responsive Design */
 @media screen and (max-width: 768px) {
+    .header-div {
+        padding: 0px;
+    }
     .main-container {
         padding: 0 5px;
     }
@@ -852,7 +856,7 @@ body {
 
 @media screen and (max-width: 480px) {
     .header-div {
-        padding: 15px;
+        padding: 0px;
     }
     
     .header-title {

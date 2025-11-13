@@ -14,18 +14,18 @@ class BlackWhiteColorizer {
     }
 
     bindEvents() {
-        // 文件上传
+        // File upload
         const fileInput = document.getElementById('fileInput');
         const uploadArea = document.querySelector('.upload-area');
         
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         
-        // 拖拽上传
+        // Drag and drop upload
         uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
         uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
         
-        // 滑块控制
+        // Slider controls
         document.getElementById('intensitySlider').addEventListener('input', (e) => this.updateIntensityValue(e));
         document.getElementById('skinIntensity').addEventListener('input', (e) => this.updateSkinIntensityValue(e));
         document.getElementById('skyIntensity').addEventListener('input', (e) => this.updateSkyIntensityValue(e));
@@ -33,7 +33,7 @@ class BlackWhiteColorizer {
         document.getElementById('buildingIntensity').addEventListener('input', (e) => this.updateBuildingIntensityValue(e));
         document.getElementById('qualitySlider').addEventListener('input', (e) => this.updateQualityValue(e));
         
-        // 按钮事件
+        // Button events
         document.getElementById('colorizeBtn').addEventListener('click', () => this.colorizeAllImages());
         document.getElementById('previewBtn').addEventListener('click', () => this.previewColorization());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearAll());
@@ -68,12 +68,12 @@ class BlackWhiteColorizer {
         const imageFiles = files.filter(file => file.type.startsWith('image/'));
         
         if (imageFiles.length === 0) {
-            alert('请选择图片文件');
+            alert('Please select image files');
             return;
         }
 
         if (imageFiles.length > 5) {
-            alert('最多只能上传5张图片');
+            alert('Maximum 5 images can be uploaded');
             return;
         }
 
@@ -117,8 +117,8 @@ class BlackWhiteColorizer {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="blackWhiteColorizer.colorizeSingleImage('${imageData.id}')">上色</button>
-                    <button class="btn btn-outline" onclick="blackWhiteColorizer.removeImage('${imageData.id}')">删除</button>
+                    <button class="btn btn-primary" onclick="blackWhiteColorizer.colorizeSingleImage('${imageData.id}')">Colorize</button>
+                    <button class="btn btn-outline" onclick="blackWhiteColorizer.removeImage('${imageData.id}')">Remove</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -147,14 +147,14 @@ class BlackWhiteColorizer {
     }
 
     setupPresetButtons() {
-        // 强度预设按钮
+        // Intensity preset buttons
         document.querySelectorAll('.intensity-preset-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.setIntensityPreset(e));
         });
     }
 
     setupModeToggle() {
-        // 上色模式切换
+        // Colorization mode toggle
         document.querySelectorAll('input[name="colorizationMode"]').forEach(radio => {
             radio.addEventListener('change', (e) => this.handleModeChange(e));
         });
@@ -178,7 +178,7 @@ class BlackWhiteColorizer {
         slider.value = value;
         valueDisplay.textContent = value;
         
-        // 更新按钮状态
+        // Update button state
         document.querySelectorAll('.intensity-preset-btn').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -218,11 +218,11 @@ class BlackWhiteColorizer {
             if (colorizedImage) {
                 this.colorizedImages.push(colorizedImage);
                 this.displayResults();
-                alert('上色成功！');
+                alert('Colorization successful!');
             }
         } catch (error) {
-            console.error('单张图片上色失败:', error);
-            alert('上色失败，请检查图片格式和设置');
+            console.error('Single image colorization failed:', error);
+            alert('Colorization failed, please check image format and settings');
         }
     }
 
@@ -240,7 +240,7 @@ class BlackWhiteColorizer {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `正在上色: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `Colorizing: ${imageData.name}`);
             
             try {
                 const colorizedImage = await this.colorizeImage(imageData);
@@ -250,28 +250,28 @@ class BlackWhiteColorizer {
                 }
                 completed++;
             } catch (error) {
-                console.error('照片上色失败:', error);
+                console.error('Photo colorization failed:', error);
                 errorCount++;
                 completed++;
             }
         }
 
-        // 显示处理结果
-        let resultMessage = `上色完成！成功: ${successCount}张`;
+        // Display processing results
+        let resultMessage = `Colorization completed! Success: ${successCount} image(s)`;
         if (errorCount > 0) {
-            resultMessage += `，失败: ${errorCount}张`;
+            resultMessage += `, Failed: ${errorCount} image(s)`;
         }
         
         this.updateProgress(totalImages, totalImages, resultMessage);
         this.isProcessing = false;
         this.displayResults();
         
-        // 显示结果提示
-        if (successCount > 0) {
-            alert(resultMessage);
-        } else {
-            alert('上色失败，请检查图片格式和设置');
-        }
+        // Display result notification
+        // if (successCount > 0) {
+        //     alert(resultMessage);
+        // } else {
+        //     alert('Colorization failed, please check image format and settings');
+        // }
     }
 
     async colorizeImage(imageData) {
@@ -281,23 +281,23 @@ class BlackWhiteColorizer {
                 const ctx = canvas.getContext('2d');
                 
                 if (!ctx) {
-                    reject(new Error('无法创建Canvas上下文'));
+                    reject(new Error('Unable to create Canvas context'));
                     return;
                 }
                 
                 canvas.width = imageData.width;
                 canvas.height = imageData.height;
                 
-                // 绘制原图
+                // Draw original image
                 ctx.drawImage(imageData.img, 0, 0);
                 
-                // 获取上色设置
+                // Get colorization settings
                 const settings = this.getColorizationSettings();
                 
-                // 应用上色算法
+                // Apply colorization algorithm
                 this.applyColorization(ctx, settings, canvas.width, canvas.height);
                 
-                // 获取输出格式
+                // Get output format
                 let mimeType = imageData.file.type;
                 let fileExtension = this.getFileExtension(imageData.file.name);
                 
@@ -318,16 +318,16 @@ class BlackWhiteColorizer {
                     }
                 }
                 
-                // 生成数据URL
+                // Generate data URL
                 const quality = settings.quality / 100;
                 const dataUrl = canvas.toDataURL(mimeType, quality);
                 
                 if (!dataUrl || dataUrl === 'data:,') {
-                    reject(new Error('无法生成上色后的图像'));
+                    reject(new Error('Unable to generate colorized image'));
                     return;
                 }
                 
-                // 创建Blob
+                // Create Blob
                 const byteString = atob(dataUrl.split(',')[1]);
                 const ab = new ArrayBuffer(byteString.length);
                 const ia = new Uint8Array(ab);
@@ -336,7 +336,7 @@ class BlackWhiteColorizer {
                 }
                 const blob = new Blob([ab], { type: mimeType });
                 
-                // 生成文件名
+                // Generate file name
                 const originalName = imageData.name.split('.')[0];
                 const fileName = `${originalName}_colorized.${fileExtension}`;
                 
@@ -351,7 +351,7 @@ class BlackWhiteColorizer {
                     mimeType: mimeType
                 });
             } catch (error) {
-                console.error('上色处理错误:', error);
+                console.error('Colorization processing error:', error);
                 reject(error);
             }
         });
@@ -361,7 +361,7 @@ class BlackWhiteColorizer {
         const imageData = ctx.getImageData(0, 0, width, height);
         const data = imageData.data;
         
-        console.log('开始上色处理:', {
+        console.log('Starting colorization processing:', {
             width,
             height,
             mode: settings.colorizationMode,
@@ -369,59 +369,59 @@ class BlackWhiteColorizer {
             style: settings.colorStyle
         });
         
-        // 预处理：检测图像是否为黑白图像
+        // Preprocessing: detect if image is black and white
         const isBW = this.isBlackAndWhiteImage(data);
-        console.log('图像类型检测:', isBW ? '黑白图像' : '彩色图像');
+        console.log('Image type detection:', isBW ? 'Black and white image' : 'Color image');
         
         if (!isBW) {
-            // 如果不是黑白图像，先转换为黑白
+            // If not black and white, convert to black and white first
             this.convertToBlackAndWhite(data);
-            console.log('已转换为黑白图像');
+            console.log('Converted to black and white image');
         }
         
-        // 根据上色模式应用不同的算法
+        // Apply different algorithms based on colorization mode
         switch (settings.colorizationMode) {
             case 'auto':
-                console.log('应用智能上色算法');
+                console.log('Applying intelligent colorization algorithm');
                 this.applyAutoColorization(data, settings, width, height);
                 break;
             case 'manual':
-                console.log('应用手动上色算法');
+                console.log('Applying manual colorization algorithm');
                 this.applyManualColorization(data, settings, width, height);
                 break;
             case 'style':
-                console.log('应用风格上色算法');
+                console.log('Applying style colorization algorithm');
                 this.applyStyleColorization(data, settings, width, height);
                 break;
         }
         
-        // 应用后处理效果
+        // Apply post-processing effects
         if (settings.preserveContrast) {
-            console.log('应用对比度保持');
+            console.log('Applying contrast preservation');
             this.preserveContrast(data, width, height);
         }
         
         if (settings.enhanceDetails) {
-            console.log('应用细节增强');
+            console.log('Applying detail enhancement');
             this.enhanceDetails(data, width, height);
         }
         
         if (settings.smoothTransitions) {
-            console.log('应用平滑过渡');
+            console.log('Applying smooth transitions');
             this.smoothTransitions(data, width, height);
         }
         
         if (settings.colorHarmony) {
-            console.log('应用色彩和谐');
+            console.log('Applying color harmony');
             this.applyColorHarmony(data, width, height);
         }
         
         ctx.putImageData(imageData, 0, 0);
-        console.log('上色处理完成');
+        console.log('Colorization processing completed');
     }
 
     isBlackAndWhiteImage(data) {
-        // 检测图像是否为黑白图像
+        // Detect if image is black and white
         let colorVariation = 0;
         const sampleSize = Math.min(1000, data.length / 4);
         
@@ -431,24 +431,24 @@ class BlackWhiteColorizer {
             const g = data[index + 1];
             const b = data[index + 2];
             
-            // 计算RGB通道之间的差异
+            // Calculate difference between RGB channels
             const max = Math.max(r, g, b);
             const min = Math.min(r, g, b);
             colorVariation += (max - min);
         }
         
         const avgVariation = colorVariation / sampleSize;
-        return avgVariation < 30; // 如果平均颜色差异小于30，认为是黑白图像
+        return avgVariation < 30; // If average color difference is less than 30, consider it a black and white image
     }
 
     convertToBlackAndWhite(data) {
-        // 将彩色图像转换为黑白图像
+        // Convert color image to black and white
         for (let i = 0; i < data.length; i += 4) {
             const gray = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
             data[i] = gray;     // R
             data[i + 1] = gray; // G
             data[i + 2] = gray; // B
-            // data[i + 3] 保持透明度不变
+            // data[i + 3] keep transparency unchanged
         }
     }
 
@@ -458,13 +458,13 @@ class BlackWhiteColorizer {
         for (let i = 0; i < data.length; i += 4) {
             const gray = (data[i] + data[i + 1] + data[i + 2]) / 3;
             
-            // 智能颜色分配
+            // Intelligent color assignment
             const color = this.getSmartColor(gray, settings);
             
-            // 使用更自然的颜色混合算法
+            // Use more natural color blending algorithm
             const newColor = this.blendColors(gray, color, intensity);
             
-            // 应用颜色
+            // Apply color
             data[i] = Math.round(newColor.r);
             data[i + 1] = Math.round(newColor.g);
             data[i + 2] = Math.round(newColor.b);
@@ -479,13 +479,13 @@ class BlackWhiteColorizer {
             const x = (i / 4) % width;
             const y = Math.floor((i / 4) / width);
             
-            // 根据位置和灰度值选择颜色
+            // Select color based on position and grayscale value
             const color = this.getManualColor(gray, x, y, width, height, settings);
             
-            // 使用更自然的颜色混合算法
+            // Use more natural color blending algorithm
             const newColor = this.blendColors(gray, color, intensity);
             
-            // 应用颜色
+            // Apply color
             data[i] = Math.round(newColor.r);
             data[i + 1] = Math.round(newColor.g);
             data[i + 2] = Math.round(newColor.b);
@@ -498,13 +498,13 @@ class BlackWhiteColorizer {
         for (let i = 0; i < data.length; i += 4) {
             const gray = (data[i] + data[i + 1] + data[i + 2]) / 3;
             
-            // 根据风格选择颜色
+            // Select color based on style
             const color = this.getStyleColor(gray, settings.colorStyle);
             
-            // 使用更自然的颜色混合算法
+            // Use more natural color blending algorithm
             const newColor = this.blendColors(gray, color, intensity);
             
-            // 应用颜色
+            // Apply color
             data[i] = Math.round(newColor.r);
             data[i + 1] = Math.round(newColor.g);
             data[i + 2] = Math.round(newColor.b);
@@ -512,42 +512,42 @@ class BlackWhiteColorizer {
     }
 
     getSmartColor(gray, settings) {
-        // 智能颜色分配算法 - 基于灰度值的概率分布
+        // Intelligent color assignment algorithm - based on grayscale value probability distribution
         const normalizedGray = gray / 255;
         
-        // 使用更自然的颜色映射
+        // Use more natural color mapping
         if (normalizedGray < 0.2) {
-            // 很暗的区域 - 可能是头发、阴影、深色物体
+            // Very dark areas - possibly hair, shadows, dark objects
             return { r: 40, g: 25, b: 15 };
         } else if (normalizedGray < 0.35) {
-            // 暗色区域 - 可能是皮肤、深色衣服、树干等
+            // Dark areas - possibly skin, dark clothing, tree trunks, etc.
             if (settings.skinDetection) {
-                return { r: 220, g: 180, b: 160 }; // 自然肤色
+                return { r: 220, g: 180, b: 160 }; // Natural skin tone
             }
             return { r: 120, g: 80, b: 60 };
         } else if (normalizedGray < 0.5) {
-            // 中等暗色 - 可能是皮肤、中等色调物体
+            // Medium dark - possibly skin, medium-toned objects
             if (settings.skinDetection) {
-                return { r: 240, g: 200, b: 180 }; // 较亮肤色
+                return { r: 240, g: 200, b: 180 }; // Lighter skin tone
             }
             return { r: 160, g: 120, b: 100 };
         } else if (normalizedGray < 0.65) {
-            // 中等亮色 - 可能是天空、植物、浅色物体
-            return { r: 150, g: 200, b: 240 }; // 天蓝色
+            // Medium light - possibly sky, plants, light objects
+            return { r: 150, g: 200, b: 240 }; // Sky blue
         } else if (normalizedGray < 0.8) {
-            // 亮色区域 - 可能是云朵、浅色建筑、浅色衣服
-            return { r: 200, g: 220, b: 240 }; // 浅蓝色
+            // Light areas - possibly clouds, light buildings, light clothing
+            return { r: 200, g: 220, b: 240 }; // Light blue
         } else if (normalizedGray < 0.9) {
-            // 很亮的区域 - 可能是高光、白色物体
-            return { r: 240, g: 240, b: 250 }; // 接近白色
+            // Very bright areas - possibly highlights, white objects
+            return { r: 240, g: 240, b: 250 }; // Near white
         } else {
-            // 最亮的区域 - 保持白色
+            // Brightest areas - keep white
             return { r: 255, g: 255, b: 255 };
         }
     }
 
     getManualColor(gray, x, y, width, height, settings) {
-        // 手动颜色分配 - 基于位置和灰度值的智能分析
+        // Manual color assignment - intelligent analysis based on position and grayscale value
         const centerX = width / 2;
         const centerY = height / 2;
         const distanceFromCenter = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
@@ -555,11 +555,11 @@ class BlackWhiteColorizer {
         const normalizedDistance = distanceFromCenter / maxDistance;
         const normalizedGray = gray / 255;
         
-        // 根据位置和灰度值选择颜色
+        // Select color based on position and grayscale value
         if (normalizedGray < 0.3) {
-            // 暗色区域
+            // Dark areas
             if (normalizedDistance < 0.4 && y > height * 0.2 && y < height * 0.8) {
-                // 中心区域 - 可能是人脸
+                // Center area - possibly face
                 const skinRgb = this.hexToRgb(settings.skinColor);
                 const skinIntensity = parseInt(document.getElementById('skinIntensity').value) / 100;
                 return {
@@ -568,13 +568,13 @@ class BlackWhiteColorizer {
                     b: Math.round(skinRgb.b * skinIntensity + gray * (1 - skinIntensity))
                 };
             } else {
-                // 边缘区域 - 可能是头发、衣服
+                // Edge areas - possibly hair, clothing
                 return { r: 50, g: 30, b: 20 };
             }
         } else if (normalizedGray < 0.6) {
-            // 中等色调
+            // Medium tones
             if (y < height * 0.4) {
-                // 上部 - 可能是天空
+                // Upper part - possibly sky
                 const skyRgb = this.hexToRgb(settings.skyColor);
                 const skyIntensity = parseInt(document.getElementById('skyIntensity').value) / 100;
                 return {
@@ -583,7 +583,7 @@ class BlackWhiteColorizer {
                     b: Math.round(skyRgb.b * skyIntensity + gray * (1 - skyIntensity))
                 };
             } else if (y > height * 0.6) {
-                // 下部 - 可能是地面、建筑
+                // Lower part - possibly ground, buildings
                 const buildingRgb = this.hexToRgb(settings.buildingColor);
                 const buildingIntensity = parseInt(document.getElementById('buildingIntensity').value) / 100;
                 return {
@@ -592,7 +592,7 @@ class BlackWhiteColorizer {
                     b: Math.round(buildingRgb.b * buildingIntensity + gray * (1 - buildingIntensity))
                 };
             } else {
-                // 中部 - 可能是植物
+                // Middle part - possibly plants
                 const plantRgb = this.hexToRgb(settings.plantColor);
                 const plantIntensity = parseInt(document.getElementById('plantIntensity').value) / 100;
                 return {
@@ -602,13 +602,13 @@ class BlackWhiteColorizer {
                 };
             }
         } else {
-            // 亮色区域 - 保持接近白色
+            // Light areas - keep near white
             return { r: 255, g: 255, b: 255 };
         }
     }
 
     getStyleColor(gray, colorStyle) {
-        // 根据风格返回颜色
+        // Return color based on style
         switch (colorStyle) {
             case 'natural':
                 return this.getNaturalColor(gray);
@@ -689,7 +689,7 @@ class BlackWhiteColorizer {
         let h, s, l = (max + min) / 2;
         
         if (max === min) {
-            h = s = 0; // 无色
+            h = s = 0; // No color
         } else {
             const d = max - min;
             s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -720,7 +720,7 @@ class BlackWhiteColorizer {
         let r, g, b;
         
         if (s === 0) {
-            r = g = b = l; // 无色
+            r = g = b = l; // No color
         } else {
             const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
             const p = 2 * l - q;
@@ -737,22 +737,22 @@ class BlackWhiteColorizer {
     }
 
     blendColors(gray, color, intensity) {
-        // 更自然的颜色混合算法
+        // More natural color blending algorithm
         const grayHsl = this.rgbToHsl(gray, gray, gray);
         const colorHsl = this.rgbToHsl(color.r, color.g, color.b);
         
-        // 计算混合后的HSL值
+        // Calculate blended HSL values
         const blendedHsl = {
-            h: colorHsl.h, // 使用目标颜色的色相
-            s: colorHsl.s * intensity, // 根据强度调整饱和度
-            l: grayHsl.l // 保持原图的亮度
+            h: colorHsl.h, // Use target color hue
+            s: colorHsl.s * intensity, // Adjust saturation based on intensity
+            l: grayHsl.l // Preserve original image brightness
         };
         
-        // 转换回RGB
+        // Convert back to RGB
         const blendedRgb = this.hslToRgb(blendedHsl.h, blendedHsl.s, blendedHsl.l);
         
-        // 添加一些随机变化，使颜色更自然
-        const variation = 0.05; // 5%的随机变化
+        // Add some random variation to make colors more natural
+        const variation = 0.05; // 5% random variation
         const randomFactor = 1 + (Math.random() - 0.5) * variation;
         
         return {
@@ -763,7 +763,7 @@ class BlackWhiteColorizer {
     }
 
     preserveContrast(data, width, height) {
-        // 保持对比度
+        // Preserve contrast
         for (let i = 0; i < data.length; i += 4) {
             const gray = (data[i] + data[i + 1] + data[i + 2]) / 3;
             const contrast = 1.2;
@@ -775,14 +775,14 @@ class BlackWhiteColorizer {
     }
 
     enhanceDetails(data, width, height) {
-        // 细节增强
+        // Detail enhancement
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 拉普拉斯算子增强
+                // Laplacian operator enhancement
                 const laplacian = this.applyLaplacian(tempData, width, height, x, y);
                 
                 data[index] = Math.max(0, Math.min(255, data[index] + laplacian.r * 0.3));
@@ -793,14 +793,14 @@ class BlackWhiteColorizer {
     }
 
     smoothTransitions(data, width, height) {
-        // 平滑过渡
+        // Smooth transitions
         const tempData = new Uint8ClampedArray(data);
         
         for (let y = 1; y < height - 1; y++) {
             for (let x = 1; x < width - 1; x++) {
                 const index = (y * width + x) * 4;
                 
-                // 轻微的高斯模糊
+                // Slight Gaussian blur
                 const blurred = this.applyGaussianBlur(tempData, width, height, x, y);
                 
                 data[index] = Math.round(data[index] * 0.8 + blurred.r * 0.2);
@@ -811,10 +811,10 @@ class BlackWhiteColorizer {
     }
 
     applyColorHarmony(data, width, height) {
-        // 色彩和谐
+        // Color harmony
         let rSum = 0, gSum = 0, bSum = 0, count = 0;
         
-        // 计算平均颜色
+        // Calculate average color
         for (let i = 0; i < data.length; i += 40) {
             rSum += data[i];
             gSum += data[i + 1];
@@ -826,7 +826,7 @@ class BlackWhiteColorizer {
         const avgG = gSum / count;
         const avgB = bSum / count;
         
-        // 调整颜色和谐
+        // Adjust color harmony
         for (let i = 0; i < data.length; i += 4) {
             data[i] = Math.min(255, Math.max(0, data[i] * 0.9 + avgR * 0.1));
             data[i + 1] = Math.min(255, Math.max(0, data[i + 1] * 0.9 + avgG * 0.1));
@@ -957,7 +957,7 @@ class BlackWhiteColorizer {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="blackWhiteColorizer.downloadSingleImage('${imageData.name}')">下载</button>
+                    <button class="btn btn-success" onclick="blackWhiteColorizer.downloadSingleImage('${imageData.name}')">Download</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -968,7 +968,7 @@ class BlackWhiteColorizer {
 
     async previewColorization() {
         if (this.images.length === 0) {
-            alert('请先选择图片');
+            alert('Please select an image first');
             return;
         }
 
@@ -976,12 +976,12 @@ class BlackWhiteColorizer {
         const colorizedImage = await this.colorizeImage(firstImage);
         
         if (colorizedImage) {
-            // 创建预览窗口
+            // Create preview window
             const previewWindow = window.open('', '_blank', 'width=1200,height=800');
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>黑白照片上色预览</title>
+                        <title>Black and White Photo Colorization Preview</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f5f5f5; }
                             .preview-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
@@ -992,19 +992,19 @@ class BlackWhiteColorizer {
                         </style>
                     </head>
                     <body>
-                        <h2>黑白照片上色预览</h2>
+                        <h2>Black and White Photo Colorization Preview</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>上色前</h3>
-                                <img src="${firstImage.dataUrl}" alt="上色前" />
-                                <div class="preview-info">尺寸: ${firstImage.width}×${firstImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(firstImage.size)}</div>
+                                <h3>Before Colorization</h3>
+                                <img src="${firstImage.dataUrl}" alt="Before Colorization" />
+                                <div class="preview-info">Dimensions: ${firstImage.width}×${firstImage.height}</div>
+                                <div class="preview-info">Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>上色后</h3>
-                                <img src="${colorizedImage.dataUrl}" alt="上色后" />
-                                <div class="preview-info">尺寸: ${colorizedImage.width}×${colorizedImage.height}</div>
-                                <div class="preview-info">大小: ${this.formatFileSize(colorizedImage.size)}</div>
+                                <h3>After Colorization</h3>
+                                <img src="${colorizedImage.dataUrl}" alt="After Colorization" />
+                                <div class="preview-info">Dimensions: ${colorizedImage.width}×${colorizedImage.height}</div>
+                                <div class="preview-info">Size: ${this.formatFileSize(colorizedImage.size)}</div>
                             </div>
                         </div>
                     </body>
@@ -1033,13 +1033,13 @@ class BlackWhiteColorizer {
 
     async downloadAsZip() {
         if (this.colorizedImages.length === 0) {
-            alert('没有可下载的图片');
+            alert('No images available for download');
             return;
         }
 
-        // 由于浏览器限制，我们无法直接创建ZIP文件
-        // 这里提供一个替代方案：逐个下载
-        alert('由于浏览器限制，将逐个下载图片文件');
+        // Due to browser limitations, we cannot directly create ZIP files
+        // Here we provide an alternative: download files one by one
+        alert('Due to browser limitations, images will be downloaded one by one');
         this.downloadAllImages();
     }
 
@@ -1060,7 +1060,7 @@ class BlackWhiteColorizer {
     }
 }
 
-// 初始化应用
+// Initialize application
 let blackWhiteColorizer;
 document.addEventListener('DOMContentLoaded', () => {
     blackWhiteColorizer = new BlackWhiteColorizer();
