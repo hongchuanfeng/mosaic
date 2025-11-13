@@ -235,6 +235,7 @@ body {
     background: #ddd;
     outline: none;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 #rangeInput::-webkit-slider-thumb {
@@ -465,8 +466,19 @@ body::after {
     }
     
     .main-div {
-        flex-direction: column;
-        gap: 15px;
+        display: block;
+        width: 100%;
+        padding: 0 16px 48px;
+        box-sizing: border-box;
+    }
+
+    .main-div .frame-div {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .main-div .frame-div:last-of-type {
+        margin-bottom: 0;
     }
     
     .frame-center {
