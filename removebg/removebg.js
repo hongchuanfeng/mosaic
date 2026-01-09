@@ -134,8 +134,8 @@ class BackgroundRemover {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="backgroundRemover.processSingleImage('${imageData.id}')">Process</button>
-                    <button class="btn btn-outline" onclick="backgroundRemover.removeImage('${imageData.id}')">Remove</button>
+                    <button class="btn btn-primary" onclick="backgroundRemover.processSingleImage('${imageData.id}')">去背景</button>
+                    <button class="btn btn-outline" onclick="backgroundRemover.removeImage('${imageData.id}')">移除</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -233,7 +233,7 @@ class BackgroundRemover {
             }
         } catch (error) {
             console.error('Single image processing failed:', error);
-            alert('Processing failed, please check image format and settings');
+            alert('处理失败，请检查图片格式和设置');
         }
     }
 
@@ -251,7 +251,7 @@ class BackgroundRemover {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `Processing: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `处理中: ${imageData.name}`);
             
             try {
                 const processedImage = await this.processImage(imageData);
@@ -268,7 +268,7 @@ class BackgroundRemover {
         }
 
         // Display processing results
-        let resultMessage = `Processing completed! Success: ${successCount} image(s)`;
+        let resultMessage = `处理完成！成功：${successCount}张图片`;
         if (errorCount > 0) {
             resultMessage += `, Failed: ${errorCount} image(s)`;
         }
@@ -707,7 +707,7 @@ class BackgroundRemover {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="backgroundRemover.downloadSingleImage('${imageData.name}')">Download</button>
+                    <button class="btn btn-success" onclick="backgroundRemover.downloadSingleImage('${imageData.name}')">下载</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -731,7 +731,7 @@ class BackgroundRemover {
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>Background Removal Preview</title>
+                        <title>背景去除预览</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f5f5f5; }
                             .preview-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
@@ -751,18 +751,18 @@ class BackgroundRemover {
                         </style>
                     </head>
                     <body>
-                        <h2>Background Removal Preview</h2>
+                        <h2>背景去除预览</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>Before Processing</h3>
-                                <img src="${firstImage.dataUrl}" alt="Before Processing" />
+                                <h3>处理前</h3>
+                                <img src="${firstImage.dataUrl}" alt="处理前图片" />
                                 <div class="preview-info">Dimensions: ${firstImage.width}×${firstImage.height}</div>
                                 <div class="preview-info">Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>After Processing</h3>
+                                <h3>处理后</h3>
                                 <div class="transparent-bg">
-                                    <img src="${processedImage.dataUrl}" alt="After Processing" />
+                                    <img src="${processedImage.dataUrl}" alt="处理后图片" />
                                 </div>
                                 <div class="preview-info">Dimensions: ${processedImage.width}×${processedImage.height}</div>
                                 <div class="preview-info">Size: ${this.formatFileSize(processedImage.size)}</div>

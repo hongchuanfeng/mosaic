@@ -154,8 +154,8 @@ class WatermarkProcessor {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="watermarkProcessor.addWatermarkToSingle('${imageData.id}')">Add Watermark</button>
-                    <button class="btn btn-secondary" onclick="watermarkProcessor.removeImage('${imageData.id}')">Remove</button>
+                    <button class="btn btn-primary" onclick="watermarkProcessor.addWatermarkToSingle('${imageData.id}')">添加水印</button>
+                    <button class="btn btn-secondary" onclick="watermarkProcessor.removeImage('${imageData.id}')">移除</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -214,6 +214,13 @@ class WatermarkProcessor {
             btn.classList.remove('active');
         });
         e.target.classList.add('active');
+
+        // Disable custom position when preset position is selected
+        const customPositionCheckbox = document.getElementById('customPosition');
+        if (customPositionCheckbox.checked) {
+            customPositionCheckbox.checked = false;
+            this.toggleCustomPosition({ target: customPositionCheckbox });
+        }
     }
 
     setupRotationToggle() {
@@ -227,7 +234,27 @@ class WatermarkProcessor {
 
     toggleCustomPosition(e) {
         const positionInputs = document.getElementById('positionInputs');
-        positionInputs.style.display = e.target.checked ? 'flex' : 'none';
+        const positionButtons = document.querySelectorAll('.position-btn');
+
+        if (e.target.checked) {
+            // Enable custom position inputs
+            positionInputs.style.display = 'flex';
+            // Disable preset position buttons
+            positionButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            });
+        } else {
+            // Disable custom position inputs
+            positionInputs.style.display = 'none';
+            // Enable preset position buttons
+            positionButtons.forEach(btn => {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            });
+        }
     }
 
     toggleRotation(e) {
@@ -292,7 +319,7 @@ class WatermarkProcessor {
             }
         }
 
-        this.updateProgress(totalImages, totalImages, 'Processing complete');
+        this.updateProgress(totalImages, totalImages, '处理完成');
         this.isProcessing = false;
         this.displayResults();
     }
@@ -310,11 +337,25 @@ class WatermarkProcessor {
             
             // Get watermark settings
             const settings = this.getWatermarkSettings();
-            
-            if (settings.watermarkType === 'text') {
-                this.addTextWatermark(ctx, settings, canvas.width, canvas.height);
-            } else if (settings.watermarkType === 'image' && this.watermarkImage) {
-                this.addImageWatermark(ctx, settings, canvas.width, canvas.height);
+
+            if (settings.addMultipleWatermarks) {
+                // Add multiple watermarks at different positions
+                const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'center'];
+                positions.forEach(pos => {
+                    const multiSettings = { ...settings, position: pos };
+                    if (settings.watermarkType === 'text') {
+                        this.addTextWatermark(ctx, multiSettings, canvas.width, canvas.height);
+                    } else if (settings.watermarkType === 'image' && this.watermarkImage) {
+                        this.addImageWatermark(ctx, multiSettings, canvas.width, canvas.height);
+                    }
+                });
+            } else {
+                // Add single watermark
+                if (settings.watermarkType === 'text') {
+                    this.addTextWatermark(ctx, settings, canvas.width, canvas.height);
+                } else if (settings.watermarkType === 'image' && this.watermarkImage) {
+                    this.addImageWatermark(ctx, settings, canvas.width, canvas.height);
+                }
             }
             
             // Get output format
@@ -382,8 +423,9 @@ class WatermarkProcessor {
         const rotateWatermark = document.getElementById('rotateWatermark').checked;
         const rotation = parseInt(document.getElementById('rotationSlider').value);
         const maintainQuality = document.getElementById('maintainQuality').checked;
+        const addMultipleWatermarks = document.getElementById('addMultipleWatermarks').checked;
         const outputFormat = document.getElementById('outputFormat').value;
-        
+
         return {
             watermarkType,
             watermarkText,
@@ -399,16 +441,26 @@ class WatermarkProcessor {
             rotateWatermark,
             rotation,
             maintainQuality,
+            addMultipleWatermarks,
             outputFormat
         };
     }
 
     getSelectedPosition() {
+        // Check if custom position is enabled
+        const customPositionEnabled = document.getElementById('customPosition').checked;
+        if (customPositionEnabled) {
+            const x = parseInt(document.getElementById('positionX').value) || 0;
+            const y = parseInt(document.getElementById('positionY').value) || 0;
+            return { x: x, y: y, custom: true };
+        }
+
+        // Return preset position
         const activeBtn = document.querySelector('.position-btn.active');
         if (activeBtn) {
             return activeBtn.dataset.position;
         }
-        return 'bottom-right';
+        return 'center';
     }
 
     addTextWatermark(ctx, settings, canvasWidth, canvasHeight) {
@@ -512,27 +564,36 @@ class WatermarkProcessor {
 
     calculatePosition(position, elementWidth, elementHeight, canvasWidth, canvasHeight) {
         const margin = 20;
-        
+
+        // Handle custom position
+        if (position && typeof position === 'object' && position.custom) {
+            return {
+                x: Math.max(0, Math.min(position.x, canvasWidth - elementWidth)),
+                y: Math.max(0, Math.min(position.y, canvasHeight - elementHeight))
+            };
+        }
+
+        // Handle preset positions
         switch (position) {
             case 'top-left':
-                return { x: margin, y: elementHeight + margin };
+                return { x: margin, y: margin };
             case 'top-center':
-                return { x: (canvasWidth - elementWidth) / 2, y: elementHeight + margin };
+                return { x: (canvasWidth - elementWidth) / 2, y: margin };
             case 'top-right':
-                return { x: canvasWidth - elementWidth - margin, y: elementHeight + margin };
+                return { x: canvasWidth - elementWidth - margin, y: margin };
             case 'middle-left':
-                return { x: margin, y: (canvasHeight + elementHeight) / 2 };
+                return { x: margin, y: (canvasHeight - elementHeight) / 2 };
             case 'center':
-                return { x: (canvasWidth - elementWidth) / 2, y: (canvasHeight + elementHeight) / 2 };
+                return { x: (canvasWidth - elementWidth) / 2, y: (canvasHeight - elementHeight) / 2 };
             case 'middle-right':
-                return { x: canvasWidth - elementWidth - margin, y: (canvasHeight + elementHeight) / 2 };
+                return { x: canvasWidth - elementWidth - margin, y: (canvasHeight - elementHeight) / 2 };
             case 'bottom-left':
-                return { x: margin, y: canvasHeight - margin };
+                return { x: margin, y: canvasHeight - elementHeight - margin };
             case 'bottom-center':
-                return { x: (canvasWidth - elementWidth) / 2, y: canvasHeight - margin };
+                return { x: (canvasWidth - elementWidth) / 2, y: canvasHeight - elementHeight - margin };
             case 'bottom-right':
             default:
-                return { x: canvasWidth - elementWidth - margin, y: canvasHeight - margin };
+                return { x: canvasWidth - elementWidth - margin, y: canvasHeight - elementHeight - margin };
         }
     }
 
@@ -562,7 +623,7 @@ class WatermarkProcessor {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="watermarkProcessor.downloadSingleImage('${imageData.name}')">Download</button>
+                    <button class="btn btn-success" onclick="watermarkProcessor.downloadSingleImage('${imageData.name}')">下载</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);

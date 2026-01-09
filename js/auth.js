@@ -40,8 +40,8 @@
     }
     function setLoggedOutUI(loginBtn, loginLabel){
         if (!loginBtn || !loginLabel) return;
-        loginLabel.textContent = 'Sign in with Google';
-        loginBtn.setAttribute('aria-label', 'Sign in with Google');
+        loginLabel.textContent = 'Google登录';
+        loginBtn.setAttribute('aria-label', 'Google登录');
     }
 
     async function upsertUser(user){

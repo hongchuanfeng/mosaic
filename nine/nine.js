@@ -116,8 +116,8 @@ class NineGridCutter {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="nineGridCutter.cutSingleImage('${imageData.id}')">Split</button>
-                    <button class="btn btn-secondary" onclick="nineGridCutter.removeImage('${imageData.id}')">Remove</button>
+                    <button class="btn btn-primary" onclick="nineGridCutter.cutSingleImage('${imageData.id}')">分割</button>
+                    <button class="btn btn-secondary" onclick="nineGridCutter.removeImage('${imageData.id}')">移除</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -254,7 +254,7 @@ class NineGridCutter {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `Splitting: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `分割中: ${imageData.name}`);
             
             try {
                 const cutResult = await this.cutImage(imageData);
@@ -263,12 +263,12 @@ class NineGridCutter {
                 }
                 completed++;
             } catch (error) {
-                console.error('Split failed:', error);
+                console.error('分割失败:', error);
                 completed++;
             }
         }
 
-        this.updateProgress(totalImages, totalImages, 'Split completed');
+        this.updateProgress(totalImages, totalImages, '分割完成');
         this.isProcessing = false;
         this.displayResults();
     }
@@ -652,9 +652,9 @@ class NineGridCutter {
                 <div class="result-info">${result.grid.rows}×${result.grid.cols} Grid | ${result.cutImages.length} Images</div>
                 <div class="result-name">${result.originalImage.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="nineGridCutter.downloadSingleResult('${result.id}')">Download All</button>
-                    <button class="btn btn-info" onclick="nineGridCutter.downloadPreview('${result.id}')">Download Preview</button>
-                    <button class="btn btn-secondary" onclick="nineGridCutter.showDetailedPreview('${result.id}')">Detailed Preview</button>
+                    <button class="btn btn-success" onclick="nineGridCutter.downloadSingleResult('${result.id}')">下载全部</button>
+                    <button class="btn btn-info" onclick="nineGridCutter.downloadPreview('${result.id}')">下载预览</button>
+                    <button class="btn btn-secondary" onclick="nineGridCutter.showDetailedPreview('${result.id}')">详细预览</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -686,7 +686,7 @@ class NineGridCutter {
         previewWindow.document.write(`
             <html>
                 <head>
-                    <title>Split Detailed Preview - ${result.originalImage.name}</title>
+                    <title>分割详细预览 - ${result.originalImage.name}</title>
                     <style>
                         body { 
                             font-family: Arial, sans-serif; 
@@ -765,7 +765,7 @@ class NineGridCutter {
                     </style>
                 </head>
                 <body>
-                    <h2 style="text-align: center; color: #333; margin-bottom: 30px;">Split Detailed Preview</h2>
+                    <h2 style="text-align: center; color: #333; margin-bottom: 30px;">分割详细预览</h2>
                     
                     <div class="info-panel">
                         <h3 style="margin-top: 0;">Image Information</h3>
@@ -803,7 +803,7 @@ class NineGridCutter {
                             <img src="${result.originalImage.dataUrl}" alt="Original Image" />
                         </div>
                         <div class="preview-item">
-                            <h3>Split Results</h3>
+                            <h3>分割结果</h3>
                             <div class="grid-preview">
                                 ${result.cutImages.map(img => `<img src="${img.dataUrl}" alt="${img.name}" title="${img.name}" />`).join('')}
                             </div>

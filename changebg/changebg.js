@@ -137,8 +137,8 @@ class BackgroundChanger {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="backgroundChanger.processSingleImage('${imageData.id}')">Process</button>
-                    <button class="btn btn-outline" onclick="backgroundChanger.removeImage('${imageData.id}')">Delete</button>
+                    <button class="btn btn-primary" onclick="backgroundChanger.processSingleImage('${imageData.id}')">换背景</button>
+                    <button class="btn btn-outline" onclick="backgroundChanger.removeImage('${imageData.id}')">删除</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -241,7 +241,7 @@ class BackgroundChanger {
             }
         } catch (error) {
             console.error('Single image processing failed:', error);
-            alert('Processing failed, please check image format and settings');
+            alert('处理失败，请检查图片格式和设置');
         }
     }
 
@@ -259,7 +259,7 @@ class BackgroundChanger {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `Processing: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `处理中: ${imageData.name}`);
             
             try {
                 const processedImage = await this.processImage(imageData);
@@ -276,7 +276,7 @@ class BackgroundChanger {
         }
 
         // Display Processing Results
-        let resultMessage = `Processing complete! Success: ${successCount} images`;
+        let resultMessage = `处理完成！成功：${successCount}张图片`;
         if (errorCount > 0) {
             resultMessage += `, Failed: ${errorCount} images`;
         }
@@ -875,7 +875,7 @@ class BackgroundChanger {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="backgroundChanger.downloadSingleImage('${imageData.name}')">Download</button>
+                    <button class="btn btn-success" onclick="backgroundChanger.downloadSingleImage('${imageData.name}')">下载</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -899,7 +899,7 @@ class BackgroundChanger {
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>Background Change Preview</title>
+                        <title>背景更换预览</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f5f5f5; }
                             .preview-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
@@ -910,17 +910,17 @@ class BackgroundChanger {
                         </style>
                     </head>
                     <body>
-                        <h2>Background Change Preview</h2>
+                        <h2>背景更换预览</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>Before</h3>
-                                <img src="${firstImage.dataUrl}" alt="Before" />
+                                <h3>更换前</h3>
+                                <img src="${firstImage.dataUrl}" alt="更换前图片" />
                                 <div class="preview-info">Size: ${firstImage.width}×${firstImage.height}</div>
                                 <div class="preview-info">File Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>After</h3>
-                                <img src="${processedImage.dataUrl}" alt="After" />
+                                <h3>更换后</h3>
+                                <img src="${processedImage.dataUrl}" alt="更换后图片" />
                                 <div class="preview-info">Size: ${processedImage.width}×${processedImage.height}</div>
                                 <div class="preview-info">File Size: ${this.formatFileSize(processedImage.size)}</div>
                             </div>

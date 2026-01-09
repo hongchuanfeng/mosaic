@@ -117,8 +117,8 @@ class OldPhotoRestorer {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="oldPhotoRestorer.restoreSingleImage('${imageData.id}')">Restore</button>
-                    <button class="btn btn-outline" onclick="oldPhotoRestorer.removeImage('${imageData.id}')">Remove</button>
+                    <button class="btn btn-primary" onclick="oldPhotoRestorer.restoreSingleImage('${imageData.id}')">修复</button>
+                    <button class="btn btn-outline" onclick="oldPhotoRestorer.removeImage('${imageData.id}')">移除</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -219,7 +219,7 @@ class OldPhotoRestorer {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `Restoring: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `修复中: ${imageData.name}`);
             
             try {
                 const restoredImage = await this.restoreImage(imageData);
@@ -233,7 +233,7 @@ class OldPhotoRestorer {
             }
         }
 
-        this.updateProgress(totalImages, totalImages, 'Restoration completed');
+        this.updateProgress(totalImages, totalImages, '修复完成');
         this.isProcessing = false;
         this.displayResults();
     }
@@ -778,7 +778,7 @@ class OldPhotoRestorer {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="oldPhotoRestorer.downloadSingleImage('${imageData.name}')">Download</button>
+                    <button class="btn btn-success" onclick="oldPhotoRestorer.downloadSingleImage('${imageData.name}')">下载</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -802,7 +802,7 @@ class OldPhotoRestorer {
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>Old Photo Restoration Preview</title>
+                        <title>老照片修复预览</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f5f5f5; }
                             .preview-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
@@ -813,17 +813,17 @@ class OldPhotoRestorer {
                         </style>
                     </head>
                     <body>
-                        <h2>Old Photo Restoration Preview</h2>
+                        <h2>老照片修复预览</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>Before Restoration</h3>
-                                <img src="${firstImage.dataUrl}" alt="Before Restoration" />
+                                <h3>修复前</h3>
+                                <img src="${firstImage.dataUrl}" alt="修复前照片" />
                                 <div class="preview-info">Size: ${firstImage.width}×${firstImage.height}</div>
                                 <div class="preview-info">File Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>After Restoration</h3>
-                                <img src="${restoredImage.dataUrl}" alt="After Restoration" />
+                                <h3>修复后</h3>
+                                <img src="${restoredImage.dataUrl}" alt="修复后照片" />
                                 <div class="preview-info">Size: ${restoredImage.width}×${restoredImage.height}</div>
                                 <div class="preview-info">File Size: ${this.formatFileSize(restoredImage.size)}</div>
                             </div>

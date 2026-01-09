@@ -14,6 +14,7 @@ class TextToImageEditor {
             position: 'center',
             positionX: 50,
             positionY: 50,
+            enableCustomPosition: false,
             addStroke: false,
             addBackground: false,
             addShadow: false,
@@ -120,11 +121,19 @@ class TextToImageEditor {
         // 位置设置
         document.querySelectorAll('.position-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.position-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                this.settings.position = e.target.dataset.position;
-                this.updatePreview();
+                // 只有在未启用自定义位置时才允许点击预设位置按钮
+                if (!document.getElementById('enableCustomPosition').checked) {
+                    document.querySelectorAll('.position-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    this.settings.position = e.target.dataset.position;
+                    this.updatePreview();
+                }
             });
+        });
+
+        // 自定义位置开关
+        document.getElementById('enableCustomPosition').addEventListener('change', (e) => {
+            this.toggleCustomPosition(e.target.checked);
         });
 
         document.getElementById('positionX').addEventListener('input', (e) => {
@@ -198,6 +207,40 @@ class TextToImageEditor {
         document.getElementById('downloadBtn').addEventListener('click', () => this.downloadImage());
         document.getElementById('downloadPngBtn').addEventListener('click', () => this.downloadImage('png'));
         document.getElementById('downloadJpgBtn').addEventListener('click', () => this.downloadImage('jpeg'));
+    }
+
+    toggleCustomPosition(enabled) {
+        const positionInputs = document.getElementById('positionInputs');
+        const positionButtons = document.querySelectorAll('.position-btn');
+
+        if (enabled) {
+            // 启用自定义位置
+            positionInputs.style.display = 'flex';
+            positionButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            });
+            this.settings.position = 'custom';
+        } else {
+            // 禁用自定义位置
+            positionInputs.style.display = 'none';
+            positionButtons.forEach(btn => {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            });
+            // 如果没有激活的预设位置按钮，默认选择居中
+            const activeBtn = document.querySelector('.position-btn.active');
+            if (!activeBtn) {
+                const centerBtn = document.querySelector('[data-position="center"]');
+                if (centerBtn) {
+                    centerBtn.classList.add('active');
+                    this.settings.position = 'center';
+                }
+            }
+        }
+        this.updatePreview();
     }
 
     handleDragOver(e) {
@@ -330,49 +373,65 @@ class TextToImageEditor {
         const canvasWidth = this.canvas.width;
         const canvasHeight = this.canvas.height;
 
+        // 测量文字尺寸
+        this.ctx.font = `${this.settings.fontWeight} ${this.settings.fontSize}px ${this.settings.fontFamily}`;
+        const textMetrics = this.ctx.measureText(this.settings.text);
+        const textWidth = textMetrics.width;
+        const textHeight = this.settings.fontSize;
+
         let x, y;
 
-        switch (position) {
-            case 'top-left':
-                x = 20;
-                y = this.settings.fontSize + 20;
-                break;
-            case 'top-center':
-                x = canvasWidth / 2;
-                y = this.settings.fontSize + 20;
-                break;
-            case 'top-right':
-                x = canvasWidth - 20;
-                y = this.settings.fontSize + 20;
-                break;
-            case 'center-left':
-                x = 20;
-                y = canvasHeight / 2;
-                break;
-            case 'center':
-                x = canvasWidth / 2;
-                y = canvasHeight / 2;
-                break;
-            case 'center-right':
-                x = canvasWidth - 20;
-                y = canvasHeight / 2;
-                break;
-            case 'bottom-left':
-                x = 20;
-                y = canvasHeight - 20;
-                break;
-            case 'bottom-center':
-                x = canvasWidth / 2;
-                y = canvasHeight - 20;
-                break;
-            case 'bottom-right':
-                x = canvasWidth - 20;
-                y = canvasHeight - 20;
-                break;
-            default:
-                x = positionX;
-                y = positionY;
-                break;
+        // 检查是否启用了自定义位置
+        const customEnabled = document.getElementById('enableCustomPosition').checked;
+
+        if (customEnabled) {
+            // 使用自定义位置（百分比转换为像素）
+            x = (positionX / 100) * canvasWidth;
+            y = (positionY / 100) * canvasHeight;
+        } else {
+            // 使用预设位置
+            switch (position) {
+                case 'top-left':
+                    x = 20 + textWidth / 2;
+                    y = 20 + textHeight;
+                    break;
+                case 'top-center':
+                    x = canvasWidth / 2;
+                    y = 20 + textHeight;
+                    break;
+                case 'top-right':
+                    x = canvasWidth - 20 - textWidth / 2;
+                    y = 20 + textHeight;
+                    break;
+                case 'center-left':
+                    x = 20 + textWidth / 2;
+                    y = canvasHeight / 2;
+                    break;
+                case 'center':
+                    x = canvasWidth / 2;
+                    y = canvasHeight / 2;
+                    break;
+                case 'center-right':
+                    x = canvasWidth - 20 - textWidth / 2;
+                    y = canvasHeight / 2;
+                    break;
+                case 'bottom-left':
+                    x = 20 + textWidth / 2;
+                    y = canvasHeight - 20;
+                    break;
+                case 'bottom-center':
+                    x = canvasWidth / 2;
+                    y = canvasHeight - 20;
+                    break;
+                case 'bottom-right':
+                    x = canvasWidth - 20 - textWidth / 2;
+                    y = canvasHeight - 20;
+                    break;
+                default:
+                    x = canvasWidth / 2;
+                    y = canvasHeight / 2;
+                    break;
+            }
         }
 
         return { x, y };
@@ -548,10 +607,15 @@ class TextToImageEditor {
         document.getElementById('imageQuality').value = this.settings.imageQuality;
         document.getElementById('imageQualityValue').textContent = Math.round(this.settings.imageQuality * 100) + '%';
 
+        // 更新自定义位置开关
+        const customEnabled = this.settings.position === 'custom';
+        document.getElementById('enableCustomPosition').checked = customEnabled;
+        this.toggleCustomPosition(customEnabled);
+
         // 更新位置按钮
         document.querySelectorAll('.position-btn').forEach(btn => {
             btn.classList.remove('active');
-            if (btn.dataset.position === this.settings.position) {
+            if (btn.dataset.position === this.settings.position && !customEnabled) {
                 btn.classList.add('active');
             }
         });

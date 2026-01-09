@@ -116,11 +116,13 @@
             .lang-switch {
                 position: fixed;
                 right: 12px;
-                top: 12px;
+                /* top: 0px; */
                 height: 38px;
-                padding: 0 14px;
+                min-width: 110px;
+                padding: 0 18px;
                 z-index: 10002;
                 font-size: 13px;
+                white-space: nowrap;
             }
             .lang-switch .badge {
                 font-size: 11px;
@@ -266,6 +268,13 @@
             .nav-item {
                 width: 100%;
                 border-bottom: 1px solid #f2f2f2;
+            }
+
+            /* 防止菜单打开时页面滚动 */
+            body.menu-open,
+            html.menu-open {
+                overflow: hidden;
+                height: 100vh;
             }
             .dropdown-toggle {
                 width: 100%;
@@ -486,7 +495,7 @@
 
             <div class="contact-info">
                 <h3>联系方式</h3>
-                <p><strong>邮箱：</strong> <a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                <p><strong>邮箱：</strong> <a href="mailto:support@openai2025.com">support@openai2025.com</a></p>
                 <p><strong>响应时间：</strong> 我们通常在24-48小时内回复</p>
                 <p><strong>支持时间：</strong> 周一至周五，上午9:00 - 下午6:00（UTC）</p>
             </div>
@@ -532,7 +541,7 @@
                 </div>
                 <div class="footer-column">
                     <h3>联系我们</h3>
-                    <p>邮箱：<a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                    <p>邮箱：<a href="mailto:support@openai2025.com">support@openai2025.com</a></p>
                     <p>我们随时为您解答任何问题或疑虑。</p>
                 </div>
                 <div class="footer-column">
@@ -553,7 +562,256 @@
     </footer>
 
     <script>
+        // Mobile menu toggle logic (same as index.html)
         document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            const navItem = document.querySelector('.nav-item'); // For dropdown
+            const dropdownToggle = document.querySelector('.dropdown-toggle'); // For dropdown
+            const dropdownMenu = document.querySelector('.dropdown-menu'); // For dropdown
+            const navOriginalContainer = navMenu ? navMenu.parentElement : null;
+
+            function isMobile() {
+                return window.innerWidth <= 768;
+            }
+
+            // 将菜单在移动端提到 body 直下，避免任何父级层叠上下文/裁剪影响层级
+            function promoteMenuForMobile(){
+                if (!navMenu) return;
+                if (isMobile()) {
+                    if (navMenu.parentElement !== document.body) {
+                        document.body.appendChild(navMenu);
+                    }
+                    // 确保移动端菜单有正确的样式
+                    navMenu.style.display = 'flex';
+                    navMenu.style.position = 'fixed';
+                    navMenu.style.top = '0';
+                    navMenu.style.left = '0';
+                    navMenu.style.width = '380px';
+                    navMenu.style.height = '100vh';
+                    navMenu.style.background = '#ffffff';
+                    navMenu.style.flexDirection = 'column';
+                    navMenu.style.justifyContent = 'flex-start';
+                    navMenu.style.alignItems = 'stretch';
+                    navMenu.style.padding = '0';
+                    navMenu.style.gap = '0';
+                    navMenu.style.zIndex = '10001';
+                    navMenu.style.boxShadow = '2px 0 10px rgba(0, 0, 0, 0.1)';
+                        navMenu.style.overflowY = 'scroll';
+                        navMenu.style.overflowX = 'hidden';
+                    navMenu.style.webkitOverflowScrolling = 'touch';
+                        navMenu.style.touchAction = 'pan-y';
+                    navMenu.style.transition = 'transform .25s ease';
+
+                    // 保持菜单的当前显示状态，不强制隐藏
+                    if (!navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(-100%)';
+                    } else {
+                        navMenu.style.transform = 'translateX(0)';
+                    }
+                    } else {
+                    if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
+                        navOriginalContainer.appendChild(navMenu);
+                    }
+                    // 重置PC端样式
+                    navMenu.style.display = '';
+                    navMenu.style.position = '';
+                    navMenu.style.top = '';
+                    navMenu.style.left = '';
+                    navMenu.style.width = '';
+                    navMenu.style.height = '';
+                    navMenu.style.background = '';
+                    navMenu.style.flexDirection = '';
+                    navMenu.style.justifyContent = '';
+                    navMenu.style.alignItems = '';
+                    navMenu.style.padding = '';
+                    navMenu.style.gap = '';
+                    navMenu.style.zIndex = '';
+                    navMenu.style.boxShadow = '';
+                    navMenu.style.overflowY = '';
+                    navMenu.style.overflowX = '';
+                    navMenu.style.webkitOverflowScrolling = '';
+                    navMenu.style.touchAction = '';
+                    navMenu.style.transition = '';
+                    navMenu.style.transform = '';
+                }
+            }
+
+            // 初始化时调用
+            promoteMenuForMobile();
+
+            function toggleMenu() {
+                if (isMobile()) {
+                    navMenu.classList.toggle('nav-menu-active');
+                    navToggle.classList.toggle('nav-toggle-active');
+                    navOverlay.classList.toggle('nav-overlay-active');
+                    document.body.classList.toggle('menu-open');
+                    document.documentElement.classList.toggle('menu-open');
+                }
+            }
+
+            function closeMenu() {
+                if (isMobile()) {
+                    navMenu.classList.remove('nav-menu-active');
+                    navToggle.classList.remove('nav-toggle-active');
+                    navOverlay.classList.remove('nav-overlay-active');
+                    document.body.classList.remove('menu-open');
+                    document.documentElement.classList.remove('menu-open');
+                }
+            }
+
+            if (navToggle) {
+                navToggle.addEventListener('click', toggleMenu);
+            }
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+
+            // PC dropdown logic (simplified)
+            if (!isMobile() && navItem && dropdownToggle && dropdownMenu) {
+                let hideTimer = null;
+
+                function showDropdown() {
+                    if (hideTimer) {
+                        clearTimeout(hideTimer);
+                        hideTimer = null;
+                    }
+                    navItem.classList.add('dropdown-open');
+                }
+
+                function hideDropdown() {
+                    hideTimer = setTimeout(function() {
+                        navItem.classList.remove('dropdown-open');
+                    }, 200);
+                }
+
+                navItem.addEventListener('mouseenter', showDropdown);
+                dropdownMenu.addEventListener('mouseenter', showDropdown);
+                navItem.addEventListener('mouseleave', function(e) {
+                    if (e.relatedTarget && dropdownMenu.contains(e.relatedTarget)) {
+                        return;
+                    }
+                    hideDropdown();
+                });
+                dropdownMenu.addEventListener('mouseleave', function(e) {
+                    if (e.relatedTarget && navItem.contains(e.relatedTarget)) {
+                        return;
+                    }
+                    hideDropdown();
+                });
+            }
+
+            // Mobile dropdown click handling
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', function(e) {
+                    if (isMobile()) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        navItem.classList.toggle('dropdown-open');
+                    }
+                });
+            }
+
+            // 点击菜单项后关闭移动端菜单并导航
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                let startX = 0, startY = 0, startT = 0;
+                const threshold = 8; // 允许的手指抖动
+                function onStart(e){
+                    if (!isMobile()) return;
+                    const t = e.touches ? e.touches[0] : e;
+                    startX = t.clientX; startY = t.clientY; startT = Date.now();
+                }
+                function onEnd(e){
+                    if (!isMobile()) return;
+                    const t = e.changedTouches ? e.changedTouches[0] : e;
+                    const dx = Math.abs(t.clientX - startX);
+                    const dy = Math.abs(t.clientY - startY);
+                    const dt = Date.now() - startT;
+                    if (dx < threshold && dy < threshold && dt < 1500) {
+                        const href = link.getAttribute('href');
+                        if (href && !href.startsWith('#')) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            window.location.assign(href);
+                        }
+                    }
+                }
+                link.addEventListener('touchstart', onStart, {passive:true, capture:true});
+                link.addEventListener('touchend', onEnd, {passive:false, capture:true});
+                link.addEventListener('mousedown', onStart, true);
+                link.addEventListener('mouseup', onEnd, true);
+                // 兜底：点击事件（防止某些环境未触发指针序列）
+                link.addEventListener('click', function(e){
+                    if (!isMobile()) return;
+                    const href = link.getAttribute('href');
+                    if (href && !href.startsWith('#')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                        window.location.assign(href);
+                    }
+                }, true);
+            });
+
+            // 联系表单处理
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('感谢您的消息！我们会尽快回复您。');
+                    this.reset();
+
+                    // 这里可以添加实际的表单提交逻辑
+                    // fetch('/api/contact', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({
+                    //         name: document.getElementById('name').value,
+                    //         email: document.getElementById('email').value,
+                    //         subject: document.getElementById('subject').value,
+                    //         message: document.getElementById('message').value
+                    //     })
+                    // })
+                    // .then(response => response.json())
+                    // .then(data => {
+                    //     alert('感谢您的消息！');
+                    //     contactForm.reset();
+                    // })
+                    // .catch(error => {
+                    //     alert('发送消息失败。请重试。');
+                    // });
+                });
+            }
+
+            // 窗口大小改变时重新检查
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                } else {
+                    // 移动端时只重新初始化样式，不改变菜单显示状态
+                    promoteMenuForMobile();
+                }
+            });
+
+            // 页面滚动时也重新检查菜单状态，但不重置菜单显示状态
+            window.addEventListener('scroll', function() {
+                if (isMobile()) {
+                    // 只确保菜单在正确的位置，不改变显示状态
+                    if (navMenu.parentElement !== document.body) {
+                        document.body.appendChild(navMenu);
+                    }
+                    // 保持菜单的当前显示状态
+                    if (navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(0)';
+                    } else {
+                        navMenu.style.transform = 'translateX(-100%)';
+                    }
+                }
+            });
+        });
             const navToggle = document.getElementById('navToggle');
             const navMenu = document.getElementById('navMenu');
             const navOverlay = document.getElementById('navOverlay');

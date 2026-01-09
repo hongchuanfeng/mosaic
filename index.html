@@ -62,7 +62,8 @@
             align-items: center;
             justify-content: center;
             height: 40px;
-            padding: 0 16px;
+            min-width: 120px;
+            padding: 0 20px;
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -75,6 +76,7 @@
             font-weight: 500;
             gap: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
         }
         .lang-switch:hover {
             background: rgba(255, 255, 255, 0.15);
@@ -132,9 +134,11 @@
                 right: 12px;
                 /* top: 0px; */
                 height: 38px;
-                padding: 0 14px;
+                min-width: 110px;
+                padding: 0 18px;
                 z-index: 10002;
                 font-size: 13px;
+                white-space: nowrap;
             }
             .lang-switch .badge {
                 font-size: 11px;
@@ -355,6 +359,53 @@
             border: none; appearance: none; -webkit-appearance: none; cursor: pointer;
             border-radius: 8px;
         }
+        /* 友情链接样式 */
+        .friendship-links {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .friendship-links h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .links-grid a {
+            display: inline;
+            text-decoration: underline;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0 15px 10px 0;
+            transition: color 0.3s ease;
+        }
+
+        .links-grid a:hover {
+            color: #007bff;
+        }
+
+        /* 移动端友情链接样式 */
+        @media (max-width: 768px) {
+            .links-grid a {
+                margin: 0 10px 8px 0;
+                font-size: 15px;
+            }
+
+            .friendship-links {
+                padding: 0 15px;
+            }
+        }
     </style>
 
 </head>
@@ -394,9 +445,9 @@
                     <a href="about.html" class="nav-link">关于</a>
                     <a href="contact.html" class="nav-link">联系我们</a>
                 </div>
-                <button id="loginBtn" class="lang-switch" style="margin-left:0;margin-right:12px;" aria-label="使用Google登录">
+                <button id="loginBtn" class="lang-switch" style="margin-left:0;margin-right:12px;" aria-label="Google登录">
                     <span class="ls-left">
-                        <span class="label" id="loginLabel">使用Google登录</span>
+                        <span class="label" id="loginLabel">Google登录</span>
                     </span>
                 </button>
                 <a class="lang-switch" href="https://mosaic.chdaoai.com/" rel="nofollow" aria-label="切换到中文版本">
@@ -631,7 +682,7 @@
                 <!-- 联系我们 -->
                 <div class="footer-column">
                     <h3>联系我们</h3>
-                    <p>邮箱：<a href="mailto:support@chuandaoai.com">support@chuandaoai.com</a></p>
+                    <p>邮箱：<a href="mailto:support@openai2025.com">support@openai2025.com</a></p>
                     <p>我们随时为您解答任何问题或疑虑。</p>
                 </div>
 
@@ -647,6 +698,20 @@
                     <h3>服务条款</h3>
                     <p>使用我们的服务，即表示您同意我们的条款和条件。</p>
                     <a href="terms.html" class="footer-link">了解更多</a>
+                </div>
+            </div>
+
+            <!-- 友情链接 -->
+            <div class="friendship-links">
+                <h3>友情链接</h3>
+                <div class="links-grid">
+                    <a href="https://removewatermark.zorezoro.com/" target="_blank" rel="noopener noreferrer">视频去水印字幕</a>
+                    <a href="https://www.chdaoai.com/" target="_blank" rel="noopener noreferrer">图片去Logo</a>
+                    <a href="https://qrcode.chdaoai.com" target="_blank" rel="noopener noreferrer">在线生成二维码</a>
+                    <a href="https://barcode.zorezoro.com/" target="_blank" rel="noopener noreferrer">在线生成条码</a>
+                    <a href="https://www.zorezoro.com/" target="_blank" rel="noopener noreferrer">NBA趣事</a>
+                    <a href="https://pdf.chdaoai.com/" target="_blank" rel="noopener noreferrer">PDF转换工具</a>
+                    <a href="https://www.icebreakgame.com/" target="_blank" rel="noopener noreferrer">在线免费游戏</a>
                 </div>
             </div>
 

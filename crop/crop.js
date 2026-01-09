@@ -350,37 +350,38 @@ class ImageCropper {
 
     updatePreview() {
         if (!this.sourceImage || !this.cropBox) return;
-        
+
         const cropRect = this.cropBox.getBoundingClientRect();
         const imgRect = document.getElementById('sourceImage').getBoundingClientRect();
         const wrapperRect = this.imageWrapper.getBoundingClientRect();
-        
+
         // 计算裁剪区域相对于图片的位置
         const scaleX = this.sourceImage.naturalWidth / imgRect.width;
         const scaleY = this.sourceImage.naturalHeight / imgRect.height;
-        
+
         const cropX = (cropRect.left - imgRect.left) * scaleX;
         const cropY = (cropRect.top - imgRect.top) * scaleY;
         const cropWidth = cropRect.width * scaleX;
         const cropHeight = cropRect.height * scaleY;
-        
-        // 更新预览画布
+
+        // 更新预览画布 - 1:1显示实际裁剪尺寸
         const canvas = this.previewCanvas;
         const ctx = canvas.getContext('2d');
-        
-        canvas.width = Math.min(200, cropWidth);
-        canvas.height = Math.min(200, cropHeight);
-        
+
+        // 设置画布尺寸为实际裁剪尺寸
+        canvas.width = Math.round(cropWidth);
+        canvas.height = Math.round(cropHeight);
+
         ctx.drawImage(
             this.sourceImage,
             cropX, cropY, cropWidth, cropHeight,
             0, 0, canvas.width, canvas.height
         );
-        
+
         // 更新信息显示
-        document.getElementById('cropSize').textContent = `Size: ${Math.round(cropWidth)} x ${Math.round(cropHeight)}`;
+        document.getElementById('cropSize').textContent = `尺寸：${Math.round(cropWidth)} × ${Math.round(cropHeight)}`;
         const ratio = cropWidth / cropHeight;
-        document.getElementById('cropRatio').textContent = `Ratio: ${ratio.toFixed(2)}:1`;
+        document.getElementById('cropRatio').textContent = `比例：${ratio.toFixed(2)}:1`;
     }
 
     downloadCroppedImage() {

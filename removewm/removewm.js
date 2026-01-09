@@ -129,9 +129,9 @@ class WatermarkRemover {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="watermarkRemover.removeWatermarkFromSingle('${imageData.id}')">Remove Watermark</button>
-                    <button class="btn btn-secondary" onclick="watermarkRemover.editImage('${imageData.id}')">Edit</button>
-                    <button class="btn btn-outline" onclick="watermarkRemover.removeImage('${imageData.id}')">Remove</button>
+                    <button class="btn btn-primary" onclick="watermarkRemover.removeWatermarkFromSingle('${imageData.id}')">移除水印</button>
+                    <button class="btn btn-secondary" onclick="watermarkRemover.editImage('${imageData.id}')">编辑</button>
+                    <button class="btn btn-outline" onclick="watermarkRemover.removeImage('${imageData.id}')">移除</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -478,7 +478,7 @@ class WatermarkRemover {
             }
         }
 
-        this.updateProgress(totalImages, totalImages, 'Processing complete');
+        this.updateProgress(totalImages, totalImages, '处理完成');
         this.isProcessing = false;
         this.displayResults();
     }
@@ -956,7 +956,7 @@ class WatermarkRemover {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="watermarkRemover.downloadSingleImage('${imageData.name}')">Download</button>
+                    <button class="btn btn-success" onclick="watermarkRemover.downloadSingleImage('${imageData.name}')">下载</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);

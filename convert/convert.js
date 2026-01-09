@@ -115,8 +115,8 @@ class ImageConverter {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="imageConverter.convertSingleImage('${imageData.id}')">Convert</button>
-                    <button class="btn btn-secondary" onclick="imageConverter.removeImage('${imageData.id}')">Remove</button>
+                    <button class="btn btn-primary" onclick="imageConverter.convertSingleImage('${imageData.id}')">转换</button>
+                    <button class="btn btn-secondary" onclick="imageConverter.removeImage('${imageData.id}')">移除</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -227,7 +227,7 @@ class ImageConverter {
             }
         }
 
-        this.updateProgress(totalImages, totalImages, 'Conversion completed');
+        this.updateProgress(totalImages, totalImages, '转换完成');
         this.isConverting = false;
         this.displayResults();
     }
@@ -347,7 +347,7 @@ class ImageConverter {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="imageConverter.downloadSingleImage('${imageData.id}')">Download</button>
+                    <button class="btn btn-success" onclick="imageConverter.downloadSingleImage('${imageData.id}')">下载</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);

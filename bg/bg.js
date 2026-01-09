@@ -117,8 +117,8 @@ class BlackWhiteColorizer {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="image-name">${imageData.name}</div>
                 <div class="image-actions">
-                    <button class="btn btn-primary" onclick="blackWhiteColorizer.colorizeSingleImage('${imageData.id}')">Colorize</button>
-                    <button class="btn btn-outline" onclick="blackWhiteColorizer.removeImage('${imageData.id}')">Remove</button>
+                    <button class="btn btn-primary" onclick="blackWhiteColorizer.colorizeSingleImage('${imageData.id}')">上色</button>
+                    <button class="btn btn-outline" onclick="blackWhiteColorizer.removeImage('${imageData.id}')">移除</button>
                 </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -218,11 +218,11 @@ class BlackWhiteColorizer {
             if (colorizedImage) {
                 this.colorizedImages.push(colorizedImage);
                 this.displayResults();
-                alert('Colorization successful!');
+                alert('上色成功！');
             }
         } catch (error) {
             console.error('Single image colorization failed:', error);
-            alert('Colorization failed, please check image format and settings');
+            alert('上色失败，请检查图片格式和设置');
         }
     }
 
@@ -240,7 +240,7 @@ class BlackWhiteColorizer {
 
         for (let i = 0; i < totalImages; i++) {
             const imageData = this.images[i];
-            this.updateProgress(completed, totalImages, `Colorizing: ${imageData.name}`);
+            this.updateProgress(completed, totalImages, `上色中: ${imageData.name}`);
             
             try {
                 const colorizedImage = await this.colorizeImage(imageData);
@@ -257,7 +257,7 @@ class BlackWhiteColorizer {
         }
 
         // Display processing results
-        let resultMessage = `Colorization completed! Success: ${successCount} image(s)`;
+        let resultMessage = `上色完成！成功：${successCount}张图片`;
         if (errorCount > 0) {
             resultMessage += `, Failed: ${errorCount} image(s)`;
         }
@@ -957,7 +957,7 @@ class BlackWhiteColorizer {
                 <div class="result-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                 <div class="result-name">${imageData.name}</div>
                 <div class="result-actions">
-                    <button class="btn btn-success" onclick="blackWhiteColorizer.downloadSingleImage('${imageData.name}')">Download</button>
+                    <button class="btn btn-success" onclick="blackWhiteColorizer.downloadSingleImage('${imageData.name}')">下载</button>
                 </div>
             `;
             resultsGrid.appendChild(resultItem);
@@ -981,7 +981,7 @@ class BlackWhiteColorizer {
             previewWindow.document.write(`
                 <html>
                     <head>
-                        <title>Black and White Photo Colorization Preview</title>
+                        <title>黑白照片上色预览</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; text-align: center; background-color: #f5f5f5; }
                             .preview-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
@@ -992,17 +992,17 @@ class BlackWhiteColorizer {
                         </style>
                     </head>
                     <body>
-                        <h2>Black and White Photo Colorization Preview</h2>
+                        <h2>黑白照片上色预览</h2>
                         <div class="preview-container">
                             <div class="preview-item">
-                                <h3>Before Colorization</h3>
-                                <img src="${firstImage.dataUrl}" alt="Before Colorization" />
+                                <h3>上色前</h3>
+                                <img src="${firstImage.dataUrl}" alt="上色前照片" />
                                 <div class="preview-info">Dimensions: ${firstImage.width}×${firstImage.height}</div>
                                 <div class="preview-info">Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>After Colorization</h3>
-                                <img src="${colorizedImage.dataUrl}" alt="After Colorization" />
+                                <h3>上色后</h3>
+                                <img src="${colorizedImage.dataUrl}" alt="上色后照片" />
                                 <div class="preview-info">Dimensions: ${colorizedImage.width}×${colorizedImage.height}</div>
                                 <div class="preview-info">Size: ${this.formatFileSize(colorizedImage.size)}</div>
                             </div>

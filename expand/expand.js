@@ -118,8 +118,8 @@ class ImageExpander {
                 <div class="image-info">${this.formatFileSize(imageData.size)} | ${imageData.width}×${imageData.height}</div>
                     <div class="image-name">${imageData.name}</div>
                     <div class="image-actions">
-                        <button class="btn btn-primary" onclick="imageExpander.expandSingleImage('${imageData.id}')">Expand</button>
-                        <button class="btn btn-outline" onclick="imageExpander.removeImage('${imageData.id}')">Remove</button>
+                        <button class="btn btn-primary" onclick="imageExpander.expandSingleImage('${imageData.id}')">放大</button>
+                        <button class="btn btn-outline" onclick="imageExpander.removeImage('${imageData.id}')">移除</button>
                     </div>
             `;
             imagesGrid.appendChild(imageItem);
@@ -657,8 +657,8 @@ class ImageExpander {
                                 <div class="preview-info">File Size: ${this.formatFileSize(firstImage.size)}</div>
                             </div>
                             <div class="preview-item">
-                                <h3>Expanded</h3>
-                                <img src="${expandedImage.dataUrl}" alt="Expanded" />
+                                <h3>已放大</h3>
+                                <img src="${expandedImage.dataUrl}" alt="已放大图片" />
                                 <div class="preview-info">Size: ${expandedImage.width}×${expandedImage.height}</div>
                                 <div class="preview-info">File Size: ${this.formatFileSize(expandedImage.size)}</div>
                             </div>
