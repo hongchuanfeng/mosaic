@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link id="favicon" rel="icon" type="image/png" href="../favicon.ico">
-    <title>在线免费图片马赛克 - 更换图片背景</title>
-    <meta name="keywords" content="更换图片背景,背景替换,背景颜色,图片编辑,在线背景更换器" />
-    <meta name="description" content="免费在线背景更换器。检测背景并使用颜色、渐变或图案替换，支持手动工具。" />
-    <link rel="canonical" href="https://mosaic.openai2025.com/changebg/changebg.html">
+    <title>在线免费图片旋转 - 图片旋转工具</title>
+    <meta name="keywords" content="在线图片旋转,图片旋转工具,免费图片编辑,图像处理工具,图片角度调整" />
+    <meta name="description" content="免费在线图片旋转工具。调整图片角度，实时预览，一键下载。" />
+    <link rel="canonical" href="https://mosaic.openai2025.com/rotate/rotate.html">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4SRJM5F5CT"></script>
 <script>
@@ -21,10 +21,9 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css.css">
-    <link rel="stylesheet" href="changebg.css">
+    <link rel="stylesheet" href="rotate.css">
     <style>
         body { min-height: 120vh; }
-        body { background-color: transparent; }
         .navbar { position: relative; z-index: auto; }
         .nav-container { display: flex; align-items: center; justify-content: space-between; }
         .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -118,6 +117,7 @@
             .lang-switch {
                 position: fixed;
                 right: 12px;
+                /* top: 12px; */
                 height: 38px;
                 padding: 0 14px;
                 z-index: 10002;
@@ -132,12 +132,12 @@
             }
         }
 
-        .nav-item { 
-            position: relative; 
+        .nav-item {
+            position: relative;
             display: inline-block;
         }
-        .dropdown-toggle { 
-            cursor: pointer; 
+        .dropdown-toggle {
+            cursor: pointer;
             user-select: none;
         }
         .dropdown-menu {
@@ -192,39 +192,45 @@
             margin-left: 4px;
             opacity: 0.7;
         }
-        
+
         @media (min-width: 769px) and (max-width: 1024px) {
             .dropdown-menu {
                 min-width: 480px;
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-        
+
         @media (min-width: 1025px) {
             .dropdown-menu {
                 min-width: 600px;
                 grid-template-columns: repeat(4, 1fr);
             }
         }
-        
-        .dropdown-toggle::before,
-        .nav-link[href="../about.html"]::before,
-        .nav-link[href="../contact.html"]::before {
+
+        .dropdown-toggle::before {
+            content: "🤖";
             display: inline-block;
             margin-right: 6px;
             font-size: 16px;
             line-height: 1;
         }
-        .dropdown-toggle::before {
-            content: "🤖";
-        }
-        .nav-link[href="../about.html"]::before {
+        .nav-link[href="../about.html"]::before,
+        .nav-link[href="about.html"]::before {
             content: "ℹ️";
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
         }
-        .nav-link[href="../contact.html"]::before {
+        .nav-link[href="../contact.html"]::before,
+        .nav-link[href="contact.html"]::before {
             content: "📧";
+            display: inline-block;
+            margin-right: 6px;
+            font-size: 16px;
+            line-height: 1;
         }
-        
+
         @media (min-width: 769px) {
             .nav-item .dropdown-toggle {
                 color: rgba(255, 255, 255, 0.9);
@@ -254,15 +260,12 @@
             }
             .nav-menu .nav-link { display: flex; align-items: center; padding: 0; border-bottom: 1px solid #f2f2f2; }
             .nav-menu.nav-menu-active { transform: translateX(0); }
-
             .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 10000; display: block; }
             .nav-overlay.nav-overlay-active { opacity: 1; pointer-events: auto; }
-
             .nav-toggle.nav-toggle-active .hamburger:nth-child(1) { transform: translateY(7px) rotate(45deg); }
             .nav-toggle.nav-toggle-active .hamburger:nth-child(2) { opacity: 0; }
             .nav-toggle.nav-toggle-active .hamburger:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
             .nav-menu .nav-link { margin: 10px 0; }
-            
             .nav-item {
                 width: 100%;
                 border-bottom: 1px solid #f2f2f2;
@@ -312,14 +315,6 @@
             .dropdown-menu .nav-link:hover {
                 background: #e9ecef;
             }
-            
-            .dropdown-toggle::before,
-            .nav-link[href="../about.html"]::before,
-            .nav-link[href="../contact.html"]::before {
-                display: inline-block;
-                margin-right: 8px;
-                font-size: 18px;
-            }
         }
     </style>
 </head>
@@ -353,15 +348,15 @@
                             <a href="../old/old.html" class="nav-link">照片修复</a>
                             <a href="../bg/bg.html" class="nav-link">图片上色</a>
                             <a href="../removebg/removebg.html" class="nav-link">去除背景</a>
-                            <a href="changebg.html" class="nav-link">更换背景</a>
-                            <a href="../rotate/rotate.html" class="nav-link">🔄 图片旋转</a>
+                            <a href="../changebg/changebg.html" class="nav-link">更换背景</a>
+                            <a href="rotate.html" class="nav-link">🔄 图片旋转</a>
                             <a href="../exif/exif.html" class="nav-link">📷 查看EXIF</a>
                         </div>
                     </div>
                     <a href="../about.html" class="nav-link">关于</a>
                     <a href="../contact.html" class="nav-link">联系我们</a>
                 </div>
-                <a class="lang-switch" href="https://mosaic.chdaoai.com/changebg/changebg.html" rel="nofollow" aria-label="切换到中文版本">
+                <a class="lang-switch" href="https://mosaic.chdaoai.com/" rel="nofollow" aria-label="切换到中文版本">
                     <span class="ls-left">
                         <span class="badge">English</span>
                         <span class="divider"></span>
@@ -370,388 +365,175 @@
                 </a>
             </div>
         </nav>
-        <h1 class="header-title">背景更换</h1>
+        <h1 class="header-title">图片旋转</h1>
     </header>
 
-    <!-- Mobile menu overlay -->
+    <!-- 移动端菜单遮罩层 -->
     <div class="nav-overlay" id="navOverlay"></div>
 
     <main class="main-container">
-        <!-- File Upload Area -->
+        <!-- 文件上传区域 -->
         <section class="upload-section">
             <div class="upload-area">
                 <label for="fileInput" class="file-label">
-                    <div class="upload-icon">🎨</div>
+                    <div class="upload-icon">📁</div>
                     <div class="upload-text">点击选择图片或拖放到此处</div>
-                    <div class="upload-hint">支持 JPG, PNG, GIF, BMP, WebP 格式</div>
-                    <div class="upload-hint">支持批量处理，最多5张图片</div>
+                    <div class="upload-hint">支持格式：JPG、PNG、GIF、BMP、WebP</div>
                 </label>
-                <input type="file" id="fileInput" accept="image/*" multiple />
+                <input type="file" id="fileInput" accept="image/*" />
             </div>
         </section>
 
-        <!-- Background Settings Area -->
-        <section class="settings-section" id="settingsSection" style="display: none;">
-            <div class="settings-container">
-                <h3>背景设置</h3>
-                
-                <div class="settings-grid">
-                    <!-- Background Type Selection -->
-                    <div class="setting-group">
-                        <label class="setting-label">背景类型</label>
-                        <div class="background-types">
-                            <label class="radio-label">
-                                <input type="radio" name="backgroundType" value="solid" checked />
-                                <span class="radio-mark"></span>
-                                纯色
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="backgroundType" value="gradient" />
-                                <span class="radio-mark"></span>
-                                渐变
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="backgroundType" value="pattern" />
-                                <span class="radio-mark"></span>
-                                图案
-                            </label>
-                        </div>
+        <!-- 图片编辑区域 -->
+        <section class="editor-section" id="editorSection" style="display: none;">
+            <div class="editor-container">
+                <!-- 工具栏 -->
+                <div class="toolbar">
+                    <div class="tool-group">
+                        <button id="uploadNewBtn" class="tool-btn upload-new-btn">📁 上传新图片</button>
+                        <button id="rotateLeftBtn" class="tool-btn">↺ 左转90°</button>
+                        <button id="rotateRightBtn" class="tool-btn">↻ 右转90°</button>
+                        <button id="flipHorizontalBtn" class="tool-btn">⬌ 水平翻转</button>
+                        <button id="flipVerticalBtn" class="tool-btn">⬍ 垂直翻转</button>
+                        <button id="resetBtn" class="tool-btn">重置</button>
                     </div>
-
-                    <!-- Solid Color Background Settings -->
-                    <div class="setting-group" id="solidGroup">
-                        <label class="setting-label">纯色背景</label>
-                        <div class="solid-background-tools">
-                            <div class="color-picker-group">
-                                <label>背景颜色：</label>
-                                <input type="color" id="backgroundColor" value="#ffffff" />
-                                <button type="button" id="pickColorBtn" class="btn btn-secondary">颜色选择器</button>
-                            </div>
-                            <div class="color-picker-group">
-                                <label>颜色强度：</label>
-                                <input type="range" id="colorIntensity" min="0" max="100" value="100" />
-                                <span id="colorIntensityValue">100%</span>
-                            </div>
-                        </div>
+                    <div class="tool-group">
+                        <label for="angleInput" class="angle-label">自定义角度：</label>
+                        <input type="number" id="angleInput" min="-360" max="360" value="0" step="1" class="angle-input" />
+                        <span class="angle-unit">°</span>
+                        <button id="applyAngleBtn" class="tool-btn">应用</button>
                     </div>
-
-                    <!-- Gradient Background Settings -->
-                    <div class="setting-group" id="gradientGroup" style="display: none;">
-                        <label class="setting-label">渐变背景</label>
-                        <div class="gradient-background-tools">
-                            <div class="color-picker-group">
-                                <label>起始颜色：</label>
-                                <input type="color" id="gradientStartColor" value="#ff6b6b" />
-                            </div>
-                            <div class="color-picker-group">
-                                <label>结束颜色：</label>
-                                <input type="color" id="gradientEndColor" value="#4ecdc4" />
-                            </div>
-                            <div class="color-picker-group">
-                                <label>渐变类型：</label>
-                                <select id="gradientDirection" class="tool-select">
-                                    <option value="linear">线性</option>
-                                    <option value="radial">径向</option>
-                                    <option value="conic">圆锥</option>
-                                </select>
-                            </div>
-                            <div class="color-picker-group">
-                                <label>渐变角度：</label>
-                                <input type="range" id="gradientAngle" min="0" max="360" value="45" />
-                                <span id="gradientAngleValue">45°</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pattern Background Settings -->
-                    <div class="setting-group" id="patternGroup" style="display: none;">
-                        <label class="setting-label">图案背景</label>
-                        <div class="pattern-background-tools">
-                            <div class="color-picker-group">
-                                <label>图案类型：</label>
-                                <select id="patternType" class="tool-select">
-                                    <option value="dots">点</option>
-                                    <option value="lines">线条</option>
-                                    <option value="grid">网格</option>
-                                    <option value="waves">波浪</option>
-                                    <option value="stars">星星</option>
-                                </select>
-                            </div>
-                            <div class="color-picker-group">
-                                <label>图案颜色：</label>
-                                <input type="color" id="patternColor" value="#cccccc" />
-                            </div>
-                            <div class="color-picker-group">
-                                <label>图案大小：</label>
-                                <input type="range" id="patternSize" min="10" max="100" value="30" />
-                                <span id="patternSizeValue">30px</span>
-                            </div>
-                            <div class="color-picker-group">
-                                <label>图案密度：</label>
-                                <input type="range" id="patternDensity" min="10" max="100" value="50" />
-                                <span id="patternDensityValue">50%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Background Detection Settings -->
-                    <div class="setting-group">
-                        <label class="setting-label">背景检测</label>
-                        <div class="detection-options">
-                            <label class="radio-label">
-                                <input type="radio" name="detectionMode" value="auto" checked />
-                                <span class="radio-mark"></span>
-                                自动检测
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="detectionMode" value="manual" />
-                                <span class="radio-mark"></span>
-                                手动选择
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="detectionMode" value="color" />
-                                <span class="radio-mark"></span>
-                                颜色选择
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Manual Selection Tools -->
-                    <div class="setting-group" id="manualGroup" style="display: none;">
-                        <label class="setting-label">手动选择</label>
-                        <div class="manual-tools">
-                            <div class="tool-group">
-                                <label>选择模式：</label>
-                                <select id="selectionMode" class="tool-select">
-                                    <option value="rectangle">矩形</option>
-                                    <option value="circle">圆形</option>
-                                    <option value="brush">画笔</option>
-                                </select>
-                            </div>
-                            <div class="tool-group">
-                                <label>画笔大小：</label>
-                                <input type="range" id="brushSize" min="5" max="50" value="20" />
-                                <span id="brushSizeValue">20px</span>
-                            </div>
-                            <div class="tool-group">
-                                <label>容差：</label>
-                                <input type="range" id="tolerance" min="0" max="100" value="30" />
-                                <span id="toleranceValue">30</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Color Selection Tools -->
-                    <div class="setting-group" id="colorGroup" style="display: none;">
-                        <label class="setting-label">颜色选择</label>
-                        <div class="color-selection-tools">
-                            <div class="color-picker-group">
-                                <label>要替换的颜色：</label>
-                                <input type="color" id="replaceColor" value="#ffffff" />
-                                <button type="button" id="pickReplaceColorBtn" class="btn btn-secondary">颜色选择器</button>
-                            </div>
-                            <div class="color-picker-group">
-                                <label>颜色容差：</label>
-                                <input type="range" id="colorTolerance" min="0" max="100" value="20" />
-                                <span id="colorToleranceValue">20</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Advanced Settings -->
-                    <div class="setting-group">
-                        <label class="setting-label">高级设置</label>
-                        <div class="advanced-options">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="preserveShadows" />
-                                <span class="checkmark"></span>
-                                保留阴影
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="smoothEdges" checked />
-                                <span class="checkmark"></span>
-                                平滑边缘
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="enhanceContrast" />
-                                <span class="checkmark"></span>
-                                增强对比度
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="autoDetect" checked />
-                                <span class="checkmark"></span>
-                                智能检测
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="previewMode" />
-                                <span class="checkmark"></span>
-                                预览模式
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Output Settings -->
-                    <div class="setting-group">
-                        <label class="setting-label">输出设置</label>
-                        <select id="outputFormat" class="format-select">
-                            <option value="original">保持原始格式</option>
-                            <option value="jpeg">JPEG (.jpg)</option>
-                            <option value="png">PNG (.png)</option>
-                            <option value="webp">WebP (.webp)</option>
-                        </select>
-                        
-                        <label class="setting-label">输出质量</label>
-                        <div class="quality-control">
-                            <input type="range" id="qualitySlider" min="60" max="100" value="95" />
-                            <span id="qualityValue">95%</span>
-                        </div>
+                    <div class="tool-group">
+                        <button id="downloadBtn" class="tool-btn download-btn">下载旋转图片</button>
                     </div>
                 </div>
 
-                <div class="action-buttons">
-                    <button id="processBtn" class="btn btn-primary">立即处理</button>
-                    <button id="previewBtn" class="btn btn-secondary">预览效果</button>
-                    <button id="clearBtn" class="btn btn-outline">清除列表</button>
+                <!-- 图片显示区域 -->
+                <div class="image-container">
+                    <div class="image-wrapper" id="imageWrapper">
+                        <canvas id="rotationCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- 预览信息 -->
+                <div class="preview-section">
+                    <h3>1:1 预览</h3>
+                    <div class="preview-container">
+                        <canvas id="previewCanvas"></canvas>
+                        <div class="preview-info">
+                            <div class="info-item">
+                                <strong>当前角度：</strong><span id="currentAngle">0°</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>图片尺寸：</strong><span id="imageSize">0 × 0</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>旋转状态：</strong><span id="rotationStatus">未旋转</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- Image List Area -->
-        <section class="images-section" id="imagesSection" style="display: none;">
-            <div class="images-container">
-                <h3>图片列表</h3>
-                <div class="images-grid" id="imagesGrid">
-                    <!-- Image items will be dynamically added here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Progress Area -->
-        <section class="progress-section" id="progressSection" style="display: none;">
-            <div class="progress-container">
-                <h3>处理进度</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-text" id="progressText">准备中...</div>
-            </div>
-        </section>
-
-        <!-- Results Area -->
-        <section class="results-section" id="resultsSection" style="display: none;">
-            <div class="results-container">
-                <h3>处理结果</h3>
-                <div class="results-actions">
-                    <button id="downloadAllBtn" class="btn btn-success">下载全部</button>
-                    <button id="downloadZipBtn" class="btn btn-info">下载为ZIP</button>
-                </div>
-                <div class="results-grid" id="resultsGrid">
-                    <!-- Processing results will be displayed here -->
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <!-- Feature description and usage guide section -->
+    <!-- 功能说明与使用指南 -->
     <section class="info-section">
         <div class="info-container">
-            <!-- Feature description -->
+            <!-- 功能说明 -->
             <div class="info-card">
                 <h2>📋 功能说明</h2>
-                <p>我们的背景更换工具提供强大的AI功能，可以更换图片背景：</p>
+                <p>我们的图片旋转工具为您提供全面的图片角度调整体验：</p>
                 <ul>
-                    <li><strong>多种背景类型：</strong> 支持纯色、渐变和图案背景</li>
-                    <li><strong>智能检测：</strong> 自动识别背景区域以进行精确替换</li>
-                    <li><strong>渐变选项：</strong> 使用线性、径向或圆锥渐变创建美观的渐变背景</li>
-                    <li><strong>图案库：</strong> 添加各种图案背景，包括点、线条、网格、波浪和星星</li>
-                    <li><strong>高级功能：</strong> 保留阴影、平滑边缘、增强对比度、智能检测和预览模式</li>
+                    <li><strong>快速旋转：</strong> 一键90°左转或右转，适用于照片方向纠正</li>
+                    <li><strong>镜像翻转：</strong> 水平或垂直翻转，满足不同创意需求</li>
+                    <li><strong>自定义角度：</strong> 输入任意角度值进行精确旋转</li>
+                    <li><strong>实时预览：</strong> 所有操作即时显示效果，无需等待</li>
+                    <li><strong>高质量输出：</strong> 保持原始图片质量，下载旋转后的图片</li>
+                    <li><strong>一键重置：</strong> 随时恢复到原始状态</li>
                 </ul>
             </div>
 
-            <!-- Usage guide -->
+            <!-- 使用帮助 -->
             <div class="info-card">
                 <h2>💡 使用指南</h2>
                 <ol>
-                    <li>点击选择图片或拖放到此处上传（最多5张图片）</li>
-                    <li>选择背景类型：纯色、渐变或图案</li>
-                    <li>对于纯色：选择背景颜色并调整颜色强度</li>
-                    <li>对于渐变：选择起始和结束颜色，选择渐变类型（线性、径向或圆锥），并调整渐变角度</li>
-                    <li>对于图案：选择图案类型（点、线条、网格、波浪或星星），选择图案颜色，并调整图案大小和密度</li>
-                    <li>选择背景检测模式：自动检测（推荐）、手动选择或颜色选择</li>
-                    <li>如果使用手动模式，选择选择模式（矩形、圆形或画笔）并调整画笔大小和容差</li>
-                    <li>如果使用颜色选择模式，选择要替换的颜色并调整颜色容差</li>
-                    <li>根据需要启用高级设置：保留阴影、平滑边缘、增强对比度、智能检测、预览模式</li>
-                    <li>选择输出格式：保持原始格式、JPEG、PNG或WebP</li>
-                    <li>调整输出质量（60%至100%）</li>
-                    <li>点击"预览效果"查看背景更换效果</li>
-                    <li>点击"立即处理"开始处理</li>
-                    <li>下载单个处理后的图片或下载全部为ZIP文件</li>
+                    <li>点击"选择图片"上传您需要旋转的图片</li>
+                    <li>使用快速旋转按钮（↺左转90° 或 ↻右转90°）进行标准角度调整</li>
+                    <li>如需镜像效果，点击"水平翻转"或"垂直翻转"按钮</li>
+                    <li>对于精确角度，在输入框中输入所需角度值，然后点击"应用"</li>
+                    <li>查看右侧旋转信息，确认当前角度和图片状态</li>
+                    <li>满意效果后，点击"下载旋转图片"保存结果</li>
+                    <li>如需重新开始，点击"重置"按钮恢复原始图片</li>
                 </ol>
             </div>
 
-            <!-- Use cases -->
+            <!-- 使用案例 -->
             <div class="info-card">
                 <h2>🎨 使用案例</h2>
                 <div class="use-cases">
                     <div class="use-case-item">
-                        <strong>证件照：</strong> 为专业证件照和护照照片替换纯色背景
+                        <strong>照片方向纠正：</strong> 手机拍摄的照片方向不对，使用90°旋转快速纠正
                     </div>
                     <div class="use-case-item">
-                        <strong>产品摄影：</strong> 将产品背景更换为渐变或图案，用于电商列表
+                        <strong>创意设计：</strong> 通过镜像翻转创建独特的视觉效果
                     </div>
                     <div class="use-case-item">
-                        <strong>人像编辑：</strong> 为人像背景更换为美观的渐变或图案，用于社交媒体
+                        <strong>艺术创作：</strong> 精确角度旋转用于抽象艺术或特殊效果
                     </div>
                     <div class="use-case-item">
-                        <strong>创意项目：</strong> 使用图案背景为创意项目创建独特的艺术效果</div>
+                        <strong>文档处理：</strong> 扫描文档角度不正，通过旋转调整为正确方向
+                    </div>
+                    <div class="use-case-item">
+                        <strong>社交媒体：</strong> 优化图片方向，提升发布在社交平台的视觉效果
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Video tutorial section -->
+    <!-- 视频教程 -->
     <section class="examples-section">
         <div class="examples-container">
             <h2>📹 视频教程</h2>
             <div class="examples-grid">
                 <div class="example-card example-video-card">
-                    <h3>如何更换图片背景</h3>
+                    <h3>如何使用图片旋转工具</h3>
                     <div class="example-video-wrapper">
-                        <video src="/static/image/changebg.mp4" controls class="example-video" poster="">
+                        <video src="../static/image/rotate.mp4" controls class="example-video" poster="">
                             您的浏览器不支持视频标签。
                         </video>
                     </div>
                     <p class="example-description">
-                        <strong>视频指南：</strong> 观看本教程视频，了解如何有效使用我们的背景更换工具。查看上传图片、选择背景类型、调整设置和下载处理后的图片的分步说明。
+                        <strong>视频指南：</strong> 观看本教程视频，了解如何使用图片旋转工具调整图片角度，包括快速90°旋转、水平垂直翻转和自定义角度设置的详细步骤。支持实时预览，操作简单直观。
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Membership plans section -->
+    <!-- 会员套餐 -->
     <section class="pricing-section">
         <div class="pricing-container">
             <h2>💎 会员套餐</h2>
             <div class="pricing-grid">
-                <!-- Monthly plan -->
+                <!-- 月度套餐 -->
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>月度套餐</h3>
-                        <div class="price">$6.6<span>/月</span></div>
+                        <div class="price">$6.66<span>/月</span></div>
                     </div>
                     <ul class="pricing-features">
-                        <li>✓ 无限背景更换</li>
-                        <li>✓ 所有背景类型</li>
-                        <li>✓ 批量处理（最多10张图片）</li>
-                        <li>✓ 优先支持</li>
+                        <li>✓ 无限图片旋转</li>
+                        <li>✓ 全部旋转工具</li>
+                        <li>✓ 高分辨率下载</li>
+                        <li>✓ 优先客服支持</li>
                         <li>✓ 无广告体验</li>
                     </ul>
                     <button class="pricing-btn">立即订阅</button>
                 </div>
 
-                <!-- Quarterly plan -->
+                <!-- 季度套餐 -->
                 <div class="pricing-card featured">
                     <div class="pricing-badge">超值选择</div>
                     <div class="pricing-header">
@@ -761,15 +543,15 @@
                     </div>
                     <ul class="pricing-features">
                         <li>✓ 包含月度套餐所有功能</li>
-                        <li>✓ 无限批量处理</li>
-                        <li>✓ 高级AI检测</li>
+                        <li>✓ 批量旋转</li>
+                        <li>✓ 高级旋转预设</li>
                         <li>✓ API访问</li>
-                        <li>✓ 自定义背景预设</li>
+                        <li>✓ 自动角度检测</li>
                     </ul>
                     <button class="pricing-btn">立即订阅</button>
                 </div>
 
-                <!-- Annual plan -->
+                <!-- 年度套餐 -->
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>年度套餐</h3>
@@ -780,7 +562,7 @@
                         <li>✓ 包含季度套餐所有功能</li>
                         <li>✓ 无限存储</li>
                         <li>✓ 白标选项</li>
-                        <li>✓ 专属支持</li>
+                        <li>✓ 专属客服支持</li>
                         <li>✓ 新功能抢先体验</li>
                     </ul>
                     <button class="pricing-btn">立即订阅</button>
@@ -789,7 +571,7 @@
         </div>
     </section>
 
-    <!-- Newsletter subscription section -->
+    <!-- 邮件订阅 -->
     <section class="newsletter-section">
         <div class="newsletter-container">
             <h2>📧 订阅我们的 newsletter</h2>
@@ -802,7 +584,7 @@
         </div>
     </section>
 
-    <!-- Footer section -->
+    <!-- 页脚 -->
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-grid">
@@ -811,9 +593,9 @@
                     <ul class="footer-links">
                         <li><a href="../index.html">图片马赛克</a></li>
                         <li><a href="../crop/crop.html">裁剪图片</a></li>
+                        <li><a href="rotate.html">图片旋转</a></li>
                         <li><a href="../convert/convert.html">格式转换</a></li>
-                        <li><a href="../icon/icon.html">图标生成器</a></li>
-                        <li><a href="changebg.html">更换背景</a></li>
+                        <li><a href="../compress/compress.html">压缩图片</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -851,19 +633,19 @@
             const dropdownToggle = document.querySelector('.dropdown-toggle'); // For dropdown
             const dropdownMenu = document.querySelector('.dropdown-menu'); // For dropdown
             const navOriginalContainer = navMenu ? navMenu.parentElement : null;
-            
+
             function isMobile() {
                 return window.innerWidth <= 768;
             }
-            
-            // Move menu to body directly on mobile to avoid parent stacking context/clipping affecting z-index
+
+            // 将菜单在移动端提到 body 直下，避免任何父级层叠上下文/裁剪影响层级
             function promoteMenuForMobile(){
                 if (!navMenu) return;
                 if (isMobile()) {
                     if (navMenu.parentElement !== document.body) {
                         document.body.appendChild(navMenu);
                     }
-                    // Ensure mobile menu has correct styles
+                    // 确保移动端菜单有正确的样式
                     navMenu.style.display = 'flex';
                     navMenu.style.position = 'fixed';
                     navMenu.style.top = '0';
@@ -878,23 +660,23 @@
                     navMenu.style.gap = '0';
                     navMenu.style.zIndex = '10001';
                     navMenu.style.boxShadow = '2px 0 10px rgba(0, 0, 0, 0.1)';
-                    navMenu.style.overflowY = 'scroll';
-                    navMenu.style.overflowX = 'hidden';
+                        navMenu.style.overflowY = 'scroll';
+                        navMenu.style.overflowX = 'hidden';
                     navMenu.style.webkitOverflowScrolling = 'touch';
-                    navMenu.style.touchAction = 'pan-y';
+                        navMenu.style.touchAction = 'pan-y';
                     navMenu.style.transition = 'transform .25s ease';
-                    
-                    // Keep menu's current display state, don't force hide
+
+                    // 保持菜单的当前显示状态，不强制隐藏
                     if (!navMenu.classList.contains('nav-menu-active')) {
                         navMenu.style.transform = 'translateX(-100%)';
                     } else {
                         navMenu.style.transform = 'translateX(0)';
                     }
-                } else {
+                    } else {
                     if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
                         navOriginalContainer.appendChild(navMenu);
                     }
-                    // Reset PC styles
+                    // 重置PC端样式
                     navMenu.style.display = '';
                     navMenu.style.position = '';
                     navMenu.style.top = '';
@@ -913,14 +695,14 @@
                     navMenu.style.overflowX = '';
                     navMenu.style.webkitOverflowScrolling = '';
                     navMenu.style.touchAction = '';
-                    navMenu.style.transition = '';
                     navMenu.style.transform = '';
+                    navMenu.style.transition = '';
                 }
             }
-            
-            // Call on initialization
+
+            // 初始化时调用
             promoteMenuForMobile();
-            
+
             function toggleMenu() {
                 if (isMobile()) {
                     navMenu.classList.toggle('nav-menu-active');
@@ -930,7 +712,7 @@
                     document.documentElement.classList.toggle('menu-open');
                 }
             }
-            
+
             function closeMenu() {
                 if (isMobile()) {
                     navMenu.classList.remove('nav-menu-active');
@@ -947,38 +729,8 @@
             if (navOverlay) {
                 navOverlay.addEventListener('click', closeMenu);
             }
-            
-            // Mobile reliable navigation
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                let startX = 0, startY = 0, startT = 0;
-                const threshold = 8;
-                function onStart(e){ if(!isMobile()) return; const t=e.touches?e.touches[0]:e; startX=t.clientX; startY=t.clientY; startT=Date.now(); }
-                function onEnd(e){ if(!isMobile()) return; const t=e.changedTouches?e.changedTouches[0]:e; const dx=Math.abs(t.clientX-startX); const dy=Math.abs(t.clientY-startY); const dt=Date.now()-startT; if(dx<threshold&&dy<threshold&&dt<1500){ const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href); } } }
-                link.addEventListener('touchstart', onStart, {passive:true, capture:true});
-                link.addEventListener('touchend', onEnd, {passive:false, capture:true});
-                link.addEventListener('mousedown', onStart, true);
-                link.addEventListener('mouseup', onEnd, true);
-                link.addEventListener('click', function(e){ if(!isMobile()) return; const href=link.getAttribute('href'); if(href){ e.preventDefault(); e.stopPropagation(); window.location.assign(href);} }, true);
-            });
-            
-            // Close menu when window size changes
-            window.addEventListener('resize', function() {
-                if (!isMobile()) {
-                    closeMenu();
-                }
-                promoteMenuForMobile();
-            });
-            
-            // Add scroll listener to ensure menu position is correct
-            window.addEventListener('scroll', function() {
-                if (isMobile() && navMenu.classList.contains('nav-menu-active')) {
-                    // When menu is open, ensure position is correct
-                    navMenu.style.top = '0';
-                }
-            });
-            
-            // PC dropdown logic
+
+            // PC dropdown logic (simplified)
             if (!isMobile() && navItem && dropdownToggle && dropdownMenu) {
                 let hideTimer = null;
 
@@ -1011,17 +763,102 @@
                     hideDropdown();
                 });
             }
-            
-            // Mobile dropdown toggle
-            if (isMobile() && dropdownToggle) {
+
+            // Mobile dropdown click handling
+            if (dropdownToggle) {
                 dropdownToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    navItem.classList.toggle('dropdown-open');
+                    if (isMobile()) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        navItem.classList.toggle('dropdown-open');
+                    }
                 });
             }
+
+            // 点击菜单项后关闭移动端菜单并导航
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                let startX = 0, startY = 0, startT = 0;
+                const threshold = 8; // 允许的手指抖动
+                function onStart(e){
+                    if (!isMobile()) return;
+                    const t = e.touches ? e.touches[0] : e;
+                    startX = t.clientX; startY = t.clientY; startT = Date.now();
+                }
+                function onEnd(e){
+                    if (!isMobile()) return;
+                    const t = e.changedTouches ? e.changedTouches[0] : e;
+                    const dx = Math.abs(t.clientX - startX);
+                    const dy = Math.abs(t.clientY - startY);
+                    const dt = Date.now() - startT;
+                    if (dx < threshold && dy < threshold && dt < 1500) {
+                        const href = link.getAttribute('href');
+                        if (href && !href.startsWith('#')) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            window.location.assign(href);
+                        }
+                    }
+                }
+                link.addEventListener('touchstart', onStart, {passive:true, capture:true});
+                link.addEventListener('touchend', onEnd, {passive:false, capture:true});
+                link.addEventListener('mousedown', onStart, true);
+                link.addEventListener('mouseup', onEnd, true);
+                // 兜底：点击事件（防止某些环境未触发指针序列）
+                link.addEventListener('click', function(e){
+                    if (!isMobile()) return;
+                    const href = link.getAttribute('href');
+                    if (href && !href.startsWith('#')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                        window.location.assign(href);
+                    }
+                }, true);
+            });
+
+            // Email subscription form handling
+            const newsletterForm = document.getElementById('newsletterForm');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = newsletterForm.querySelector('.newsletter-input');
+                    const email = emailInput.value.trim();
+                    if (email) {
+                        alert('感谢您的订阅！我们将向您发送更新和独家优惠。');
+                        emailInput.value = '';
+                    }
+                });
+            }
+
+            // 窗口大小改变时重新检查
+            window.addEventListener('resize', function() {
+                if (!isMobile()) {
+                    closeMenu();
+                } else {
+                    // 移动端时只重新初始化样式，不改变菜单显示状态
+                    promoteMenuForMobile();
+                }
+            });
+
+            // 页面滚动时也重新检查菜单状态，但不重置菜单显示状态
+            window.addEventListener('scroll', function() {
+                if (isMobile()) {
+                    // 只确保菜单在正确的位置，不改变显示状态
+                    if (navMenu.parentElement !== document.body) {
+                        document.body.appendChild(navMenu);
+                    }
+                    // 保持菜单的当前显示状态
+                    if (navMenu.classList.contains('nav-menu-active')) {
+                        navMenu.style.transform = 'translateX(0)';
+                    } else {
+                        navMenu.style.transform = 'translateX(-100%)';
+                    }
+                }
+            });
         });
     </script>
-    <script src="changebg.js"></script>
+    <script src="rotate.js"></script>
 </body>
 </html>

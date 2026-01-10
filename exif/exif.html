@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link id="favicon" rel="icon" type="image/png" href="../favicon.ico">
-    <title>图标生成器 - 创建自定义图标</title>
-    <meta name="keywords" content="图标生成器,图片转图标,favicon,应用图标,自定义图标" />
-    <meta name="description" content="免费在线图标生成工具，从图片创建自定义图标，支持多种格式和尺寸，适用于网站、应用等" />
-    <link rel="canonical" href="https://mosaic.openai2025.com/icon/icon.html">
+    <title>在线免费查看照片EXIF - 照片信息查看工具</title>
+    <meta name="keywords" content="在线查看EXIF,照片EXIF信息,图片元数据,照片信息查看器,EXIF数据分析" />
+    <meta name="description" content="免费在线照片EXIF信息查看工具。查看照片拍摄时间、相机型号、GPS位置等详细信息。" />
+    <link rel="canonical" href="https://mosaic.openai2025.com/exif/exif.html">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4SRJM5F5CT"></script>
 <script>
@@ -21,7 +21,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7274710287377352"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css.css">
-    <link rel="stylesheet" href="icon.css">
+    <link rel="stylesheet" href="exif.css">
     <style>
         body { min-height: 120vh; }
         .navbar { position: relative; z-index: auto; }
@@ -132,12 +132,12 @@
             }
         }
 
-        .nav-item { 
-            position: relative; 
+        .nav-item {
+            position: relative;
             display: inline-block;
         }
-        .dropdown-toggle { 
-            cursor: pointer; 
+        .dropdown-toggle {
+            cursor: pointer;
             user-select: none;
         }
         .dropdown-menu {
@@ -192,21 +192,21 @@
             margin-left: 4px;
             opacity: 0.7;
         }
-        
+
         @media (min-width: 769px) and (max-width: 1024px) {
             .dropdown-menu {
                 min-width: 480px;
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-        
+
         @media (min-width: 1025px) {
             .dropdown-menu {
                 min-width: 600px;
                 grid-template-columns: repeat(4, 1fr);
             }
         }
-        
+
         .dropdown-toggle::before {
             content: "🤖";
             display: inline-block;
@@ -230,7 +230,7 @@
             font-size: 16px;
             line-height: 1;
         }
-        
+
         @media (min-width: 769px) {
             .nav-item .dropdown-toggle {
                 color: rgba(255, 255, 255, 0.9);
@@ -334,9 +334,9 @@
                             <a href="../index.html" class="nav-link">图片马赛克</a>
                             <a href="../crop/crop.html" class="nav-link">裁剪图片</a>
                             <a href="../convert/convert.html" class="nav-link">格式转换</a>
-                            <a href="icon.html" class="nav-link">图标生成器</a>
+                            <a href="../icon/icon.html" class="nav-link">图标生成器</a>
                             <a href="../compress/compress.html" class="nav-link">压缩图片</a>
-                    <a href="../blank/blank.html" class="nav-link">灰度处理</a>
+                            <a href="../blank/blank.html" class="nav-link">灰度处理</a>
                             <a href="../watermark/watermark.html" class="nav-link">添加水印</a>
                             <a href="../removewm/removewm.html" class="nav-link">去除水印</a>
                             <a href="../nine/nine.html" class="nav-link">图片网格</a>
@@ -350,8 +350,8 @@
                             <a href="../removebg/removebg.html" class="nav-link">去除背景</a>
                             <a href="../changebg/changebg.html" class="nav-link">更换背景</a>
                             <a href="../rotate/rotate.html" class="nav-link">🔄 图片旋转</a>
-                            <a href="../exif/exif.html" class="nav-link">📷 查看EXIF</a>
-                </div>
+                            <a href="exif.html" class="nav-link">📷 查看EXIF</a>
+                        </div>
                     </div>
                     <a href="../about.html" class="nav-link">关于</a>
                     <a href="../contact.html" class="nav-link">联系我们</a>
@@ -365,367 +365,148 @@
                 </a>
             </div>
         </nav>
-        <h1 class="header-title">图标生成器</h1>
+        <h1 class="header-title">查看照片EXIF</h1>
     </header>
 
-    <!-- Mobile menu overlay -->
+    <!-- 移动端菜单遮罩层 -->
     <div class="nav-overlay" id="navOverlay"></div>
 
     <main class="main-container">
-        <!-- File upload area -->
+        <!-- 文件上传区域 -->
         <section class="upload-section">
             <div class="upload-area">
                 <label for="fileInput" class="file-label">
-                    <div class="upload-icon">🖼️</div>
-                    <div class="upload-text">点击选择图片或拖放到此处</div>
-                    <div class="upload-hint">支持 JPG、PNG、GIF、BMP、WebP 格式</div>
-                    <div class="upload-hint">建议使用正方形图片以获得最佳效果</div>
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">点击选择照片或拖放到此处</div>
+                    <div class="upload-hint">支持格式：JPG、JPEG、PNG、TIFF、WebP等</div>
                 </label>
                 <input type="file" id="fileInput" accept="image/*" />
             </div>
         </section>
 
-        <!-- Icon settings area -->
-        <section class="settings-section" id="settingsSection" style="display: none;">
-            <div class="settings-container">
-                <h3>图标设置</h3>
-                
-                <div class="settings-grid">
-                    <!-- 输出格式 -->
-                    <div class="setting-group">
-                        <label class="setting-label">输出格式</label>
-                        <select id="outputFormat" class="format-select">
-                            <option value="png">PNG（.png）</option>
-                            <option value="ico">ICO（.ico）</option>
-                            <option value="svg">SVG（.svg）</option>
-                        </select>
-                    </div>
-
-                    <!-- 图标尺寸 -->
-                    <div class="setting-group">
-                        <label class="setting-label">图标尺寸</label>
-                        <div class="size-options">
-                            <div class="size-presets">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="size16" value="16" />
-                                    <span class="checkmark"></span>
-                                    16×16（favicon）
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="size32" value="32" checked />
-                                    <span class="checkmark"></span>
-                                    32×32（favicon）
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="size48" value="48" />
-                                    <span class="checkmark"></span>
-                                    48×48（Windows）
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="size64" value="64" />
-                                    <span class="checkmark"></span>
-                                    64×64（Windows）
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="size128" value="128" />
-                                    <span class="checkmark"></span>
-                                    128×128（Android）
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="size256" value="256" />
-                                    <span class="checkmark"></span>
-                                    256×256（iOS）
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="size512" value="512" />
-                                    <span class="checkmark"></span>
-                                    512×512（PWA）
-                                </label>
-                            </div>
-                            <div class="custom-size">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" id="customSizeEnabled" />
-                                    <span class="checkmark"></span>
-                                    自定义尺寸
-                                </label>
-                                <div class="custom-size-input" id="customSizeInput" style="display: none;">
-                                    <input type="number" id="customSizeValue" placeholder="宽度" min="16" max="1024" value="64" />
-                                    <span>×</span>
-                                    <input type="number" id="customSizeValue2" placeholder="高度" min="16" max="1024" value="64" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 处理选项 -->
-                    <div class="setting-group">
-                        <label class="setting-label">处理选项</label>
-                        <div class="processing-options">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="cropToSquare" checked />
-                                <span class="checkmark"></span>
-                                裁剪为正方形
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="addPadding" />
-                                <span class="checkmark"></span>
-                                添加内边距
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="addBorderRadius" />
-                                <span class="checkmark"></span>
-                                添加圆角
-                            </label>
-                            <div class="border-radius-control" id="borderRadiusControl" style="display: none;">
-                                <label class="setting-label">圆角大小</label>
-                                <div class="radius-slider">
-                                    <input type="range" id="borderRadiusSlider" min="0" max="50" value="10" />
-                                    <span id="borderRadiusValue">10px</span>
-                                </div>
-                                <div class="radius-presets">
-                                    <button type="button" class="radius-preset-btn" data-value="0">无圆角</button>
-                                    <button type="button" class="radius-preset-btn" data-value="5">小圆角</button>
-                                    <button type="button" class="radius-preset-btn" data-value="10">中圆角</button>
-                                    <button type="button" class="radius-preset-btn" data-value="20">大圆角</button>
-                                    <button type="button" class="radius-preset-btn" data-value="circle">圆形</button>
-                                </div>
-                            </div>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="optimizeForWeb" />
-                                <span class="checkmark"></span>
-                                网页优化
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- 背景设置 -->
-                    <div class="setting-group">
-                        <label class="setting-label">背景设置</label>
-                        <div class="background-options">
-                            <label class="radio-label">
-                                <input type="radio" name="background" value="transparent" checked />
-                                <span class="radio-mark"></span>
-                                透明背景
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="background" value="white" />
-                                <span class="radio-mark"></span>
-                                白色背景
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="background" value="custom" />
-                                <span class="radio-mark"></span>
-                                自定义颜色
-                            </label>
-                            <input type="color" id="customColor" value="#ffffff" style="display: none;" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button id="generateIconsBtn" class="btn btn-primary">生成图标</button>
-                    <button id="previewBtn" class="btn btn-secondary">预览</button>
-                    <button id="clearBtn" class="btn btn-outline">清除</button>
-                </div>
+            <!-- EXIF信息显示区域 -->
+        <section class="exif-section" id="exifSection" style="display: none;">
+            <!-- 摘要信息（顶部） -->
+            <div id="exifSummary" class="exif-summary" aria-live="polite">
+                <!-- 动态填充：设备 / 曝光参数 / 模式与闪光 / 拍摄时间 / 文件信息 / 尺寸 / 分辨率 / 方向 -->
             </div>
-        </section>
-
-        <!-- Preview area -->
-        <section class="preview-section" id="previewSection" style="display: none;">
-            <div class="preview-container">
-                <h3>预览</h3>
-                <div class="preview-grid" id="previewGrid">
-                    <!-- Preview icons will be displayed here -->
-                </div>
+            <!-- 操作按钮 -->
+            <div style="padding:0 20px 12px 20px;">
+                <button id="uploadNewBtn" class="tool-btn upload-new-btn">上传新图片</button>
             </div>
-        </section>
 
-        <!-- Results area -->
-        <section class="results-section" id="resultsSection" style="display: none;">
-            <div class="results-container">
-                <h3>生成的图标</h3>
-                <div class="results-actions">
-                    <button id="downloadAllBtn" class="btn btn-success">下载全部</button>
-                    <button id="downloadZipBtn" class="btn btn-info">下载ZIP</button>
+            <div class="exif-container">
+                <!-- 图片预览 -->
+                <div class="image-preview">
+                    <h3>图片预览</h3>
+                    <div class="preview-container">
+                        <img id="previewImage" alt="图片预览" />
+                    </div>
                 </div>
-                <div class="results-grid" id="resultsGrid">
-                    <!-- Generated icons will be displayed here -->
-                </div>
-            </div>
-        </section>
 
-        <!-- Instructions -->
-        <section class="instructions-section">
-            <div class="instructions-container">
-                <h3>使用说明</h3>
-                <div class="instructions-content">
-                    <div class="instruction-item">
-                        <h4>📱 移动应用图标</h4>
-                        <p>选择128×128或256×256尺寸的PNG格式，适用于Android和iOS应用图标</p>
+                <!-- EXIF信息 -->
+                <div class="exif-info">
+                    <h3>📋 EXIF信息</h3>
+                    <div class="info-grid" id="exifData">
+                        <!-- EXIF数据将在这里动态显示 -->
                     </div>
-                    <div class="instruction-item">
-                        <h4>🌐 网站图标</h4>
-                        <p>选择16×16和32×32尺寸的ICO格式，适用于网站favicon</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h4>📱 PWA图标</h4>
-                        <p>选择512×512尺寸的PNG格式，适用于渐进式Web应用</p>
-                    </div>
-                    <div class="instruction-item">
-                        <h4>💡 提示</h4>
-                        <p>使用正方形图片，避免小文字，选择简洁设计以获得最佳效果</p>
-                    </div>
+
+                    <!-- 全部原始EXIF信息 -->
+                    <h3 style="margin-top:16px;">全部EXIF原始信息</h3>
+                    <pre id="rawExif" class="raw-exif" aria-label="原始EXIF信息"></pre>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Feature description and usage guide section -->
+    <!-- 功能说明与使用指南 -->
     <section class="info-section">
         <div class="info-container">
-            <!-- Feature description -->
+            <!-- 功能说明 -->
             <div class="info-card">
                 <h2>📋 功能说明</h2>
-                <p>我们的图标生成器工具提供强大的图标创建能力：</p>
+                <p>我们的照片EXIF查看工具可以帮助您深入了解图片的详细信息：</p>
                 <ul>
-                    <li><strong>多种格式：</strong> 生成PNG、ICO和SVG格式的图标</li>
-                    <li><strong>多种尺寸：</strong> 创建从16×16到512×512像素的标准尺寸图标</li>
-                    <li><strong>自定义尺寸：</strong> 生成任意自定义尺寸的图标（16-1024像素）</li>
-                    <li><strong>智能处理：</strong> 裁剪为正方形、添加内边距和应用圆角</li>
-                    <li><strong>背景选项：</strong> 透明、白色或自定义颜色背景</li>
-                    <li><strong>批量生成：</strong> 一次生成多个尺寸的图标</li>
-                    <li><strong>网页优化：</strong> 优化图标以用于网页</li>
+                    <li><strong>拍摄信息：</strong> 查看相机型号、镜头信息、光圈、快门速度、ISO等拍摄参数</li>
+                    <li><strong>时间信息：</strong> 显示照片的拍摄时间、修改时间等时间戳</li>
+                    <li><strong>位置信息：</strong> GPS坐标、地理位置、海拔高度等地理数据</li>
+                    <li><strong>图像属性：</strong> 分辨率、颜色空间、压缩方式等技术信息</li>
+                    <li><strong>版权信息：</strong> 版权声明、作者信息、创建软件等元数据</li>
+                    <li><strong>完整解析：</strong> 支持所有标准EXIF标签的读取和显示</li>
                 </ul>
             </div>
 
-            <!-- 使用指南 -->
+            <!-- 使用帮助 -->
             <div class="info-card">
                 <h2>💡 使用指南</h2>
                 <ol>
-                    <li>点击"选择图片"或拖放图片进行上传</li>
-                    <li>选择输出格式（PNG、ICO或SVG）</li>
-                    <li>从预设选项中选择图标尺寸或启用自定义尺寸</li>
-                    <li>配置处理选项（裁剪为正方形、添加内边距、圆角）</li>
-                    <li>选择背景设置（透明、白色或自定义颜色）</li>
-                    <li>点击"生成图标"创建您的图标</li>
-                    <li>预览生成的图标并单独下载或打包ZIP下载</li>
+                    <li>点击"选择照片"上传包含EXIF信息的图片文件</li>
+                    <li>工具会自动解析并显示图片的EXIF元数据</li>
+                    <li>查看拍摄参数、时间信息、GPS位置等详细信息</li>
+                    <li>不同相机型号和软件可能包含不同的EXIF信息</li>
+                    <li>隐私提醒：GPS信息可能泄露拍摄位置，请谨慎分享</li>
                 </ol>
             </div>
 
-            <!-- 使用案例 -->
+            <!-- EXIF信息说明 -->
             <div class="info-card">
-                <h2>🎨 使用案例</h2>
-                <div class="use-cases">
-                    <div class="use-case-item">
-                        <strong>网站图标：</strong> 为您的网站创建多种尺寸的favicon
+                <h2>ℹ️ EXIF信息说明</h2>
+                <div class="exif-explanation">
+                    <div class="exif-category">
+                        <h4>📷 拍摄参数</h4>
+                        <ul>
+                            <li><strong>相机型号：</strong> 拍摄设备的品牌和型号</li>
+                            <li><strong>镜头信息：</strong> 使用的镜头规格</li>
+                            <li><strong>光圈值：</strong> 镜头光圈大小 (f/2.8, f/4等)</li>
+                            <li><strong>快门速度：</strong> 曝光时间 (1/100s, 1/500s等)</li>
+                            <li><strong>ISO值：</strong> 感光度设置</li>
+                            <li><strong>焦距：</strong> 镜头焦距长度</li>
+                        </ul>
                     </div>
-                    <div class="use-case-item">
-                        <strong>移动应用：</strong> 为Android和iOS应用生成应用图标
+
+                    <div class="exif-category">
+                        <h4>🕐 时间信息</h4>
+                        <ul>
+                            <li><strong>拍摄时间：</strong> 照片拍摄的准确时间</li>
+                            <li><strong>数字化时间：</strong> 文件创建时间</li>
+                            <li><strong>修改时间：</strong> 文件最后修改时间</li>
+                        </ul>
                     </div>
-                    <div class="use-case-item">
-                        <strong>PWA图标：</strong> 为渐进式Web应用创建图标
-                    </div>
-                    <div class="use-case-item">
-                        <strong>品牌资产：</strong> 为您的品牌生成统一的图标集
+
+                    <div class="exif-category">
+                        <h4>📍 位置信息</h4>
+                        <ul>
+                            <li><strong>GPS坐标：</strong> 纬度、经度信息</li>
+                            <li><strong>海拔高度：</strong> 拍摄地点的海拔</li>
+                            <li><strong>方向角：</strong> 拍摄方向</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Video tutorial section -->
+    <!-- 视频教程 -->
     <section class="examples-section">
         <div class="examples-container">
             <h2>📹 视频教程</h2>
             <div class="examples-grid">
                 <div class="example-card example-video-card">
-                    <h3>如何使用图标生成器</h3>
+                    <h3>如何查看照片EXIF信息</h3>
                     <div class="example-video-wrapper">
-                        <video src="/static/image/icon.mp4" controls class="example-video" poster="">
+                        <video src="../static/image/exif.mp4" controls class="example-video" poster="">
                             您的浏览器不支持视频标签。
                         </video>
                     </div>
                     <p class="example-description">
-                        <strong>视频指南：</strong> 观看本教程视频，了解如何高效使用我们的图标生成器工具。查看创建不同格式和尺寸图标、应用圆角以及下载结果的分步说明。
+                        <strong>视频指南：</strong> 观看本教程视频，了解如何上传图片并查看其 EXIF 元数据，包括拍摄参数、GPS 信息和原始 EXIF 导出方法。
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Membership plans section -->
-    <section class="pricing-section">
-        <div class="pricing-container">
-            <h2>💎 会员套餐</h2>
-            <div class="pricing-grid">
-                <!-- 月度套餐 -->
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>月度套餐</h3>
-                        <div class="price">$6.6<span>/月</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>✓ 无限图标生成</li>
-                        <li>✓ 支持所有输出格式</li>
-                        <li>✓ 标准图标尺寸</li>
-                        <li>✓ 优先客服支持</li>
-                        <li>✓ 无广告体验</li>
-                    </ul>
-                    <button class="pricing-btn">立即订阅</button>
-                </div>
-
-                <!-- 季度套餐 -->
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">超值选择</div>
-                    <div class="pricing-header">
-                        <h3>季度套餐</h3>
-                        <div class="price">$16.66<span>/3个月</span></div>
-                        <div class="price-save">节省17%</div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>✓ 包含月度套餐所有功能</li>
-                        <li>✓ 自定义图标尺寸</li>
-                        <li>✓ 高级处理选项</li>
-                        <li>✓ API访问</li>
-                        <li>✓ 批量图标生成</li>
-                    </ul>
-                    <button class="pricing-btn">立即订阅</button>
-                </div>
-
-                <!-- 年度套餐 -->
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>年度套餐</h3>
-                        <div class="price">$56.66<span>/年</span></div>
-                        <div class="price-save">节省33%</div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>✓ 包含季度套餐所有功能</li>
-                        <li>✓ 无限批量生成</li>
-                        <li>✓ 白标选项</li>
-                        <li>✓ 专属支持</li>
-                        <li>✓ 新功能抢先体验</li>
-                    </ul>
-                    <button class="pricing-btn">立即订阅</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter subscription section -->
-    <section class="newsletter-section">
-        <div class="newsletter-container">
-            <h2>📧 订阅我们的 newsletter</h2>
-            <p>获取使用指南、使用案例和独家会员优惠</p>
-            <form class="newsletter-form" id="newsletterForm">
-                <input type="email" placeholder="输入您的邮箱地址" required class="newsletter-input">
-                <button type="submit" class="newsletter-btn">订阅</button>
-            </form>
-            <p class="newsletter-note">订阅后，您将收到使用指南、使用案例和会员信息。</p>
-        </div>
-    </section>
-
-    <!-- Footer section -->
+    <!-- 页脚 -->
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-grid">
@@ -734,8 +515,8 @@
                     <ul class="footer-links">
                         <li><a href="../index.html">图片马赛克</a></li>
                         <li><a href="../crop/crop.html">裁剪图片</a></li>
+                        <li><a href="exif.html">查看EXIF</a></li>
                         <li><a href="../convert/convert.html">格式转换</a></li>
-                        <li><a href="icon.html">图标生成器</a></li>
                         <li><a href="../compress/compress.html">压缩图片</a></li>
                     </ul>
                 </div>
@@ -770,23 +551,21 @@
             const navToggle = document.getElementById('navToggle');
             const navMenu = document.getElementById('navMenu');
             const navOverlay = document.getElementById('navOverlay');
-            const navItem = document.querySelector('.nav-item'); // For dropdown
-            const dropdownToggle = document.querySelector('.dropdown-toggle'); // For dropdown
-            const dropdownMenu = document.querySelector('.dropdown-menu'); // For dropdown
+            const navItem = document.querySelector('.nav-item');
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
             const navOriginalContainer = navMenu ? navMenu.parentElement : null;
-            
+
             function isMobile() {
                 return window.innerWidth <= 768;
             }
-            
-            // 将菜单在移动端提到 body 直下，避免任何父级层叠上下文/裁剪影响层级
+
             function promoteMenuForMobile(){
                 if (!navMenu) return;
                 if (isMobile()) {
                     if (navMenu.parentElement !== document.body) {
                         document.body.appendChild(navMenu);
                     }
-                    // 确保移动端菜单有正确的样式
                     navMenu.style.display = 'flex';
                     navMenu.style.position = 'fixed';
                     navMenu.style.top = '0';
@@ -806,8 +585,7 @@
                     navMenu.style.webkitOverflowScrolling = 'touch';
                         navMenu.style.touchAction = 'pan-y';
                     navMenu.style.transition = 'transform .25s ease';
-                    
-                    // 保持菜单的当前显示状态，不强制隐藏
+
                     if (!navMenu.classList.contains('nav-menu-active')) {
                         navMenu.style.transform = 'translateX(-100%)';
                     } else {
@@ -817,7 +595,6 @@
                     if (navOriginalContainer && navMenu.parentElement !== navOriginalContainer) {
                         navOriginalContainer.appendChild(navMenu);
                     }
-                    // 重置PC端样式
                     navMenu.style.display = '';
                     navMenu.style.position = '';
                     navMenu.style.top = '';
@@ -836,12 +613,11 @@
                     navMenu.style.overflowX = '';
                     navMenu.style.webkitOverflowScrolling = '';
                     navMenu.style.touchAction = '';
-                    navMenu.style.transition = '';
                     navMenu.style.transform = '';
+                    navMenu.style.transition = '';
                 }
             }
-            
-            // 初始化时调用
+
             promoteMenuForMobile();
 
             function toggleMenu() {
@@ -853,7 +629,7 @@
                     document.documentElement.classList.toggle('menu-open');
                 }
             }
-            
+
             function closeMenu() {
                 if (isMobile()) {
                     navMenu.classList.remove('nav-menu-active');
@@ -870,42 +646,7 @@
             if (navOverlay) {
                 navOverlay.addEventListener('click', closeMenu);
             }
-            
-            // PC dropdown logic (simplified)
-            if (!isMobile() && navItem && dropdownToggle && dropdownMenu) {
-                let hideTimer = null;
 
-                function showDropdown() {
-                    if (hideTimer) {
-                        clearTimeout(hideTimer);
-                        hideTimer = null;
-                    }
-                    navItem.classList.add('dropdown-open');
-                }
-
-                function hideDropdown() {
-                    hideTimer = setTimeout(function() {
-                        navItem.classList.remove('dropdown-open');
-                    }, 200);
-                }
-
-                navItem.addEventListener('mouseenter', showDropdown);
-                dropdownMenu.addEventListener('mouseenter', showDropdown);
-                navItem.addEventListener('mouseleave', function(e) {
-                    if (e.relatedTarget && dropdownMenu.contains(e.relatedTarget)) {
-                        return;
-                    }
-                    hideDropdown();
-                });
-                dropdownMenu.addEventListener('mouseleave', function(e) {
-                    if (e.relatedTarget && navItem.contains(e.relatedTarget)) {
-                        return;
-                    }
-                    hideDropdown();
-                });
-            }
-
-            // Mobile dropdown click handling
             if (dropdownToggle) {
                 dropdownToggle.addEventListener('click', function(e) {
                     if (isMobile()) {
@@ -916,11 +657,10 @@
                 });
             }
 
-            // 点击菜单项后关闭移动端菜单并导航
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 let startX = 0, startY = 0, startT = 0;
-                const threshold = 8; // 允许的手指抖动
+                const threshold = 8;
                 function onStart(e){
                     if (!isMobile()) return;
                     const t = e.touches ? e.touches[0] : e;
@@ -935,7 +675,7 @@
                     if (dx < threshold && dy < threshold && dt < 1500) {
                         const href = link.getAttribute('href');
                         if (href && !href.startsWith('#')) {
-                            e.preventDefault(); 
+                            e.preventDefault();
                             e.stopPropagation();
                             closeMenu();
                             window.location.assign(href);
@@ -946,51 +686,31 @@
                 link.addEventListener('touchend', onEnd, {passive:false, capture:true});
                 link.addEventListener('mousedown', onStart, true);
                 link.addEventListener('mouseup', onEnd, true);
-                // 兜底：点击事件（防止某些环境未触发指针序列）
                 link.addEventListener('click', function(e){
                     if (!isMobile()) return;
                     const href = link.getAttribute('href');
-                    if (href && !href.startsWith('#')) { 
-                        e.preventDefault(); 
-                        e.stopPropagation(); 
+                    if (href && !href.startsWith('#')) {
+                        e.preventDefault();
+                        e.stopPropagation();
                         closeMenu();
-                        window.location.assign(href); 
+                        window.location.assign(href);
                     }
                 }, true);
             });
 
-            // Email subscription form handling
-            const newsletterForm = document.getElementById('newsletterForm');
-            if (newsletterForm) {
-                newsletterForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const emailInput = newsletterForm.querySelector('.newsletter-input');
-                    const email = emailInput.value.trim();
-                    if (email) {
-                        alert('感谢您的订阅！我们将向您发送更新和独家优惠。');
-                        emailInput.value = '';
-                    }
-                });
-            }
-            
-            // 窗口大小改变时重新检查
             window.addEventListener('resize', function() {
                 if (!isMobile()) {
                     closeMenu();
                 } else {
-                    // 移动端时只重新初始化样式，不改变菜单显示状态
                     promoteMenuForMobile();
                 }
             });
-            
-            // 页面滚动时也重新检查菜单状态，但不重置菜单显示状态
+
             window.addEventListener('scroll', function() {
                 if (isMobile()) {
-                    // 只确保菜单在正确的位置，不改变显示状态
                     if (navMenu.parentElement !== document.body) {
                         document.body.appendChild(navMenu);
                     }
-                    // 保持菜单的当前显示状态
                     if (navMenu.classList.contains('nav-menu-active')) {
                         navMenu.style.transform = 'translateX(0)';
                     } else {
@@ -1000,7 +720,6 @@
             });
         });
     </script>
-    <script src="icon.js"></script>
+    <script src="exif.js"></script>
 </body>
 </html>
-
