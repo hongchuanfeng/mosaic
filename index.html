@@ -475,16 +475,24 @@
                 <button type="button" id="removeMosaicBtn" class="file-label" style="margin-left:8px;">去除马赛克</button>
             </div>
             <div class="frame-center" id="leftFrameCenter" style="position:relative">
+                <div class="preview-container" id="previewContainer">
+                    <div class="preview-image-wrapper" id="previewWrapper" onclick="document.getElementById('fileBtn').click()">
+                        <img id="previewImg" alt="预览图" style="display:none"/>
+                        <span id="previewPlaceholder" style="font-size: 40px;">+</span>
+                    </div>
+                    <span class="preview-label">点击预览图选择图片</span>
+                    <span class="preview-hint">支持 JPG、PNG、GIF、BMP、WebP</span>
+                </div>
                 <img id="img" alt="原始图片" style="display:none"/>
                 <canvas id="overlayCanvas" style="display:none;position:absolute;left:0;top:0;pointer-events:auto"></canvas>
-                <div class="placeholder-text">请选择一张图片</div>
+                <div class="placeholder-text" id="uploadPlaceholder" style="display:none">请选择一张图片</div>
             </div>
         </section>
         <section class="frame-div result-section">
             <div class="frame-top">
                 <div class="controls-group">
-                    <label for="rangeInput" class="range-label">马赛克强度：<span id="rangeValue">5</span></label>
-                    <input type="range" id="rangeInput" min="1" max="10" value="5" />
+                    <label for="rangeInput" class="range-label">马赛克强度：<span id="rangeValue">15</span></label>
+                    <input type="range" id="rangeInput" min="1" max="30" value="15" />
                 </div>
                 <div class="controls-group">
                     <label for="modeSelect" class="range-label">模式：</label>
@@ -707,13 +715,14 @@
             <div class="friendship-links">
                 <h3>友情链接</h3>
                 <div class="links-grid">
-                    <a href="https://removewatermark.zorezoro.com/zh" target="_blank" rel="noopener noreferrer">视频去水印字幕</a>
+                    <a href="https://www.chdaoai.com/" target="_blank" rel="noopener noreferrer">图片去水印</a>
+                    <a href="https://www.removewatermarker.com/" target="_blank" rel="noopener noreferrer">视频去水印</a>
                     <a href="https://video2txt.zorezoro.com/" target="_blank" rel="noopener noreferrer">视频转文字</a>
                     <a href="https://qrcode.chdaoai.com/zh" target="_blank" rel="noopener noreferrer">在线生成二维码</a>
                     <a href="https://barcode.zorezoro.com/" target="_blank" rel="noopener noreferrer">在线生成条码</a>
                     <a href="https://www.zorezoro.com/cn/" target="_blank" rel="noopener noreferrer">NBA趣事</a>
                     <a href="https://pdf.chdaoai.com/" target="_blank" rel="noopener noreferrer">PDF转换工具</a>
-                    <a href="https://www.icebreakgame.com/" target="_blank" rel="noopener noreferrer">在线免费游戏</a>
+                    <a href="https://www.icebreakgame.com/" target="_blank" rel="noopener noreferrer">IceBreakGame</a>
                 </div>
             </div>
 
@@ -725,7 +734,7 @@
     </footer>
     <script type="text/javascript">
 
-        var pix = 5;
+        var pix = 15;
         // 模式与掩膜状态
         var mode = 'full'; // full | rect | brush
         var brushSize = 30;
@@ -1039,15 +1048,26 @@
                     var dataURL = event.target.result;
                     var img = document.getElementById("img");
                     var convertImg = document.getElementById("convertImg");
-                    var uploadPlaceholder = img.parentElement.querySelector('.placeholder-text');
+                    var uploadPlaceholder = document.getElementById("uploadPlaceholder");
+                    var previewContainer = document.getElementById("previewContainer");
+                    var previewImg = document.getElementById("previewImg");
+                    var previewPlaceholder = document.getElementById("previewPlaceholder");
                     var resultPlaceholder = convertImg.parentElement.querySelector('.placeholder-text');
-                    
+
                     img.src = dataURL;
                     img.style.display = "block";
                     convertImg.style.display = "block";
+
+                    // 更新预览图
+                    previewImg.src = dataURL;
+                    previewImg.style.display = "block";
+                    previewPlaceholder.style.display = "none";
+
+                    // 隐藏占位符
                     uploadPlaceholder.style.display = "none";
+                    previewContainer.style.display = "none";
                     resultPlaceholder.style.display = "none";
-                    
+
                     // 确保两个图片的显示尺寸一致
                     img.onload = function() {
                         convertImg.style.width = img.offsetWidth + 'px';
@@ -1057,7 +1077,7 @@
                         }
                     };
                 };
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
             } else {
                 alert("您的浏览器不支持此功能");
             }
